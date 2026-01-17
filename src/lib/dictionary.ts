@@ -693,6 +693,19 @@ export const SEED_DATA: DictionaryEntry[] = [
     updatedAt: new Date().toISOString()
   },
   {
+    term: "harrowing",
+    senses: [
+      {
+        pos: "adjective",
+        gloss: "Extremely distressing or disturbing; acutely painful or traumatic.",
+        example: "She gave a harrowing account of her escape from the war zone."
+      }
+    ],
+    source: "Demo Dataset",
+    license: "CC BY-SA 4.0",
+    updatedAt: new Date().toISOString()
+  },
+  {
     term: "ideology",
     senses: [
       {
