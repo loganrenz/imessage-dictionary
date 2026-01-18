@@ -18,6 +18,11 @@ export function WordPage({ term, senseIndex = 0, onNavigateHome }: WordPageProps
   // Track which sense to highlight/focus
   const [activeSenseIndex, setActiveSenseIndex] = useState(senseIndex)
 
+  // Helper to clamp sense index to valid range
+  const getValidSenseIndex = (entry: DictionaryEntry, idx: number): number => {
+    return Math.max(0, Math.min(idx, entry.senses.length - 1))
+  }
+
   useEffect(() => {
     setLoading(true)
     const foundEntry = getEntryByTerm(term)
@@ -26,8 +31,7 @@ export function WordPage({ term, senseIndex = 0, onNavigateHome }: WordPageProps
     
     // Validate senseIndex is within bounds
     if (foundEntry) {
-      const validSenseIndex = Math.min(senseIndex, foundEntry.senses.length - 1)
-      setActiveSenseIndex(Math.max(0, validSenseIndex))
+      setActiveSenseIndex(getValidSenseIndex(foundEntry, senseIndex))
     }
 
     if (foundEntry) {
@@ -37,8 +41,7 @@ export function WordPage({ term, senseIndex = 0, onNavigateHome }: WordPageProps
   }, [term, senseIndex])
 
   const updateMetaTags = (entry: DictionaryEntry, senseIdx: number) => {
-    // Clamp senseIndex to valid range
-    const validSenseIdx = Math.max(0, Math.min(senseIdx, entry.senses.length - 1))
+    const validSenseIdx = getValidSenseIndex(entry, senseIdx)
     const sense = entry.senses[validSenseIdx]
     
     const setMeta = (property: string, content: string) => {
@@ -129,9 +132,12 @@ export function WordPage({ term, senseIndex = 0, onNavigateHome }: WordPageProps
       url = `${window.location.origin}/#/w/${encodeURIComponent(entry.term)}/${index}`
     }
     
+    // Create descriptive label for toast message
+    const senseLabel = sense.pos || `definition ${index + 1}`
+    
     try {
       await navigator.clipboard.writeText(url)
-      toast.success(`Link to "${sense.pos || 'definition'}" copied!`)
+      toast.success(`Link to "${senseLabel}" copied!`)
     } catch (err) {
       toast.error('Failed to copy link')
     }
