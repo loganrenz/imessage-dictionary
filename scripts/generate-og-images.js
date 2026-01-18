@@ -20,10 +20,18 @@ try {
   process.exit(1);
 }
 
-function generateOGImage(entry, outputPath) {
-  // Validate entry has required data
-  if (!entry.senses || entry.senses.length === 0 || !entry.senses[0].gloss) {
-    console.warn(`Skipping ${entry.term}: missing required sense data`);
+/**
+ * Generate an OG image for a specific sense (definition) of a word entry
+ * @param {Object} entry - The dictionary entry
+ * @param {Object} sense - The specific sense to render
+ * @param {number} senseIndex - Index of the sense (0-based)
+ * @param {string} outputPath - Path to write the image
+ * @returns {boolean} - Whether the image was generated successfully
+ */
+function generateOGImage(entry, sense, senseIndex, outputPath) {
+  // Validate sense has required data
+  if (!sense || !sense.gloss) {
+    console.warn(`Skipping ${entry.term} sense ${senseIndex}: missing required sense data`);
     return false;
   }
 
@@ -42,14 +50,14 @@ function generateOGImage(entry, outputPath) {
   ctx.fillText(entry.term, 600, 120);
 
   // Part of speech
-  if (entry.senses[0].pos) {
+  if (sense.pos) {
     ctx.fillStyle = '#c5914a';
     ctx.font = '500 24px sans-serif';
-    ctx.fillText(entry.senses[0].pos.toUpperCase(), 600, 240);
+    ctx.fillText(sense.pos.toUpperCase(), 600, 240);
   }
 
   // Definition
-  const gloss = entry.senses[0].gloss;
+  const gloss = sense.gloss;
   ctx.fillStyle = '#1e2f50';
   ctx.font = '400 32px sans-serif';
   ctx.textAlign = 'center';
@@ -87,7 +95,7 @@ function generateOGImage(entry, outputPath) {
     }
   }
 
-  const startY = entry.senses[0].pos ? 300 : 260;
+  const startY = sense.pos ? 300 : 260;
   lines.forEach((line, index) => {
     ctx.fillText(line, 600, startY + index * lineHeight);
   });
@@ -117,32 +125,55 @@ function main() {
     mkdirSync(ogDir, { recursive: true });
   }
 
-  console.log('Generating OG images...');
+  console.log('Generating OG images for all definitions...');
   console.log(`Output directory: ${ogDir}`);
   
-  // Generate images for all entries
-  let count = 0;
+  // Generate images for all entries and all senses
+  let imageCount = 0;
   let skipped = 0;
+  let termsProcessed = 0;
+  
   for (const entry of SEED_DATA) {
-    const filename = `${entry.term}.png`;
-    const outputPath = join(ogDir, filename);
-    try {
-      const success = generateOGImage(entry, outputPath);
-      if (success) {
-        console.log(`Generated: ${outputPath}`);
-        count++;
+    if (!entry.senses || entry.senses.length === 0) {
+      console.warn(`Skipping ${entry.term}: no senses defined`);
+      skipped++;
+      continue;
+    }
+    
+    termsProcessed++;
+    
+    // Generate an OG image for each sense (definition)
+    for (let senseIndex = 0; senseIndex < entry.senses.length; senseIndex++) {
+      const sense = entry.senses[senseIndex];
+      
+      // For the first sense (index 0), use the original filename: term.png
+      // For additional senses, use: term-1.png, term-2.png, etc. (1-indexed for user-friendliness)
+      let filename;
+      if (senseIndex === 0) {
+        filename = `${entry.term}.png`;
       } else {
+        filename = `${entry.term}-${senseIndex}.png`;
+      }
+      
+      const outputPath = join(ogDir, filename);
+      try {
+        const success = generateOGImage(entry, sense, senseIndex, outputPath);
+        if (success) {
+          console.log(`Generated: ${outputPath}`);
+          imageCount++;
+        } else {
+          skipped++;
+        }
+      } catch (error) {
+        console.error(`Error generating image for ${entry.term} sense ${senseIndex}:`, error.message);
         skipped++;
       }
-    } catch (error) {
-      console.error(`Error generating image for ${entry.term}:`, error.message);
-      skipped++;
     }
   }
   
-  console.log(`\nSuccessfully generated ${count} OG images`);
+  console.log(`\nSuccessfully generated ${imageCount} OG images for ${termsProcessed} terms`);
   if (skipped > 0) {
-    console.log(`Skipped ${skipped} entries due to errors or missing data`);
+    console.log(`Skipped ${skipped} senses due to errors or missing data`);
   }
 }
 

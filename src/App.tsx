@@ -8,7 +8,7 @@ import { AdminPage } from './components/AdminPage'
 
 type Route = 
   | { type: 'home' }
-  | { type: 'word'; term: string }
+  | { type: 'word'; term: string; senseIndex: number }
   | { type: 'attribution' }
   | { type: 'og-image'; term: string }
   | { type: 'admin' }
@@ -19,8 +19,21 @@ function parseRoute(hash: string): Route {
   }
 
   if (hash.startsWith('#/w/')) {
-    const term = decodeURIComponent(hash.substring(4))
-    return { type: 'word', term }
+    // Parse word route: #/w/term or #/w/term/senseIndex
+    const path = hash.substring(4) // Remove '#/w/'
+    const parts = path.split('/')
+    const term = decodeURIComponent(parts[0])
+    
+    // Check if there's a sense index (second part of the path)
+    let senseIndex = 0
+    if (parts.length > 1 && parts[1]) {
+      const parsedIndex = parseInt(parts[1], 10)
+      if (!isNaN(parsedIndex) && parsedIndex >= 0) {
+        senseIndex = parsedIndex
+      }
+    }
+    
+    return { type: 'word', term, senseIndex }
   }
 
   if (hash === '#/attribution') {
@@ -52,8 +65,12 @@ function App() {
     return () => window.removeEventListener('hashchange', handleHashChange)
   }, [])
 
-  const navigateToWord = (term: string) => {
-    window.location.hash = `/w/${encodeURIComponent(term)}`
+  const navigateToWord = (term: string, senseIndex?: number) => {
+    if (senseIndex && senseIndex > 0) {
+      window.location.hash = `/w/${encodeURIComponent(term)}/${senseIndex}`
+    } else {
+      window.location.hash = `/w/${encodeURIComponent(term)}`
+    }
   }
 
   const navigateHome = () => {
@@ -66,7 +83,11 @@ function App() {
         <HomePage onNavigateToWord={navigateToWord} />
       )}
       {route.type === 'word' && (
-        <WordPage term={route.term} onNavigateHome={navigateHome} />
+        <WordPage 
+          term={route.term} 
+          senseIndex={route.senseIndex} 
+          onNavigateHome={navigateHome} 
+        />
       )}
       {route.type === 'attribution' && (
         <AttributionPage onNavigateHome={navigateHome} />
