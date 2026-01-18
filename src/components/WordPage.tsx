@@ -92,7 +92,18 @@ export function WordPage({ term, senseIndex = 0, onNavigateHome }: WordPageProps
   }
 
   const handleCopyLink = async () => {
-    const url = window.location.href
+    // Use clean URL for sharing (/w/term) instead of hash URL (/#/w/term)
+    // This ensures social media crawlers (iMessage, etc.) get the correct OG image
+    let url: string
+    if (entry) {
+      if (activeSenseIndex === 0) {
+        url = `${window.location.origin}/w/${encodeURIComponent(entry.term)}`
+      } else {
+        url = `${window.location.origin}/w/${encodeURIComponent(entry.term)}/${activeSenseIndex}`
+      }
+    } else {
+      url = window.location.href
+    }
     try {
       await navigator.clipboard.writeText(url)
       toast.success('Link copied to clipboard!')
@@ -104,11 +115,18 @@ export function WordPage({ term, senseIndex = 0, onNavigateHome }: WordPageProps
   const handleShare = async () => {
     if (navigator.share && entry) {
       const sense = entry.senses[activeSenseIndex]
+      // Use clean URL for sharing (/w/term) instead of hash URL (/#/w/term)
+      let url: string
+      if (activeSenseIndex === 0) {
+        url = `${window.location.origin}/w/${encodeURIComponent(entry.term)}`
+      } else {
+        url = `${window.location.origin}/w/${encodeURIComponent(entry.term)}/${activeSenseIndex}`
+      }
       try {
         await navigator.share({
           title: `${entry.term} — definition`,
           text: sense.gloss,
-          url: window.location.href,
+          url: url,
         })
       } catch (err) {
         if ((err as Error).name !== 'AbortError') {
@@ -124,12 +142,13 @@ export function WordPage({ term, senseIndex = 0, onNavigateHome }: WordPageProps
     if (!entry) return
     const sense = entry.senses[index]
     
-    // Build the URL for this specific sense
+    // Build the clean URL for this specific sense (/w/term) instead of hash URL (/#/w/term)
+    // This ensures social media crawlers (iMessage, etc.) get the correct OG image
     let url: string
     if (index === 0) {
-      url = `${window.location.origin}/#/w/${encodeURIComponent(entry.term)}`
+      url = `${window.location.origin}/w/${encodeURIComponent(entry.term)}`
     } else {
-      url = `${window.location.origin}/#/w/${encodeURIComponent(entry.term)}/${index}`
+      url = `${window.location.origin}/w/${encodeURIComponent(entry.term)}/${index}`
     }
     
     // Create descriptive label for toast message
