@@ -36,5 +36,8 @@ pids
 # Generated OG images (regenerated on build)
 public/og/
 
+# Generated word pages with OG meta tags (regenerated on build)
+public/w/
+
 # Generated dictionary data (regenerated on build)
 scripts/dictionary-data.json
