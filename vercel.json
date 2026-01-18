@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "api/og.js": {
+      "runtime": "edge"
+    }
+  },
   "rewrites": [
     {
       "source": "/og/:slug*.png",

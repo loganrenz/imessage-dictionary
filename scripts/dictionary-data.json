@@ -226,19 +226,6 @@
     "updatedAt": "2024-01-01T00:00:00.000Z"
   },
   {
-    "term": "ephemeral",
-    "senses": [
-      {
-        "pos": "adjective",
-        "gloss": "Lasting for a very short time.",
-        "example": "Youth is ephemeral, so enjoy it while it lasts."
-      }
-    ],
-    "source": "Demo Dataset",
-    "license": "CC BY-SA 4.0",
-    "updatedAt": "2024-01-01T00:00:00.000Z"
-  },
-  {
     "term": "abstract",
     "senses": [
       {
