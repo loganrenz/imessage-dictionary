@@ -44,26 +44,26 @@ function generateOGImage(entry, sense, senseIndex, outputPath) {
 
   // Word title
   ctx.fillStyle = '#1e2f50';
-  ctx.font = 'bold 96px sans-serif';
+  ctx.font = 'bold 72px sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
-  ctx.fillText(entry.term, 600, 120);
+  ctx.fillText(entry.term, 600, 100);
 
   // Part of speech
   if (sense.pos) {
     ctx.fillStyle = '#c5914a';
-    ctx.font = '500 24px sans-serif';
-    ctx.fillText(sense.pos.toUpperCase(), 600, 240);
+    ctx.font = '500 28px sans-serif';
+    ctx.fillText(sense.pos.toUpperCase(), 600, 200);
   }
 
   // Definition
   const gloss = sense.gloss;
   ctx.fillStyle = '#1e2f50';
-  ctx.font = '400 32px sans-serif';
+  ctx.font = '400 48px sans-serif';
   ctx.textAlign = 'center';
   
   const maxWidth = 1000;
-  const lineHeight = 48;
+  const lineHeight = 60;
   const words = gloss.split(' ');
   const lines = [];
   let currentLine = '';
@@ -95,7 +95,7 @@ function generateOGImage(entry, sense, senseIndex, outputPath) {
     }
   }
 
-  const startY = sense.pos ? 300 : 260;
+  const startY = sense.pos ? 260 : 220;
   lines.forEach((line, index) => {
     ctx.fillText(line, 600, startY + index * lineHeight);
   });
