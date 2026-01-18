@@ -47,23 +47,23 @@ function generateOGImage(entry, sense, senseIndex, outputPath) {
   ctx.font = 'bold 96px sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
-  ctx.fillText(entry.term, 600, 120);
+  ctx.fillText(entry.term, 600, 100);
 
   // Part of speech
   if (sense.pos) {
     ctx.fillStyle = '#c5914a';
-    ctx.font = '500 24px sans-serif';
-    ctx.fillText(sense.pos.toUpperCase(), 600, 240);
+    ctx.font = '600 28px sans-serif';
+    ctx.fillText(sense.pos.toUpperCase(), 600, 220);
   }
 
-  // Definition
+  // Definition - Make it significantly more readable with larger, bold text
   const gloss = sense.gloss;
   ctx.fillStyle = '#1e2f50';
-  ctx.font = '400 32px sans-serif';
+  ctx.font = 'bold 52px sans-serif';  // Increased from 32px to 52px and made bold
   ctx.textAlign = 'center';
   
-  const maxWidth = 1000;
-  const lineHeight = 48;
+  const maxWidth = 1050;
+  const lineHeight = 68;  // Increased line height for larger text
   const words = gloss.split(' ');
   const lines = [];
   let currentLine = '';
@@ -79,23 +79,23 @@ function generateOGImage(entry, sense, senseIndex, outputPath) {
       currentLine = testLine;
     }
     
-    if (lines.length >= 3) break;
+    if (lines.length >= 2) break;  // Reduced to 2 lines to fit larger text
   }
   
-  if (currentLine && lines.length < 3) {
+  if (currentLine && lines.length < 2) {
     lines.push(currentLine);
   }
   
   // If we had to truncate, add ellipsis properly at word boundary
-  if (lines.length === 3) {
+  if (lines.length === 2) {
     const fullText = lines.join(' ');
     if (!gloss.startsWith(fullText)) {
       // Text was truncated, ensure ellipsis looks good
-      lines[2] = lines[2].trim() + '...';
+      lines[1] = lines[1].trim() + '...';
     }
   }
 
-  const startY = sense.pos ? 300 : 260;
+  const startY = sense.pos ? 280 : 240;
   lines.forEach((line, index) => {
     ctx.fillText(line, 600, startY + index * lineHeight);
   });
