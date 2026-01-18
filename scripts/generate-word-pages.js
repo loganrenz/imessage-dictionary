@@ -32,6 +32,16 @@ function escapeHtml(text) {
     .replace(/'/g, '&#039;');
 }
 
+// Sanitize term for use as a directory/file name to prevent path traversal
+function sanitizeFileName(term) {
+  // Remove or replace dangerous characters
+  return term
+    .replace(/\.\./g, '') // Remove directory traversal attempts
+    .replace(/[\/\\]/g, '-') // Replace path separators
+    .replace(/[<>:"|?*]/g, '-') // Replace invalid filename characters
+    .trim();
+}
+
 function generateWordPage(entry) {
   // Validate entry has required data
   if (!entry.senses || entry.senses.length === 0 || !entry.senses[0].gloss) {
@@ -42,7 +52,8 @@ function generateWordPage(entry) {
   const term = escapeHtml(entry.term);
   const description = escapeHtml(entry.senses[0].gloss);
   const title = `${term} — definition`;
-  const encodedTerm = encodeURIComponent(entry.term);
+  // URL encode the term, then HTML escape for safe use in HTML attributes and JavaScript
+  const encodedTerm = escapeHtml(encodeURIComponent(entry.term));
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -133,9 +144,19 @@ function main() {
       continue;
     }
     
+    // Sanitize the term for use as a directory name
+    const safeTerm = sanitizeFileName(entry.term);
+    
+    // Skip if sanitization resulted in empty string
+    if (!safeTerm) {
+      console.warn(`Skipping ${entry.term}: invalid characters in term`);
+      skipped++;
+      continue;
+    }
+    
     // Create a directory for each word with an index.html
     // This allows /w/serendipity to serve /w/serendipity/index.html
-    const wordDir = join(wordsDir, entry.term);
+    const wordDir = join(wordsDir, safeTerm);
     if (!existsSync(wordDir)) {
       mkdirSync(wordDir, { recursive: true });
     }
