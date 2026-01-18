@@ -33,27 +33,27 @@ export function OGImagePage({ term, onNavigateHome }: OGImagePageProps) {
     ctx.fillRect(0, 0, 1200, 630)
 
     ctx.fillStyle = '#1e2f50'
-    ctx.font = 'bold 96px "Crimson Pro", serif'
+    ctx.font = 'bold 72px "Crimson Pro", serif'
     ctx.textAlign = 'center'
     ctx.textBaseline = 'top'
     
     const termText = entry.term
-    ctx.fillText(termText, 600, 120)
+    ctx.fillText(termText, 600, 80)
 
     if (entry.senses[0].pos) {
       ctx.fillStyle = '#c5914a'
-      ctx.font = '500 24px "Inter", sans-serif'
+      ctx.font = '500 20px "Inter", sans-serif'
       ctx.letterSpacing = '0.08em'
-      ctx.fillText(entry.senses[0].pos.toUpperCase(), 600, 240)
+      ctx.fillText(entry.senses[0].pos.toUpperCase(), 600, 170)
     }
 
     const gloss = entry.senses[0].gloss
     ctx.fillStyle = '#1e2f50'
-    ctx.font = '400 32px "Crimson Pro", serif'
+    ctx.font = '600 48px "Crimson Pro", serif'
     ctx.textAlign = 'center'
     
     const maxWidth = 1000
-    const lineHeight = 48
+    const lineHeight = 64
     const words = gloss.split(' ')
     const lines: string[] = []
     let currentLine = ''
@@ -80,7 +80,7 @@ export function OGImagePage({ term, onNavigateHome }: OGImagePageProps) {
       lines[2] = lines[2].substring(0, lines[2].length - 3) + '...'
     }
 
-    const startY = entry.senses[0].pos ? 300 : 260
+    const startY = entry.senses[0].pos ? 220 : 200
     lines.forEach((line, index) => {
       ctx.fillText(line, 600, startY + index * lineHeight)
     })
