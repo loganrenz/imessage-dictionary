@@ -44,26 +44,26 @@ function generateOGImage(entry, sense, senseIndex, outputPath) {
 
   // Word title
   ctx.fillStyle = '#1e2f50';
-  ctx.font = 'bold 96px sans-serif';
+  ctx.font = 'bold 72px sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'top';
-  ctx.fillText(entry.term, 600, 120);
+  ctx.fillText(entry.term, 600, 80);
 
   // Part of speech
   if (sense.pos) {
     ctx.fillStyle = '#c5914a';
-    ctx.font = '500 24px sans-serif';
-    ctx.fillText(sense.pos.toUpperCase(), 600, 240);
+    ctx.font = '500 20px sans-serif';
+    ctx.fillText(sense.pos.toUpperCase(), 600, 170);
   }
 
   // Definition
   const gloss = sense.gloss;
   ctx.fillStyle = '#1e2f50';
-  ctx.font = '400 32px sans-serif';
+  ctx.font = '600 48px sans-serif';
   ctx.textAlign = 'center';
   
-  const maxWidth = 1000;
-  const lineHeight = 48;
+  const maxWidth = 1080;
+  const lineHeight = 64;
   const words = gloss.split(' ');
   const lines = [];
   let currentLine = '';
@@ -95,16 +95,16 @@ function generateOGImage(entry, sense, senseIndex, outputPath) {
     }
   }
 
-  const startY = sense.pos ? 300 : 260;
+  const startY = sense.pos ? 220 : 200;
   lines.forEach((line, index) => {
     ctx.fillText(line, 600, startY + index * lineHeight);
   });
 
   // Attribution footer
   ctx.fillStyle = '#72757e';
-  ctx.font = '400 16px sans-serif';
+  ctx.font = '400 14px sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText(`Source: ${entry.source} • ${entry.license}`, 600, 580);
+  ctx.fillText(`Source: ${entry.source} • ${entry.license}`, 600, 590);
 
   // Write to file
   const buffer = canvas.toBuffer('image/png');
