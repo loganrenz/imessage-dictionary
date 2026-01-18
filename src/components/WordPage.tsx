@@ -23,13 +23,11 @@ export function WordPage({ term, onNavigateHome }: WordPageProps) {
 
     if (foundEntry) {
       document.title = `${foundEntry.term} — Free Dictionary`
-      
-      const ogUrl = `${window.location.origin}${window.location.pathname}#/og/${encodeURIComponent(foundEntry.term)}.png`
-      updateMetaTags(foundEntry, ogUrl)
+      updateMetaTags(foundEntry)
     }
   }, [term])
 
-  const updateMetaTags = (entry: DictionaryEntry, ogImageUrl: string) => {
+  const updateMetaTags = (entry: DictionaryEntry) => {
     const setMeta = (property: string, content: string) => {
       let element = document.querySelector(`meta[property="${property}"]`)
       if (!element) {
@@ -50,16 +48,19 @@ export function WordPage({ term, onNavigateHome }: WordPageProps) {
       element.setAttribute('content', content)
     }
 
+    // Use static OG image path instead of hash route
+    const imageUrl = `${window.location.origin}/og/${encodeURIComponent(entry.term)}.png`
+
     setMeta('og:title', `${entry.term} — definition`)
     setMeta('og:type', 'website')
-    setMeta('og:image', ogImageUrl)
+    setMeta('og:image', imageUrl)
     setMeta('og:image:width', '1200')
     setMeta('og:image:height', '630')
     setMeta('og:url', window.location.href)
     setMeta('og:description', entry.senses[0].gloss)
     
     setMetaName('twitter:card', 'summary_large_image')
-    setMetaName('twitter:image', ogImageUrl)
+    setMetaName('twitter:image', imageUrl)
     setMetaName('twitter:title', `${entry.term} — definition`)
     setMetaName('twitter:description', entry.senses[0].gloss)
   }

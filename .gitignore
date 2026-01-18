@@ -32,3 +32,9 @@ pids
 .devcontainer/
 
 .spark-workbench-id
+
+# Generated OG images (regenerated on build)
+public/og/
+
+# Generated dictionary data (regenerated on build)
+scripts/dictionary-data.json
