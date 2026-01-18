@@ -6,26 +6,27 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Load dictionary data from the source file
-const dictionaryPath = join(__dirname, '..', 'src', 'lib', 'dictionary.ts');
-const dictionaryContent = readFileSync(dictionaryPath, 'utf8');
+// Load dictionary data from exported JSON
+const dataPath = join(__dirname, 'dictionary-data.json');
+let SEED_DATA;
 
-// Extract SEED_DATA array using a simple regex
-// This is a workaround since we can't import TypeScript directly in Node.js
-const seedDataMatch = dictionaryContent.match(/export const SEED_DATA: DictionaryEntry\[\] = (\[[\s\S]*?\n\])/);
-if (!seedDataMatch) {
-  console.error('Failed to extract SEED_DATA from dictionary.ts');
+try {
+  const dataContent = readFileSync(dataPath, 'utf8');
+  SEED_DATA = JSON.parse(dataContent);
+  console.log(`Loaded ${SEED_DATA.length} dictionary entries`);
+} catch (err) {
+  console.error('Failed to load dictionary data:', err.message);
+  console.error('Run: node scripts/export-dictionary-data.js first');
   process.exit(1);
 }
 
-// Convert TypeScript to JavaScript by removing type annotations and evaluating
-let seedDataStr = seedDataMatch[1];
-// Remove updatedAt lines since they use `new Date().toISOString()` which won't work in JSON
-seedDataStr = seedDataStr.replace(/updatedAt: new Date\(\)\.toISOString\(\)/g, 'updatedAt: "2024-01-01T00:00:00.000Z"');
-
-const SEED_DATA = eval(seedDataStr);
-
 function generateOGImage(entry, outputPath) {
+  // Validate entry has required data
+  if (!entry.senses || entry.senses.length === 0 || !entry.senses[0].gloss) {
+    console.warn(`Skipping ${entry.term}: missing required sense data`);
+    return false;
+  }
+
   const canvas = createCanvas(1200, 630);
   const ctx = canvas.getContext('2d');
 
@@ -77,8 +78,13 @@ function generateOGImage(entry, outputPath) {
     lines.push(currentLine);
   }
   
-  if (lines.length === 3 && !gloss.endsWith(lines[2])) {
-    lines[2] = lines[2].substring(0, lines[2].length - 3) + '...';
+  // If we had to truncate, add ellipsis properly at word boundary
+  if (lines.length === 3) {
+    const fullText = lines.join(' ');
+    if (!gloss.startsWith(fullText)) {
+      // Text was truncated, ensure ellipsis looks good
+      lines[2] = lines[2].trim() + '...';
+    }
   }
 
   const startY = entry.senses[0].pos ? 300 : 260;
@@ -95,7 +101,7 @@ function generateOGImage(entry, outputPath) {
   // Write to file
   const buffer = canvas.toBuffer('image/png');
   writeFileSync(outputPath, buffer);
-  console.log(`Generated: ${outputPath}`);
+  return true;
 }
 
 function main() {
@@ -116,18 +122,28 @@ function main() {
   
   // Generate images for all entries
   let count = 0;
+  let skipped = 0;
   for (const entry of SEED_DATA) {
     const filename = `${entry.term}.png`;
     const outputPath = join(ogDir, filename);
     try {
-      generateOGImage(entry, outputPath);
-      count++;
+      const success = generateOGImage(entry, outputPath);
+      if (success) {
+        console.log(`Generated: ${outputPath}`);
+        count++;
+      } else {
+        skipped++;
+      }
     } catch (error) {
-      console.error(`Error generating image for ${entry.term}:`, error);
+      console.error(`Error generating image for ${entry.term}:`, error.message);
+      skipped++;
     }
   }
   
   console.log(`\nSuccessfully generated ${count} OG images`);
+  if (skipped > 0) {
+    console.log(`Skipped ${skipped} entries due to errors or missing data`);
+  }
 }
 
 main();
