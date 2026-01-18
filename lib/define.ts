@@ -736,3 +736,13 @@ export function searchTerms(query: string): string[] {
     .map(d => d.term)
     .slice(0, 10)
 }
+
+/**
+ * Get a definition directly from seed data without KV lookup.
+ * Use this for OG image generation where KV may not be available.
+ */
+export function defineSync(term: string): Definition | null {
+  const normalizedTerm = normalizeTerm(term)
+  if (!normalizedTerm) return null
+  return getFromSeedData(normalizedTerm)
+}
