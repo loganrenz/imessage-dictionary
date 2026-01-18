@@ -38,22 +38,22 @@ export function OGImagePage({ term, onNavigateHome }: OGImagePageProps) {
     ctx.textBaseline = 'top'
     
     const termText = entry.term
-    ctx.fillText(termText, 600, 120)
+    ctx.fillText(termText, 600, 100)
 
     if (entry.senses[0].pos) {
       ctx.fillStyle = '#c5914a'
-      ctx.font = '500 24px "Inter", sans-serif'
+      ctx.font = '600 28px "Inter", sans-serif'
       ctx.letterSpacing = '0.08em'
-      ctx.fillText(entry.senses[0].pos.toUpperCase(), 600, 240)
+      ctx.fillText(entry.senses[0].pos.toUpperCase(), 600, 220)
     }
 
     const gloss = entry.senses[0].gloss
     ctx.fillStyle = '#1e2f50'
-    ctx.font = '400 32px "Crimson Pro", serif'
+    ctx.font = 'bold 52px "Crimson Pro", serif'
     ctx.textAlign = 'center'
     
-    const maxWidth = 1000
-    const lineHeight = 48
+    const maxWidth = 1050
+    const lineHeight = 68
     const words = gloss.split(' ')
     const lines: string[] = []
     let currentLine = ''
@@ -69,18 +69,21 @@ export function OGImagePage({ term, onNavigateHome }: OGImagePageProps) {
         currentLine = testLine
       }
       
-      if (lines.length >= 3) break
+      if (lines.length >= 2) break
     }
     
-    if (currentLine && lines.length < 3) {
+    if (currentLine && lines.length < 2) {
       lines.push(currentLine)
     }
     
-    if (lines.length === 3 && !gloss.endsWith(lines[2])) {
-      lines[2] = lines[2].substring(0, lines[2].length - 3) + '...'
+    if (lines.length === 2) {
+      const fullText = lines.join(' ')
+      if (!gloss.startsWith(fullText)) {
+        lines[1] = lines[1].trim() + '...'
+      }
     }
 
-    const startY = entry.senses[0].pos ? 300 : 260
+    const startY = entry.senses[0].pos ? 280 : 240
     lines.forEach((line, index) => {
       ctx.fillText(line, 600, startY + index * lineHeight)
     })
@@ -175,7 +178,8 @@ export function OGImagePage({ term, onNavigateHome }: OGImagePageProps) {
             <ul className="font-sans text-sm text-foreground space-y-2">
               <li>• Dimensions: 1200 × 630 pixels (optimal for social sharing)</li>
               <li>• Format: PNG with high-quality rendering</li>
-              <li>• Typography: Crimson Pro (serif) for readability</li>
+              <li>• Typography: Crimson Pro (serif) with bold, large definition text (52px)</li>
+              <li>• Definition text designed to be as readable as the word title for iMessage previews</li>
               <li>• High contrast for mobile thumbnail legibility</li>
               <li>• Includes source attribution in footer</li>
             </ul>
