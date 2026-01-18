@@ -27,8 +27,9 @@ const CACHE_TTL = 2592000
 function normalizeTerm(term: string): string {
   try {
     term = decodeURIComponent(term)
-  } catch {
-    // If decoding fails, use the original term
+  } catch (e: unknown) {
+    // URIError: malformed URI component - use original term as fallback
+    // This can happen when the input contains invalid percent-encoded sequences
   }
   
   return term
