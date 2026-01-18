@@ -1,0 +1,41 @@
+{
+  "legacy": {
+    "term": "legacy",
+    "senses": [
+      {
+        "pos": "noun",
+        "gloss": "Something handed down from an ancestor or predecessor.",
+        "example": "His legacy lives on through his charitable foundation."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "legitimate": {
+    "term": "legitimate",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Conforming to the law or to rules; able to be defended with logic or justification.",
+        "example": "She raised several legitimate concerns about the plan."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "luminous": {
+    "term": "luminous",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Full of or shedding light; bright or shining.",
+        "example": "The luminous moon illuminated the night sky."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  }
+}

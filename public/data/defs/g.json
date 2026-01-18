@@ -1,0 +1,41 @@
+{
+  "genuine": {
+    "term": "genuine",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Truly what something is said to be; authentic.",
+        "example": "She showed genuine concern for her students."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "gratitude": {
+    "term": "gratitude",
+    "senses": [
+      {
+        "pos": "noun",
+        "gloss": "The quality of being thankful; readiness to show appreciation.",
+        "example": "She expressed her gratitude for their support."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "gregarious": {
+    "term": "gregarious",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Fond of company; sociable.",
+        "example": "She's a gregarious person who loves meeting new people."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  }
+}

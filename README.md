@@ -4,23 +4,24 @@ A production-ready dictionary web app that generates beautiful Open Graph images
 
 ## Features
 
-- 🔍 **Fast Search** - Prefix and substring matching across 200+ word entries
-- 📱 **iMessage-Optimized** - Rich Open Graph images (1200×630px) with high-contrast typography
+- 🔍 **Fast Search** - Prefix and substring matching across a prebuilt index
+- 📱 **iMessage-Optimized** - Server-rendered OG meta tags + on-demand OG images
 - 🎨 **Beautiful Design** - Scholarly aesthetic with Crimson Pro serif and Inter sans-serif fonts
 - 📖 **Word Pages** - Clean, readable definitions with part of speech, examples, and attribution
 - 🎲 **Random Discovery** - Explore words serendipitously
-- 👨‍💼 **Admin Interface** - Add/update entries without code deploys
-- 💾 **Persistent Storage** - Custom entries saved using Spark KV storage
-- 📋 **One-Tap Sharing** - Copy link or use Web Share API on iOS
+- 👨‍💼 **Admin Interface** - Add/update entries without code deploys (local-only for now)
+- 📦 **Build-Time Dataset** - Search index + sharded definitions in `public/data/`
+- ⚡ **Vercel-Ready** - Serverless APIs, edge OG images, and SPA rewrites
 
-## Live Demo
+## Live Demo Routes
 
-Visit the app and try sharing a word:
-- Home: `/#/`
-- Example word: `/#/w/serendipity`
-- OG Image preview: `/#/og/serendipity.png`
-- Attribution: `/#/attribution`
-- Admin: `/#/admin`
+- Home: `/`
+- Example word: `/w/serendipity`
+- OG Image preview: `/og/serendipity.png`
+- Search API: `/api/search?q=serendipity`
+- Word API: `/api/word?term=serendipity`
+- Attribution: `/attribution`
+- Admin: `/admin`
 
 ## Tech Stack
 
@@ -31,8 +32,8 @@ Visit the app and try sharing a word:
 - **Fonts**: Crimson Pro (serif), Inter (sans-serif), JetBrains Mono (mono)
 - **Icons**: Phosphor Icons
 - **Notifications**: Sonner
-- **Storage**: Spark KV (key-value persistence)
-- **Deployment**: Vercel-ready (or any static host)
+- **Storage**: Spark KV (key-value persistence for admin entries)
+- **Deployment**: Vercel-ready (serverless + edge)
 
 ## Getting Started
 
@@ -45,7 +46,7 @@ Visit the app and try sharing a word:
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd spark-template
+cd imessage-dictionary
 ```
 
 2. Install dependencies:
@@ -53,10 +54,9 @@ cd spark-template
 npm install
 ```
 
-3. Set up environment variables (optional):
-Create a `.env` file in the root:
-```env
-VITE_ADMIN_TOKEN=your-secure-admin-password
+3. Generate the dataset (fast path using the seed adapter):
+```bash
+npm run generate
 ```
 
 4. Run the development server:
@@ -64,7 +64,9 @@ VITE_ADMIN_TOKEN=your-secure-admin-password
 npm run dev
 ```
 
-The app will be available at `http://localhost:5173`
+The app will be available at `http://localhost:5173`.
+
+> For full-stack routing + serverless APIs locally, use `vercel dev` if you have the Vercel CLI installed.
 
 ### Building for Production
 
@@ -74,60 +76,53 @@ npm run build
 
 The production build will be in the `dist/` directory.
 
-### Preview Production Build
+### Sanity Checks
 
 ```bash
-npm run preview
+npm run sanity
 ```
+
+This validates shard sizes, index integrity, and the sample API behavior.
 
 ## Project Structure
 
 ```
-src/
-├── components/
-│   ├── ui/              # shadcn components (40+ pre-installed)
-│   ├── HomePage.tsx     # Search and word discovery
-│   ├── WordPage.tsx     # Word definition display
-│   ├── OGImagePage.tsx  # Open Graph image generator
-│   ├── AttributionPage.tsx # Licensing information
-│   └── AdminPage.tsx    # Content management interface
-├── lib/
-│   ├── dictionary.ts    # Dictionary data and search logic
-│   ├── types.ts         # TypeScript interfaces
-│   └── utils.ts         # Utility functions
-├── App.tsx              # Main app with routing
-├── index.css            # Theme configuration
-└── main.tsx             # App entry point
+api/                 # Vercel serverless + edge functions
+public/data/         # Generated dataset (index + shards)
+scripts/             # Dataset generation & sanity checks
+server/              # Shared dataset helpers (Node runtime)
+src/                 # React app
 ```
 
 ## How It Works
 
-### Routing
+### Routing (Unfurl-Friendly)
 
-The app uses hash-based routing for compatibility with static hosting:
+- The SPA uses **path-based routing** (`/w/[term]`), not hash routes.
+- `vercel.json` rewrites `/w/*` to a serverless HTML wrapper that injects **OG meta tags**.
+- The HTML wrapper also loads the SPA so the in-browser experience remains seamless.
 
-- `/` - Home page with search
-- `/w/[term]` - Word definition page
-- `/og/[term].png` - Open Graph image preview
-- `/attribution` - Licensing information
-- `/admin` - Admin interface (password protected)
+### Dataset Pipeline (Fast Path)
+
+- `scripts/generate-dataset.js` builds:
+  - `public/data/index.json` — compact search index
+  - `public/data/defs/*.json` — sharded definitions payloads
+  - `public/data/meta.json` — version and source metadata
+- For now, the seed adapter uses `scripts/dictionary-data.json` (the in-repo demo data).
+- The output is deterministic and shard sizes are validated to stay under ~5MB.
+
+### API Routes
+
+- **`/api/search?q=`**: Searches the prebuilt index (prefix boosted over substring).
+- **`/api/word?term=`**: Loads a single entry from the relevant shard.
+
+These endpoints cache results in-memory for speed.
 
 ### Open Graph Images
 
-When a word page loads (e.g., `/w/serendipity`), the app:
-
-1. Sets Open Graph meta tags in the `<head>`
-2. Points `og:image` to `/og/serendipity.png`
-3. The OG image route renders a 1200×630px canvas with:
-   - Large, bold word title (Crimson Pro Bold 96px)
-   - Part of speech label (Inter Medium 24px)
-   - Definition text (Crimson Pro Regular 32px, max 3 lines)
-   - Attribution footer (Inter Regular 16px)
-
-**Important for iMessage**: Social platforms cache OG images aggressively. When testing:
-- Share the full URL (not just `localhost`)
-- Use a unique word each time during development
-- Or clear iMessage cache by restarting the app
+- **`/og/[term].png`** (or `/og/[term]-N.png` for sense N) is generated **on-demand**.
+- Implemented with `@vercel/og` and cached aggressively at the edge.
+- Falls back gracefully if the word is missing.
 
 ### Data Model
 
@@ -135,7 +130,7 @@ Each dictionary entry follows this schema:
 
 ```typescript
 interface DictionaryEntry {
-  term: string                    // Normalized lowercase
+  term: string                    // Word to display
   senses: Array<{
     pos?: string                  // Part of speech (noun, verb, etc.)
     gloss: string                 // Definition text
@@ -148,44 +143,32 @@ interface DictionaryEntry {
 }
 ```
 
-### Storage
+## Dataset Generation (GitHub Actions)
 
-- **Seed Data**: 200+ words in `src/lib/dictionary.ts` (static, fast)
-- **Custom Entries**: Stored in Spark KV under key `custom-entries`
-- **Session**: Admin authentication uses `sessionStorage`
+A workflow generates the dataset on demand and weekly:
+- **Manual**: `workflow_dispatch`
+- **Scheduled**: Weekly cron
 
-The app merges seed data with custom entries for search and display.
+The workflow runs `npm run generate` and commits updates back to the repo.
 
-## Admin Interface
+## Optional: Cloudflare R2 (Future Extension)
 
-### Accessing Admin
+If the dataset grows too large for the repo, you can move shards and OG images to R2.
 
-1. Navigate to `/#/admin`
-2. Enter the admin token (default: `demo-admin-token`)
-3. Add or update entries
+**Planned storage abstraction:**
+- Local (default): `public/data`
+- R2 (optional): `R2_BUCKET`
 
-### Setting Admin Token
-
-**Development**:
-Set `VITE_ADMIN_TOKEN` in `.env`:
+**Suggested environment variables:**
 ```env
-VITE_ADMIN_TOKEN=your-secure-password
+R2_ENDPOINT=https://<account-id>.r2.cloudflarestorage.com
+R2_ACCESS_KEY_ID=...
+R2_SECRET_ACCESS_KEY=...
+R2_BUCKET=imessage-dictionary
+R2_PUBLIC_BASE_URL=https://<custom-domain>
 ```
 
-**Production (Vercel)**:
-Add environment variable in project settings:
-- Key: `VITE_ADMIN_TOKEN`
-- Value: Your secure password
-
-### Managing Entries
-
-The admin interface allows you to:
-- Add new dictionary entries
-- Update existing entries (by term)
-- View all custom entries
-- Set source and license for each entry
-
-Custom entries are stored persistently and merged with seed data.
+Future work would add a storage adapter to read from R2 instead of the local filesystem.
 
 ## Deployment
 
@@ -194,152 +177,12 @@ Custom entries are stored persistently and merged with seed data.
 1. Push your code to GitHub
 2. Import the project in Vercel
 3. Set environment variables:
-   - `VITE_ADMIN_TOKEN` (your admin password)
+   - `VITE_ADMIN_TOKEN` (admin password)
 4. Deploy
-
-The build configuration is already set up in `vite.config.ts`.
-
-### Other Static Hosts
-
-The app works with any static hosting service:
-- Netlify
-- Cloudflare Pages
-- GitHub Pages
-- AWS S3 + CloudFront
-
-Just run `npm run build` and deploy the `dist/` directory.
 
 ### Environment Variables
 
-- `VITE_ADMIN_TOKEN` - Admin interface password (required for production)
-
-## Customizing the Theme
-
-### Colors
-
-Edit `src/index.css` to change the color palette:
-
-```css
-:root {
-  --background: oklch(0.96 0.015 85);      /* Warm cream */
-  --foreground: oklch(0.28 0.05 250);      /* Deep navy */
-  --primary: oklch(0.28 0.05 250);         /* Deep navy */
-  --accent: oklch(0.72 0.15 75);           /* Amber */
-  /* ... more colors */
-}
-```
-
-### Fonts
-
-Change fonts in `index.html`:
-
-```html
-<link href="https://fonts.googleapis.com/css2?family=Your+Font&display=swap" rel="stylesheet">
-```
-
-Then update the CSS in `src/index.css`:
-
-```css
-@theme {
-  --font-serif: 'Your Font', serif;
-}
-```
-
-### OG Image Design
-
-Modify the canvas rendering in `src/components/OGImagePage.tsx`:
-- Dimensions: 1200×630 (optimal for social sharing)
-- Adjust font sizes, colors, and layout
-- Test at thumbnail size for mobile readability
-
-## Data Sources & Licensing
-
-### Current Dataset
-
-The app ships with 200+ demo definitions for demonstration purposes.
-- **Source**: Demo Dataset
-- **License**: CC BY-SA 4.0
-
-### Adding Real Dictionary Data
-
-To integrate real dictionary data:
-
-1. **Wiktionary** - Parse Wiktextuary XML dumps
-2. **WordNet** - Use Princeton WordNet database
-3. **Custom API** - Modify `src/lib/dictionary.ts` to fetch from your API
-
-Make sure to:
-- Respect source licenses
-- Display attribution on word pages
-- Include source info in OG images
-- Update `/attribution` page
-
-## Performance Optimization
-
-### Caching Strategy
-
-For production, add these headers to your hosting config:
-
-**Word pages** (`/w/*`):
-```
-Cache-Control: public, max-age=3600, stale-while-revalidate=86400
-```
-
-**OG images** (`/og/*`):
-```
-Cache-Control: public, max-age=86400, stale-while-revalidate=604800
-```
-
-**Static assets**:
-```
-Cache-Control: public, max-age=31536000, immutable
-```
-
-### Search Performance
-
-- Seed data search is synchronous and fast (<5ms)
-- Custom entries are loaded once and cached in memory
-- Search results limited to 10 for instant display
-
-### Image Generation
-
-OG images render on-demand using Canvas API:
-- Font loading may cause initial delay
-- Images are cacheable by CDN/browser
-- Consider pre-generating popular words
-
-## API Reference
-
-### Dictionary Functions
-
-```typescript
-// Synchronous (seed data only)
-getAllEntries(): DictionaryEntry[]
-getEntryByTerm(term: string): DictionaryEntry | undefined
-searchEntries(query: string): DictionaryEntry[]
-getRandomEntry(): DictionaryEntry
-
-// Asynchronous (includes custom entries)
-getAllEntriesAsync(): Promise<DictionaryEntry[]>
-getEntryByTermAsync(term: string): Promise<DictionaryEntry | undefined>
-searchEntriesAsync(query: string): Promise<DictionaryEntry[]>
-```
-
-### Spark KV
-
-```typescript
-// Store custom entries
-await spark.kv.set('custom-entries', entries)
-
-// Retrieve custom entries
-const entries = await spark.kv.get<DictionaryEntry[]>('custom-entries')
-
-// List all keys
-const keys = await spark.kv.keys()
-
-// Delete entries
-await spark.kv.delete('custom-entries')
-```
+- `VITE_ADMIN_TOKEN` - Admin interface password (optional for development)
 
 ## Troubleshooting
 
@@ -348,47 +191,16 @@ await spark.kv.delete('custom-entries')
 - **Check URL**: Must be publicly accessible (not `localhost`)
 - **Clear Cache**: iMessage caches aggressively; try a different word
 - **Validate Tags**: Use [Open Graph Debugger](https://www.opengraph.xyz/)
-- **Image Size**: Ensure canvas renders at exactly 1200×630px
-
-### Admin Login Not Working
-
-- **Check Token**: Verify `VITE_ADMIN_TOKEN` environment variable
-- **Rebuild**: Vite env vars are compile-time, run `npm run build`
-- **Browser Storage**: Clear `sessionStorage` if stuck
-
-### Fonts Not Loading
-
-- **Check Google Fonts**: Verify font names in `index.html`
-- **CORS Issues**: Ensure fonts are served with proper headers
-- **Fallbacks**: System fonts will be used if custom fonts fail
 
 ### Search Not Finding Words
 
 - **Case Sensitivity**: Search is case-insensitive
-- **Custom Entries**: May need async search for custom entries
 - **Typos**: No fuzzy matching yet, must match substring
-
-## Contributing
-
-To add more seed data:
-
-1. Edit `src/lib/dictionary.ts`
-2. Add entries to `SEED_DATA` array
-3. Follow the `DictionaryEntry` interface
-4. Set proper source and license
-5. Test search and OG image generation
 
 ## License
 
 Application code: See LICENSE file
 Dictionary content: Varies by source (see Attribution page)
-
-## Support
-
-For issues, questions, or contributions:
-- Open an issue on GitHub
-- Check existing documentation
-- Review the PRD.md for design decisions
 
 ---
 

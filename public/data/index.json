@@ -1,0 +1,997 @@
+[
+  {
+    "term": "abstract",
+    "gloss": "Existing in thought or as an idea but not having a physical or concrete existence.",
+    "pos": "adjective"
+  },
+  {
+    "term": "accumulate",
+    "gloss": "To gather together or acquire an increasing number or quantity of.",
+    "pos": "verb"
+  },
+  {
+    "term": "accurate",
+    "gloss": "Correct in all details; exact.",
+    "pos": "adjective"
+  },
+  {
+    "term": "acquire",
+    "gloss": "To buy or obtain an asset or object; to learn or develop a skill.",
+    "pos": "verb"
+  },
+  {
+    "term": "adequate",
+    "gloss": "Satisfactory or acceptable in quality or quantity.",
+    "pos": "adjective"
+  },
+  {
+    "term": "adjacent",
+    "gloss": "Next to or adjoining something else.",
+    "pos": "adjective"
+  },
+  {
+    "term": "advocate",
+    "gloss": "To publicly recommend or support.",
+    "pos": "verb"
+  },
+  {
+    "term": "aesthetic",
+    "gloss": "Concerned with beauty or the appreciation of beauty.",
+    "pos": "adjective"
+  },
+  {
+    "term": "allocate",
+    "gloss": "To distribute resources or duties for a particular purpose.",
+    "pos": "verb"
+  },
+  {
+    "term": "ambiguity",
+    "gloss": "The quality of being open to more than one interpretation; inexactness.",
+    "pos": "noun"
+  },
+  {
+    "term": "ambiguous",
+    "gloss": "Open to more than one interpretation; not having one obvious meaning.",
+    "pos": "adjective"
+  },
+  {
+    "term": "ambition",
+    "gloss": "A strong desire to do or achieve something.",
+    "pos": "noun"
+  },
+  {
+    "term": "analogy",
+    "gloss": "A comparison between two things, typically for the purpose of explanation or clarification.",
+    "pos": "noun"
+  },
+  {
+    "term": "analytic",
+    "gloss": "Relating to or using analysis or logical reasoning.",
+    "pos": "adjective"
+  },
+  {
+    "term": "append",
+    "gloss": "To add something to the end of a written document.",
+    "pos": "verb"
+  },
+  {
+    "term": "appreciate",
+    "gloss": "To recognize the full worth of; to be grateful for.",
+    "pos": "verb"
+  },
+  {
+    "term": "approximate",
+    "gloss": "Close to the actual, but not completely accurate or exact.",
+    "pos": "adjective"
+  },
+  {
+    "term": "arbitrary",
+    "gloss": "Based on random choice or personal whim, rather than any reason or system.",
+    "pos": "adjective"
+  },
+  {
+    "term": "articulate",
+    "gloss": "Having or showing the ability to speak fluently and coherently.",
+    "pos": "adjective"
+  },
+  {
+    "term": "assemble",
+    "gloss": "To fit together the separate component parts of; to gather together in one place.",
+    "pos": "verb"
+  },
+  {
+    "term": "assess",
+    "gloss": "To evaluate or estimate the nature, ability, or quality of.",
+    "pos": "verb"
+  },
+  {
+    "term": "assign",
+    "gloss": "To allocate a job or duty to someone; to designate or set aside for a purpose.",
+    "pos": "verb"
+  },
+  {
+    "term": "assist",
+    "gloss": "To help someone, typically by doing a share of the work.",
+    "pos": "verb"
+  },
+  {
+    "term": "assume",
+    "gloss": "To suppose to be the case, without proof; to take or begin to have.",
+    "pos": "verb"
+  },
+  {
+    "term": "assure",
+    "gloss": "To tell someone something positively to dispel any doubts.",
+    "pos": "verb"
+  },
+  {
+    "term": "attach",
+    "gloss": "To fasten; join; to be connected with.",
+    "pos": "verb"
+  },
+  {
+    "term": "attain",
+    "gloss": "To succeed in achieving something, typically after much effort.",
+    "pos": "verb"
+  },
+  {
+    "term": "attribute",
+    "gloss": "To regard something as being caused by.",
+    "pos": "verb"
+  },
+  {
+    "term": "author",
+    "gloss": "A writer of a book, article, or report.",
+    "pos": "noun"
+  },
+  {
+    "term": "authority",
+    "gloss": "The power or right to give orders, make decisions, and enforce obedience.",
+    "pos": "noun"
+  },
+  {
+    "term": "automatic",
+    "gloss": "Working by itself with little or no direct human control.",
+    "pos": "adjective"
+  },
+  {
+    "term": "available",
+    "gloss": "Able to be used or obtained; at someone's disposal.",
+    "pos": "adjective"
+  },
+  {
+    "term": "aware",
+    "gloss": "Having knowledge or perception of a situation or fact.",
+    "pos": "adjective"
+  },
+  {
+    "term": "behalf",
+    "gloss": "In the interests of; as a representative of.",
+    "pos": "noun"
+  },
+  {
+    "term": "beneficial",
+    "gloss": "Favorable or advantageous; resulting in good.",
+    "pos": "adjective"
+  },
+  {
+    "term": "benevolent",
+    "gloss": "Well meaning and kindly.",
+    "pos": "adjective"
+  },
+  {
+    "term": "bias",
+    "gloss": "Prejudice in favor of or against one thing, person, or group compared with another.",
+    "pos": "noun"
+  },
+  {
+    "term": "bond",
+    "gloss": "A connection or relationship between people or groups based on shared feelings, interests, or experiences.",
+    "pos": "noun"
+  },
+  {
+    "term": "brevity",
+    "gloss": "Concise and exact use of words in writing or speech.",
+    "pos": "noun"
+  },
+  {
+    "term": "brief",
+    "gloss": "Of short duration; using few words.",
+    "pos": "adjective"
+  },
+  {
+    "term": "bulk",
+    "gloss": "The mass or magnitude of something large; the majority or greater part.",
+    "pos": "noun"
+  },
+  {
+    "term": "capable",
+    "gloss": "Having the ability, fitness, or quality necessary to do or achieve something.",
+    "pos": "adjective"
+  },
+  {
+    "term": "capacity",
+    "gloss": "The maximum amount that something can contain or produce; the ability or power to do something.",
+    "pos": "noun"
+  },
+  {
+    "term": "catalyst",
+    "gloss": "A person or thing that precipitates an event or change.",
+    "pos": "noun"
+  },
+  {
+    "term": "category",
+    "gloss": "A class or division of people or things regarded as having particular shared characteristics.",
+    "pos": "noun"
+  },
+  {
+    "term": "cease",
+    "gloss": "To come or bring to an end.",
+    "pos": "verb"
+  },
+  {
+    "term": "challenge",
+    "gloss": "A call to take part in a contest or competition; a task or situation that tests someone's abilities.",
+    "pos": "noun"
+  },
+  {
+    "term": "channel",
+    "gloss": "A method or system for communication or distribution.",
+    "pos": "noun"
+  },
+  {
+    "term": "chapter",
+    "gloss": "A main division of a book; a period of time or an episode in a person's life.",
+    "pos": "noun"
+  },
+  {
+    "term": "circumstance",
+    "gloss": "A fact or condition connected with or relevant to an event or action.",
+    "pos": "noun"
+  },
+  {
+    "term": "civil",
+    "gloss": "Relating to ordinary citizens and their concerns; courteous and polite.",
+    "pos": "adjective"
+  },
+  {
+    "term": "clarify",
+    "gloss": "To make a statement or situation less confused and more clearly comprehensible.",
+    "pos": "verb"
+  },
+  {
+    "term": "classic",
+    "gloss": "Judged over a period of time to be of the highest quality and outstanding of its kind.",
+    "pos": "adjective"
+  },
+  {
+    "term": "clause",
+    "gloss": "A particular and separate article, stipulation, or proviso in a treaty, bill, or contract.",
+    "pos": "noun"
+  },
+  {
+    "term": "code",
+    "gloss": "A system of words, letters, figures, or symbols used to represent others; program instructions.",
+    "pos": "noun"
+  },
+  {
+    "term": "cognitive",
+    "gloss": "Related to the mental action or process of acquiring knowledge and understanding through thought, experience, and the senses.",
+    "pos": "adjective"
+  },
+  {
+    "term": "coherent",
+    "gloss": "Logical and consistent; forming a unified whole.",
+    "pos": "adjective"
+  },
+  {
+    "term": "coincide",
+    "gloss": "To occur at the same time; to be in agreement.",
+    "pos": "verb"
+  },
+  {
+    "term": "collaborate",
+    "gloss": "To work jointly on an activity or project.",
+    "pos": "verb"
+  },
+  {
+    "term": "commence",
+    "gloss": "To begin; to start.",
+    "pos": "verb"
+  },
+  {
+    "term": "comment",
+    "gloss": "A verbal or written remark expressing an opinion or reaction.",
+    "pos": "noun"
+  },
+  {
+    "term": "commit",
+    "gloss": "To carry out or perpetrate; to pledge or bind to a certain course or policy.",
+    "pos": "verb"
+  },
+  {
+    "term": "commodity",
+    "gloss": "A raw material or primary agricultural product that can be bought and sold.",
+    "pos": "noun"
+  },
+  {
+    "term": "communicate",
+    "gloss": "To share or exchange information, news, or ideas.",
+    "pos": "verb"
+  },
+  {
+    "term": "community",
+    "gloss": "A group of people living in the same place or having a particular characteristic in common.",
+    "pos": "noun"
+  },
+  {
+    "term": "compatible",
+    "gloss": "Able to exist or occur together without conflict; able to be used together.",
+    "pos": "adjective"
+  },
+  {
+    "term": "compensate",
+    "gloss": "To give someone something, typically money, in recognition of loss, suffering, or injury.",
+    "pos": "verb"
+  },
+  {
+    "term": "compile",
+    "gloss": "To produce something by assembling information collected from other sources.",
+    "pos": "verb"
+  },
+  {
+    "term": "complacent",
+    "gloss": "Showing smug or uncritical satisfaction with oneself or one's achievements.",
+    "pos": "adjective"
+  },
+  {
+    "term": "complement",
+    "gloss": "A thing that completes or brings to perfection.",
+    "pos": "noun"
+  },
+  {
+    "term": "complex",
+    "gloss": "Consisting of many different and connected parts; not easy to analyze or understand.",
+    "pos": "adjective"
+  },
+  {
+    "term": "component",
+    "gloss": "A part or element of a larger whole.",
+    "pos": "noun"
+  },
+  {
+    "term": "compound",
+    "gloss": "A thing that is composed of two or more separate elements.",
+    "pos": "noun"
+  },
+  {
+    "term": "comprehensive",
+    "gloss": "Complete; including all or nearly all elements or aspects of something.",
+    "pos": "adjective"
+  },
+  {
+    "term": "conceive",
+    "gloss": "To form or devise a plan or idea in the mind.",
+    "pos": "verb"
+  },
+  {
+    "term": "concentrate",
+    "gloss": "To focus one's attention or mental effort on a particular object or activity.",
+    "pos": "verb"
+  },
+  {
+    "term": "concept",
+    "gloss": "An abstract idea or general notion.",
+    "pos": "noun"
+  },
+  {
+    "term": "conclude",
+    "gloss": "To bring something to an end; to arrive at a judgment or opinion by reasoning.",
+    "pos": "verb"
+  },
+  {
+    "term": "concurrent",
+    "gloss": "Existing, happening, or done at the same time.",
+    "pos": "adjective"
+  },
+  {
+    "term": "conduct",
+    "gloss": "To organize and carry out; to lead or guide.",
+    "pos": "verb"
+  },
+  {
+    "term": "confer",
+    "gloss": "To have discussions; to grant or bestow a title, degree, benefit, or right.",
+    "pos": "verb"
+  },
+  {
+    "term": "confine",
+    "gloss": "To keep or restrict someone or something within certain limits.",
+    "pos": "verb"
+  },
+  {
+    "term": "confirm",
+    "gloss": "To establish the truth or correctness of something previously believed or suspected.",
+    "pos": "verb"
+  },
+  {
+    "term": "conflict",
+    "gloss": "A serious disagreement or argument; a prolonged armed struggle.",
+    "pos": "noun"
+  },
+  {
+    "term": "conform",
+    "gloss": "To comply with rules, standards, or laws; to be similar in form or type.",
+    "pos": "verb"
+  },
+  {
+    "term": "consent",
+    "gloss": "Permission for something to happen or agreement to do something.",
+    "pos": "noun"
+  },
+  {
+    "term": "consequent",
+    "gloss": "Following as a result or effect.",
+    "pos": "adjective"
+  },
+  {
+    "term": "considerable",
+    "gloss": "Notably large in size, amount, or extent.",
+    "pos": "adjective"
+  },
+  {
+    "term": "consist",
+    "gloss": "To be composed or made up of.",
+    "pos": "verb"
+  },
+  {
+    "term": "constant",
+    "gloss": "Occurring continuously over a period of time; remaining unchanged.",
+    "pos": "adjective"
+  },
+  {
+    "term": "constitute",
+    "gloss": "To be a part of a whole; to be equivalent to.",
+    "pos": "verb"
+  },
+  {
+    "term": "constrain",
+    "gloss": "To severely restrict the scope, extent, or activity of.",
+    "pos": "verb"
+  },
+  {
+    "term": "construct",
+    "gloss": "To build or erect something; to form an idea or theory by bringing together various elements.",
+    "pos": "verb"
+  },
+  {
+    "term": "consult",
+    "gloss": "To seek information or advice from someone; to have discussions or confer with someone.",
+    "pos": "verb"
+  },
+  {
+    "term": "consume",
+    "gloss": "To eat, drink, or ingest; to use up a resource.",
+    "pos": "verb"
+  },
+  {
+    "term": "contact",
+    "gloss": "The state of physical touching; communication with someone.",
+    "pos": "noun"
+  },
+  {
+    "term": "contemporary",
+    "gloss": "Living or occurring at the same time; belonging to or occurring in the present.",
+    "pos": "adjective"
+  },
+  {
+    "term": "criterion",
+    "gloss": "A principle or standard by which something may be judged or decided.",
+    "pos": "noun"
+  },
+  {
+    "term": "deference",
+    "gloss": "Humble submission and respect.",
+    "pos": "noun"
+  },
+  {
+    "term": "demographic",
+    "gloss": "Relating to the structure of populations.",
+    "pos": "adjective"
+  },
+  {
+    "term": "diligent",
+    "gloss": "Having or showing care and conscientiousness in one's work or duties.",
+    "pos": "adjective"
+  },
+  {
+    "term": "diverse",
+    "gloss": "Showing a great deal of variety; very different.",
+    "pos": "adjective"
+  },
+  {
+    "term": "eccentric",
+    "gloss": "Unconventional and slightly strange.",
+    "pos": "adjective"
+  },
+  {
+    "term": "elaborate",
+    "gloss": "Involving many carefully arranged parts or details; detailed and complicated.",
+    "pos": "adjective"
+  },
+  {
+    "term": "eloquent",
+    "gloss": "Fluent or persuasive in speaking or writing.",
+    "pos": "adjective"
+  },
+  {
+    "term": "empathy",
+    "gloss": "The ability to understand and share the feelings of another.",
+    "pos": "noun"
+  },
+  {
+    "term": "empirical",
+    "gloss": "Based on observation or experience rather than theory or pure logic.",
+    "pos": "adjective"
+  },
+  {
+    "term": "enigma",
+    "gloss": "A person or thing that is mysterious, puzzling, or difficult to understand.",
+    "pos": "noun"
+  },
+  {
+    "term": "ephemeral",
+    "gloss": "Lasting for a very short time; transitory.",
+    "pos": "adjective"
+  },
+  {
+    "term": "euphoria",
+    "gloss": "A feeling or state of intense excitement and happiness.",
+    "pos": "noun"
+  },
+  {
+    "term": "facetious",
+    "gloss": "Treating serious issues with deliberately inappropriate humor.",
+    "pos": "adjective"
+  },
+  {
+    "term": "facilitate",
+    "gloss": "To make an action or process easy or easier.",
+    "pos": "verb"
+  },
+  {
+    "term": "framework",
+    "gloss": "An essential supporting structure; a basic structure underlying a system, concept, or text.",
+    "pos": "noun"
+  },
+  {
+    "term": "frivolous",
+    "gloss": "Not having any serious purpose or value.",
+    "pos": "adjective"
+  },
+  {
+    "term": "genuine",
+    "gloss": "Truly what something is said to be; authentic.",
+    "pos": "adjective"
+  },
+  {
+    "term": "gratitude",
+    "gloss": "The quality of being thankful; readiness to show appreciation.",
+    "pos": "noun"
+  },
+  {
+    "term": "gregarious",
+    "gloss": "Fond of company; sociable.",
+    "pos": "adjective"
+  },
+  {
+    "term": "harmony",
+    "gloss": "The quality of forming a pleasing and consistent whole.",
+    "pos": "noun"
+  },
+  {
+    "term": "harrowing",
+    "gloss": "Extremely distressing or disturbing; acutely painful or traumatic.",
+    "pos": "adjective"
+  },
+  {
+    "term": "hierarchy",
+    "gloss": "A system in which members of an organization are ranked according to relative status or authority.",
+    "pos": "noun"
+  },
+  {
+    "term": "hypothesis",
+    "gloss": "A supposition or proposed explanation made on the basis of limited evidence as a starting point for further investigation.",
+    "pos": "noun"
+  },
+  {
+    "term": "ideology",
+    "gloss": "A system of ideas and ideals, especially one which forms the basis of economic or political theory and policy.",
+    "pos": "noun"
+  },
+  {
+    "term": "illustrate",
+    "gloss": "To explain or make something clear by using examples, charts, pictures, etc.",
+    "pos": "verb"
+  },
+  {
+    "term": "implicit",
+    "gloss": "Suggested though not directly expressed; implied.",
+    "pos": "adjective"
+  },
+  {
+    "term": "incorporate",
+    "gloss": "To take in or contain as part of a whole; to include.",
+    "pos": "verb"
+  },
+  {
+    "term": "inevitable",
+    "gloss": "Certain to happen; unavoidable.",
+    "pos": "adjective"
+  },
+  {
+    "term": "infrastructure",
+    "gloss": "The basic physical and organizational structures and facilities needed for the operation of a society or enterprise.",
+    "pos": "noun"
+  },
+  {
+    "term": "inherent",
+    "gloss": "Existing in something as a permanent, essential, or characteristic attribute.",
+    "pos": "adjective"
+  },
+  {
+    "term": "innovative",
+    "gloss": "Featuring new methods; advanced and original.",
+    "pos": "adjective"
+  },
+  {
+    "term": "integrity",
+    "gloss": "The quality of being honest and having strong moral principles.",
+    "pos": "noun"
+  },
+  {
+    "term": "intermediate",
+    "gloss": "Coming between two things in time, place, order, character, etc.",
+    "pos": "adjective"
+  },
+  {
+    "term": "intrinsic",
+    "gloss": "Belonging naturally; essential.",
+    "pos": "adjective"
+  },
+  {
+    "term": "invoke",
+    "gloss": "To cite or appeal to someone or something as an authority for an action or in support of an argument.",
+    "pos": "verb"
+  },
+  {
+    "term": "jargon",
+    "gloss": "Special words or expressions used by a profession or group that are difficult for others to understand.",
+    "pos": "noun"
+  },
+  {
+    "term": "justification",
+    "gloss": "The action of showing something to be right or reasonable.",
+    "pos": "noun"
+  },
+  {
+    "term": "juxtapose",
+    "gloss": "To place or deal with close together for contrasting effect.",
+    "pos": "verb"
+  },
+  {
+    "term": "juxtaposition",
+    "gloss": "The fact of two things being seen or placed close together with contrasting effect.",
+    "pos": "noun"
+  },
+  {
+    "term": "kinetic",
+    "gloss": "Relating to or resulting from motion.",
+    "pos": "adjective"
+  },
+  {
+    "term": "knowledge",
+    "gloss": "Facts, information, and skills acquired through experience or education.",
+    "pos": "noun"
+  },
+  {
+    "term": "legacy",
+    "gloss": "Something handed down from an ancestor or predecessor.",
+    "pos": "noun"
+  },
+  {
+    "term": "legitimate",
+    "gloss": "Conforming to the law or to rules; able to be defended with logic or justification.",
+    "pos": "adjective"
+  },
+  {
+    "term": "luminous",
+    "gloss": "Full of or shedding light; bright or shining.",
+    "pos": "adjective"
+  },
+  {
+    "term": "magnanimous",
+    "gloss": "Generous or forgiving, especially toward a rival or less powerful person.",
+    "pos": "adjective"
+  },
+  {
+    "term": "marginal",
+    "gloss": "Relating to or situated at the edge or margin; of secondary importance.",
+    "pos": "adjective"
+  },
+  {
+    "term": "mechanism",
+    "gloss": "A system of parts working together in a machine; a piece of machinery.",
+    "pos": "noun"
+  },
+  {
+    "term": "methodology",
+    "gloss": "A system of methods used in a particular area of study or activity.",
+    "pos": "noun"
+  },
+  {
+    "term": "meticulous",
+    "gloss": "Showing great attention to detail; very careful and precise.",
+    "pos": "adjective"
+  },
+  {
+    "term": "momentum",
+    "gloss": "The impetus and driving force gained by the development of a process or course of events.",
+    "pos": "noun"
+  },
+  {
+    "term": "narrative",
+    "gloss": "A spoken or written account of connected events; a story.",
+    "pos": "noun"
+  },
+  {
+    "term": "nostalgia",
+    "gloss": "A sentimental longing or wistful affection for the past.",
+    "pos": "noun"
+  },
+  {
+    "term": "notorious",
+    "gloss": "Famous or well known, typically for some bad quality or deed.",
+    "pos": "adjective"
+  },
+  {
+    "term": "nuance",
+    "gloss": "A subtle difference in or shade of meaning, expression, or sound.",
+    "pos": "noun"
+  },
+  {
+    "term": "objective",
+    "gloss": "Not influenced by personal feelings or opinions in considering and representing facts.",
+    "pos": "adjective"
+  },
+  {
+    "term": "obsolete",
+    "gloss": "No longer produced or used; out of date.",
+    "pos": "adjective"
+  },
+  {
+    "term": "optimal",
+    "gloss": "Best or most favorable; optimum.",
+    "pos": "adjective"
+  },
+  {
+    "term": "paradigm",
+    "gloss": "A typical example or pattern of something; a model.",
+    "pos": "noun"
+  },
+  {
+    "term": "perpetual",
+    "gloss": "Never ending or changing; occurring repeatedly.",
+    "pos": "adjective"
+  },
+  {
+    "term": "perspective",
+    "gloss": "A particular attitude toward or way of regarding something; a point of view.",
+    "pos": "noun"
+  },
+  {
+    "term": "phenomenon",
+    "gloss": "A fact or situation that is observed to exist or happen, especially one whose cause is in question.",
+    "pos": "noun"
+  },
+  {
+    "term": "pragmatic",
+    "gloss": "Dealing with things sensibly and realistically in a way that is based on practical rather than theoretical considerations.",
+    "pos": "adjective"
+  },
+  {
+    "term": "preliminary",
+    "gloss": "Denoting an action or event preceding or done in preparation for something fuller or more important.",
+    "pos": "adjective"
+  },
+  {
+    "term": "prevalent",
+    "gloss": "Widespread in a particular area at a particular time.",
+    "pos": "adjective"
+  },
+  {
+    "term": "principle",
+    "gloss": "A fundamental truth or proposition that serves as the foundation for a system of belief or behavior.",
+    "pos": "noun"
+  },
+  {
+    "term": "protocol",
+    "gloss": "The official procedure or system of rules governing affairs of state or diplomatic occasions.",
+    "pos": "noun"
+  },
+  {
+    "term": "qualitative",
+    "gloss": "Relating to or measured by the quality of something rather than its quantity.",
+    "pos": "adjective"
+  },
+  {
+    "term": "quality",
+    "gloss": "The standard of something as measured against other things of a similar kind.",
+    "pos": "noun"
+  },
+  {
+    "term": "quintessential",
+    "gloss": "Representing the most perfect or typical example of a quality or class.",
+    "pos": "adjective"
+  },
+  {
+    "term": "rational",
+    "gloss": "Based on or in accordance with reason or logic.",
+    "pos": "adjective"
+  },
+  {
+    "term": "reciprocate",
+    "gloss": "To respond to a gesture or action by making a corresponding one.",
+    "pos": "verb"
+  },
+  {
+    "term": "relevant",
+    "gloss": "Closely connected or appropriate to what is being done or considered.",
+    "pos": "adjective"
+  },
+  {
+    "term": "resilient",
+    "gloss": "Able to withstand or recover quickly from difficult conditions.",
+    "pos": "adjective"
+  },
+  {
+    "term": "restore",
+    "gloss": "To bring back to a former condition, place, or position.",
+    "pos": "verb"
+  },
+  {
+    "term": "serendipity",
+    "gloss": "The occurrence of events by chance in a happy or beneficial way.",
+    "pos": "noun"
+  },
+  {
+    "term": "significant",
+    "gloss": "Sufficiently great or important to be worthy of attention; noteworthy.",
+    "pos": "adjective"
+  },
+  {
+    "term": "simulate",
+    "gloss": "To imitate the appearance or character of; to produce a computer model of.",
+    "pos": "verb"
+  },
+  {
+    "term": "straightforward",
+    "gloss": "Uncomplicated and easy to do or understand.",
+    "pos": "adjective"
+  },
+  {
+    "term": "subsequent",
+    "gloss": "Coming after something in time; following.",
+    "pos": "adjective"
+  },
+  {
+    "term": "substantial",
+    "gloss": "Of considerable importance, size, or worth.",
+    "pos": "adjective"
+  },
+  {
+    "term": "sustain",
+    "gloss": "To strengthen or support physically or mentally; to cause to continue.",
+    "pos": "verb"
+  },
+  {
+    "term": "synchronize",
+    "gloss": "To cause to occur or operate at the same time or rate.",
+    "pos": "verb"
+  },
+  {
+    "term": "tangible",
+    "gloss": "Perceptible by touch; clear and definite; real.",
+    "pos": "adjective"
+  },
+  {
+    "term": "tentative",
+    "gloss": "Not certain or fixed; provisional.",
+    "pos": "adjective"
+  },
+  {
+    "term": "theoretical",
+    "gloss": "Concerned with or involving the theory of a subject rather than its practical application.",
+    "pos": "adjective"
+  },
+  {
+    "term": "thereby",
+    "gloss": "By that means; as a result of that.",
+    "pos": "adverb"
+  },
+  {
+    "term": "tradition",
+    "gloss": "The transmission of customs or beliefs from generation to generation.",
+    "pos": "noun"
+  },
+  {
+    "term": "transform",
+    "gloss": "To make a thorough or dramatic change in the form, appearance, or character of.",
+    "pos": "verb"
+  },
+  {
+    "term": "ubiquitous",
+    "gloss": "Present, appearing, or found everywhere.",
+    "pos": "adjective"
+  },
+  {
+    "term": "ubiquity",
+    "gloss": "The fact of appearing everywhere or of being very common.",
+    "pos": "noun"
+  },
+  {
+    "term": "undergo",
+    "gloss": "To experience or be subjected to something, typically something unpleasant.",
+    "pos": "verb"
+  },
+  {
+    "term": "unique",
+    "gloss": "Being the only one of its kind; unlike anything else.",
+    "pos": "adjective"
+  },
+  {
+    "term": "universal",
+    "gloss": "Relating to or done by all people or things in the world or in a particular group; applicable to all cases.",
+    "pos": "adjective"
+  },
+  {
+    "term": "validate",
+    "gloss": "To check or prove the validity or accuracy of something.",
+    "pos": "verb"
+  },
+  {
+    "term": "verbose",
+    "gloss": "Using or expressed in more words than are needed.",
+    "pos": "adjective"
+  },
+  {
+    "term": "versatile",
+    "gloss": "Able to adapt or be adapted to many different functions or activities.",
+    "pos": "adjective"
+  },
+  {
+    "term": "whimsical",
+    "gloss": "Playfully quaint or fanciful, especially in an appealing and amusing way.",
+    "pos": "adjective"
+  },
+  {
+    "term": "wisdom",
+    "gloss": "The quality of having experience, knowledge, and good judgment.",
+    "pos": "noun"
+  },
+  {
+    "term": "xenophobia",
+    "gloss": "Dislike of or prejudice against people from other countries.",
+    "pos": "noun"
+  },
+  {
+    "term": "yearning",
+    "gloss": "A feeling of intense longing for something.",
+    "pos": "noun"
+  },
+  {
+    "term": "zealous",
+    "gloss": "Having or showing zeal; fervent or enthusiastic.",
+    "pos": "adjective"
+  }
+]

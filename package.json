@@ -6,11 +6,12 @@
     "scripts": {
         "dev": "vite",
         "kill": "fuser -k 5000/tcp",
-        "prebuild": "node scripts/export-dictionary-data.js && node scripts/generate-og-images.js && node scripts/generate-word-pages.js",
         "build": "tsc -b --noCheck && vite build",
         "lint": "eslint .",
         "optimize": "vite optimize",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "generate": "node scripts/generate-dataset.js",
+        "sanity": "node scripts/sanity-checks.js"
     },
     "dependencies": {
         "@github/spark": ">=0.43.1 <1",
@@ -73,7 +74,8 @@
         "tw-animate-css": "^1.2.4",
         "uuid": "^11.1.0",
         "vaul": "^1.1.2",
-        "zod": "^3.25.76"
+        "zod": "^3.25.76",
+        "@vercel/og": "^0.6.2"
     },
     "devDependencies": {
         "@eslint/js": "^9.21.0",

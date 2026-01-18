@@ -1,0 +1,41 @@
+{
+  "qualitative": {
+    "term": "qualitative",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Relating to or measured by the quality of something rather than its quantity.",
+        "example": "The study used qualitative research methods."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "quality": {
+    "term": "quality",
+    "senses": [
+      {
+        "pos": "noun",
+        "gloss": "The standard of something as measured against other things of a similar kind.",
+        "example": "We focus on quality rather than quantity."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "quintessential": {
+    "term": "quintessential",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Representing the most perfect or typical example of a quality or class.",
+        "example": "She is the quintessential professional, always prepared and courteous."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  }
+}

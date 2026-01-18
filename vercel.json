@@ -1,0 +1,24 @@
+{
+  "rewrites": [
+    {
+      "source": "/og/:slug*.png",
+      "destination": "/api/og?term=:slug"
+    },
+    {
+      "source": "/w/:term/:sense",
+      "destination": "/api/word-page?term=:term&sense=:sense"
+    },
+    {
+      "source": "/w/:term",
+      "destination": "/api/word-page?term=:term"
+    },
+    {
+      "source": "/w",
+      "destination": "/api/word-page"
+    },
+    {
+      "source": "/(attribution|admin)",
+      "destination": "/index.html"
+    }
+  ]
+}

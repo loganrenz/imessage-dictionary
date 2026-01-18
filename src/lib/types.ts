@@ -15,5 +15,6 @@ export interface DictionaryEntry {
 
 export interface SearchResult {
   term: string
-  preview: string
+  gloss: string
+  pos?: string
 }

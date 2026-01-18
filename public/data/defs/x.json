@@ -1,0 +1,15 @@
+{
+  "xenophobia": {
+    "term": "xenophobia",
+    "senses": [
+      {
+        "pos": "noun",
+        "gloss": "Dislike of or prejudice against people from other countries.",
+        "example": "The rise in xenophobia concerned human rights advocates."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  }
+}

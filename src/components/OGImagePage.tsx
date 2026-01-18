@@ -15,8 +15,18 @@ export function OGImagePage({ term, onNavigateHome }: OGImagePageProps) {
   const [imageReady, setImageReady] = useState(false)
 
   useEffect(() => {
-    const foundEntry = getEntryByTerm(term.replace('.png', ''))
-    setEntry(foundEntry || null)
+    let isActive = true
+    const loadEntry = async () => {
+      const foundEntry = await getEntryByTerm(term.replace('.png', ''))
+      if (isActive) {
+        setEntry(foundEntry || null)
+      }
+    }
+    loadEntry()
+
+    return () => {
+      isActive = false
+    }
   }, [term])
 
   useEffect(() => {
@@ -36,7 +46,7 @@ export function OGImagePage({ term, onNavigateHome }: OGImagePageProps) {
     ctx.font = 'bold 72px "Crimson Pro", serif'
     ctx.textAlign = 'center'
     ctx.textBaseline = 'top'
-    
+
     const termText = entry.term
     ctx.fillText(termText, 600, 80)
 
@@ -51,31 +61,31 @@ export function OGImagePage({ term, onNavigateHome }: OGImagePageProps) {
     ctx.fillStyle = '#1e2f50'
     ctx.font = '600 48px "Crimson Pro", serif'
     ctx.textAlign = 'center'
-    
+
     const maxWidth = 1080
     const lineHeight = 64
     const words = gloss.split(' ')
     const lines: string[] = []
     let currentLine = ''
-    
+
     for (const word of words) {
       const testLine = currentLine + (currentLine ? ' ' : '') + word
       const metrics = ctx.measureText(testLine)
-      
+
       if (metrics.width > maxWidth && currentLine) {
         lines.push(currentLine)
         currentLine = word
       } else {
         currentLine = testLine
       }
-      
+
       if (lines.length >= 3) break
     }
-    
+
     if (currentLine && lines.length < 3) {
       lines.push(currentLine)
     }
-    
+
     if (lines.length === 3 && !gloss.endsWith(lines[2])) {
       lines[2] = lines[2].substring(0, lines[2].length - 3) + '...'
     }
@@ -95,7 +105,7 @@ export function OGImagePage({ term, onNavigateHome }: OGImagePageProps) {
 
   const handleDownload = () => {
     if (!canvasRef.current) return
-    
+
     const url = canvasRef.current.toDataURL('image/png')
     const link = document.createElement('a')
     link.download = `${term}-og-image.png`
@@ -115,7 +125,7 @@ export function OGImagePage({ term, onNavigateHome }: OGImagePageProps) {
             <ArrowLeft size={20} />
             Back to Home
           </Button>
-          
+
           <div className="text-center">
             <h1 className="font-serif text-3xl font-bold text-foreground mb-4">
               Word Not Found

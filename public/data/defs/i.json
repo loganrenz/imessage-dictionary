@@ -1,0 +1,158 @@
+{
+  "ideology": {
+    "term": "ideology",
+    "senses": [
+      {
+        "pos": "noun",
+        "gloss": "A system of ideas and ideals, especially one which forms the basis of economic or political theory and policy.",
+        "example": "The party's ideology attracted younger voters."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "illustrate": {
+    "term": "illustrate",
+    "senses": [
+      {
+        "pos": "verb",
+        "gloss": "To explain or make something clear by using examples, charts, pictures, etc.",
+        "example": "The diagram illustrates how the system works."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "implicit": {
+    "term": "implicit",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Suggested though not directly expressed; implied.",
+        "example": "There was an implicit understanding between them."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "incorporate": {
+    "term": "incorporate",
+    "senses": [
+      {
+        "pos": "verb",
+        "gloss": "To take in or contain as part of a whole; to include.",
+        "example": "The new design incorporates feedback from users."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "inevitable": {
+    "term": "inevitable",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Certain to happen; unavoidable.",
+        "example": "Change is inevitable in any growing organization."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "infrastructure": {
+    "term": "infrastructure",
+    "senses": [
+      {
+        "pos": "noun",
+        "gloss": "The basic physical and organizational structures and facilities needed for the operation of a society or enterprise.",
+        "example": "The city is investing heavily in infrastructure improvements."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "inherent": {
+    "term": "inherent",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Existing in something as a permanent, essential, or characteristic attribute.",
+        "example": "There are inherent risks in any investment."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "innovative": {
+    "term": "innovative",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Featuring new methods; advanced and original.",
+        "example": "The company developed an innovative solution to reduce waste."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "integrity": {
+    "term": "integrity",
+    "senses": [
+      {
+        "pos": "noun",
+        "gloss": "The quality of being honest and having strong moral principles.",
+        "example": "She was known for her integrity and fairness."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "intermediate": {
+    "term": "intermediate",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Coming between two things in time, place, order, character, etc.",
+        "example": "This course is suitable for intermediate-level students."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "intrinsic": {
+    "term": "intrinsic",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Belonging naturally; essential.",
+        "example": "The intrinsic value of education goes beyond career prospects."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "invoke": {
+    "term": "invoke",
+    "senses": [
+      {
+        "pos": "verb",
+        "gloss": "To cite or appeal to someone or something as an authority for an action or in support of an argument.",
+        "example": "He invoked his constitutional right to remain silent."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  }
+}
