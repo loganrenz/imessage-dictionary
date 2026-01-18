@@ -98,8 +98,9 @@ export function WordPage({
     setMeta('og:title', title)
     setMeta('og:type', 'website')
     setMeta('og:image', imageUrl)
+    setMeta('og:image:type', 'image/png')
     setMeta('og:image:width', '1200')
-    setMeta('og:image:height', '630')
+    setMeta('og:image:height', '540')
     setMeta('og:url', window.location.href)
     setMeta('og:description', sense.gloss)
 
@@ -315,6 +316,21 @@ export function WordPage({
             Share
           </Button>
         </div>
+
+        {/* OG Image Preview */}
+        <Card className="p-4 bg-card/50 border mb-8">
+          <p className="font-sans text-xs uppercase tracking-wider text-muted-foreground mb-3">
+            iMessage Preview
+          </p>
+          <div className="rounded-lg overflow-hidden border border-border shadow-sm">
+            <img 
+              src={`/og/${encodeURIComponent(entry.term)}${activeSenseIndex > 0 ? `-${activeSenseIndex}` : ''}.png`}
+              alt={`Preview card for ${entry.term}`}
+              className="w-full h-auto"
+              loading="lazy"
+            />
+          </div>
+        </Card>
 
         <footer className="pt-8 border-t border-border">
           <p className="font-sans text-sm text-muted-foreground">

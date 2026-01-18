@@ -18,6 +18,9 @@ dist-ssr
 !.vscode/extensions.json
 .idea
 .DS_Store
+
+# Wiktionary cache (large file, ~2.8GB)
+scripts/wiktionary-cache.jsonl
 *.suo
 *.ntvs*
 *.njsproj
@@ -38,3 +41,14 @@ public/og/
 
 # Generated word pages with OG meta tags (regenerated on build)
 public/w/
+
+# Wrangler local state
+.wrangler/
+
+# Data backups (large files)
+public/data/*.bak
+public/data/defs.bak/
+
+# Old static data files (now using D1 database)
+public/data/defs/
+public/data/index.json

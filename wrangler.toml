@@ -1,0 +1,26 @@
+name = "dict-nard-uk"
+compatibility_date = "2024-01-01"
+pages_build_output_dir = "dist"
+
+# D1 database configuration
+[[d1_databases]]
+binding = "DB"
+database_name = "dict-nard-uk-db"
+database_id = "9470aa0e-ecb7-476a-92a1-5576b7f92ce4"
+
+# Pages configuration
+[env.production]
+name = "dict-nard-uk"
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "dict-nard-uk-db"
+database_id = "9470aa0e-ecb7-476a-92a1-5576b7f92ce4"
+
+[env.preview]
+name = "dict-nard-uk-preview"
+
+[[env.preview.d1_databases]]
+binding = "DB"
+database_name = "dict-nard-uk-db-preview"
+database_id = "562cd1d4-a799-47b0-a6fa-9995e92f69ab"

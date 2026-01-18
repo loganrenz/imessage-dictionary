@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "generatedAt": "2026-01-18T19:27:19.917Z",
-  "source": "seed",
-  "entries": 199,
+  "generatedAt": "2026-01-18T22:27:06.952Z",
+  "source": "seed+wiktionary",
+  "entries": 1311216,
   "shardStrategy": "first-character"
 }
