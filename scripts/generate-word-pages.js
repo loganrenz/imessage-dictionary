@@ -1,6 +1,11 @@
 // This script generates static HTML pages for each dictionary word with proper OG meta tags
 // These pages allow social media crawlers (iMessage, Facebook, Twitter) to see correct previews
 // while redirecting users to the SPA
+//
+// For words with multiple definitions:
+// - /w/[term]/ -> shows first definition (sense 0)
+// - /w/[term]/1/ -> shows second definition (sense 1)
+// - etc.
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
@@ -42,18 +47,47 @@ function sanitizeFileName(term) {
     .trim();
 }
 
-function generateWordPage(entry) {
-  // Validate entry has required data
-  if (!entry.senses || entry.senses.length === 0 || !entry.senses[0].gloss) {
-    console.warn(`Skipping ${entry.term}: missing required sense data`);
+/**
+ * Generate a word page for a specific sense (definition)
+ * @param {Object} entry - The dictionary entry
+ * @param {Object} sense - The specific sense to render
+ * @param {number} senseIndex - Index of the sense (0-based)
+ * @returns {string|null} - The HTML content or null if invalid
+ */
+function generateWordPage(entry, sense, senseIndex) {
+  // Validate sense has required data
+  if (!sense || !sense.gloss) {
+    console.warn(`Skipping ${entry.term} sense ${senseIndex}: missing required sense data`);
     return null;
   }
 
   const term = escapeHtml(entry.term);
-  const description = escapeHtml(entry.senses[0].gloss);
-  const title = `${term} — definition`;
+  const description = escapeHtml(sense.gloss);
+  
+  // Include part of speech in title if available
+  const posLabel = sense.pos ? ` (${sense.pos})` : '';
+  const title = `${term}${posLabel} — definition`;
+  
   // URL encode the term, then HTML escape for safe use in HTML attributes and JavaScript
   const encodedTerm = escapeHtml(encodeURIComponent(entry.term));
+  
+  // Determine the OG image filename
+  // For sense 0: term.png, for sense 1+: term-1.png, term-2.png, etc.
+  let ogImageFilename;
+  if (senseIndex === 0) {
+    ogImageFilename = `${encodedTerm}.png`;
+  } else {
+    ogImageFilename = `${encodedTerm}-${senseIndex}.png`;
+  }
+  
+  // Determine the SPA hash route
+  // For sense 0: /#/w/term, for sense 1+: /#/w/term/1, /#/w/term/2, etc.
+  let hashRoute;
+  if (senseIndex === 0) {
+    hashRoute = `/#/w/${encodedTerm}`;
+  } else {
+    hashRoute = `/#/w/${encodedTerm}/${senseIndex}`;
+  }
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -66,7 +100,7 @@ function generateWordPage(entry) {
     <meta property="og:title" content="${title}" />
     <meta property="og:description" content="${description}" />
     <meta property="og:type" content="website" />
-    <meta property="og:image" content="/og/${encodedTerm}.png" />
+    <meta property="og:image" content="/og/${ogImageFilename}" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     
@@ -74,15 +108,15 @@ function generateWordPage(entry) {
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${title}" />
     <meta name="twitter:description" content="${description}" />
-    <meta name="twitter:image" content="/og/${encodedTerm}.png" />
+    <meta name="twitter:image" content="/og/${ogImageFilename}" />
     
     <!-- Redirect to SPA after meta tags are read by crawlers -->
     <script>
       // Redirect to the SPA with the correct hash route
-      window.location.replace('/#/w/${encodedTerm}');
+      window.location.replace('${hashRoute}');
     </script>
     <noscript>
-      <meta http-equiv="refresh" content="0;url=/#/w/${encodedTerm}" />
+      <meta http-equiv="refresh" content="0;url=${hashRoute}" />
     </noscript>
     
     <style>
@@ -130,16 +164,17 @@ function main() {
     mkdirSync(wordsDir, { recursive: true });
   }
 
-  console.log('Generating word pages with OG meta tags...');
+  console.log('Generating word pages with OG meta tags for all definitions...');
   console.log(`Output directory: ${wordsDir}`);
   
-  // Generate HTML pages for all entries
-  let count = 0;
+  // Generate HTML pages for all entries and all senses
+  let pageCount = 0;
   let skipped = 0;
+  let termsProcessed = 0;
   
   for (const entry of SEED_DATA) {
-    const html = generateWordPage(entry);
-    if (!html) {
+    if (!entry.senses || entry.senses.length === 0) {
+      console.warn(`Skipping ${entry.term}: no senses defined`);
       skipped++;
       continue;
     }
@@ -154,27 +189,52 @@ function main() {
       continue;
     }
     
-    // Create a directory for each word with an index.html
-    // This allows /w/serendipity to serve /w/serendipity/index.html
+    termsProcessed++;
+    
+    // Create a directory for the word
     const wordDir = join(wordsDir, safeTerm);
     if (!existsSync(wordDir)) {
       mkdirSync(wordDir, { recursive: true });
     }
     
-    const outputPath = join(wordDir, 'index.html');
-    try {
-      writeFileSync(outputPath, html);
-      console.log(`Generated: ${outputPath}`);
-      count++;
-    } catch (error) {
-      console.error(`Error generating page for ${entry.term}:`, error.message);
-      skipped++;
+    // Generate a page for each sense (definition)
+    for (let senseIndex = 0; senseIndex < entry.senses.length; senseIndex++) {
+      const sense = entry.senses[senseIndex];
+      const html = generateWordPage(entry, sense, senseIndex);
+      
+      if (!html) {
+        skipped++;
+        continue;
+      }
+      
+      // For the first sense (index 0), use /w/term/index.html
+      // For additional senses, use /w/term/1/index.html, /w/term/2/index.html, etc.
+      let outputPath;
+      if (senseIndex === 0) {
+        outputPath = join(wordDir, 'index.html');
+      } else {
+        // Create subdirectory for additional senses
+        const senseDir = join(wordDir, String(senseIndex));
+        if (!existsSync(senseDir)) {
+          mkdirSync(senseDir, { recursive: true });
+        }
+        outputPath = join(senseDir, 'index.html');
+      }
+      
+      try {
+        writeFileSync(outputPath, html);
+        console.log(`Generated: ${outputPath}`);
+        pageCount++;
+      } catch (error) {
+        console.error(`Error generating page for ${entry.term} sense ${senseIndex}:`, error.message);
+        skipped++;
+      }
     }
   }
   
-  console.log(`\nSuccessfully generated ${count} word pages`);
+  console.log(`\nSuccessfully generated ${pageCount} word pages for ${termsProcessed} terms`);
   if (skipped > 0) {
-    console.log(`Skipped ${skipped} entries due to errors or missing data`);
+    console.log(`Skipped ${skipped} senses due to errors or missing data`);
   }
 }
 
