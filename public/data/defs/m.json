@@ -1,0 +1,80 @@
+{
+  "magnanimous": {
+    "term": "magnanimous",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Generous or forgiving, especially toward a rival or less powerful person.",
+        "example": "In a magnanimous gesture, she forgave her opponent."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "marginal": {
+    "term": "marginal",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Relating to or situated at the edge or margin; of secondary importance.",
+        "example": "The difference in cost is marginal."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "mechanism": {
+    "term": "mechanism",
+    "senses": [
+      {
+        "pos": "noun",
+        "gloss": "A system of parts working together in a machine; a piece of machinery.",
+        "example": "The mechanism controlling the door needs repair."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "methodology": {
+    "term": "methodology",
+    "senses": [
+      {
+        "pos": "noun",
+        "gloss": "A system of methods used in a particular area of study or activity.",
+        "example": "The research methodology was clearly described in the paper."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "meticulous": {
+    "term": "meticulous",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Showing great attention to detail; very careful and precise.",
+        "example": "The scientist kept meticulous records of every experiment."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "momentum": {
+    "term": "momentum",
+    "senses": [
+      {
+        "pos": "noun",
+        "gloss": "The impetus and driving force gained by the development of a process or course of events.",
+        "example": "The campaign gained momentum as more people joined."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  }
+}

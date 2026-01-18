@@ -1,0 +1,28 @@
+{
+  "kinetic": {
+    "term": "kinetic",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Relating to or resulting from motion.",
+        "example": "Kinetic energy increases as an object speeds up."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "knowledge": {
+    "term": "knowledge",
+    "senses": [
+      {
+        "pos": "noun",
+        "gloss": "Facts, information, and skills acquired through experience or education.",
+        "example": "She has extensive knowledge of Renaissance art."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  }
+}

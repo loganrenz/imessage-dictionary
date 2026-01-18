@@ -1,0 +1,111 @@
+{
+  "eccentric": {
+    "term": "eccentric",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Unconventional and slightly strange.",
+        "example": "His eccentric behavior made him memorable at parties."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "elaborate": {
+    "term": "elaborate",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Involving many carefully arranged parts or details; detailed and complicated.",
+        "example": "The wedding featured elaborate decorations."
+      },
+      {
+        "pos": "verb",
+        "gloss": "To develop or present a theory, policy, or system in detail.",
+        "example": "Could you elaborate on your proposal?"
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "eloquent": {
+    "term": "eloquent",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Fluent or persuasive in speaking or writing.",
+        "example": "She delivered an eloquent speech that moved the entire audience."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "empathy": {
+    "term": "empathy",
+    "senses": [
+      {
+        "pos": "noun",
+        "gloss": "The ability to understand and share the feelings of another.",
+        "example": "Good teachers show empathy towards struggling students."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "empirical": {
+    "term": "empirical",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Based on observation or experience rather than theory or pure logic.",
+        "example": "The conclusions are supported by empirical evidence."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "enigma": {
+    "term": "enigma",
+    "senses": [
+      {
+        "pos": "noun",
+        "gloss": "A person or thing that is mysterious, puzzling, or difficult to understand.",
+        "example": "She remained an enigma to her colleagues."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "ephemeral": {
+    "term": "ephemeral",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Lasting for a very short time.",
+        "example": "Youth is ephemeral, so enjoy it while it lasts."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "euphoria": {
+    "term": "euphoria",
+    "senses": [
+      {
+        "pos": "noun",
+        "gloss": "A feeling or state of intense excitement and happiness.",
+        "example": "The team was in a state of euphoria after winning the championship."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  }
+}

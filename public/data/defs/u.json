@@ -1,0 +1,67 @@
+{
+  "ubiquitous": {
+    "term": "ubiquitous",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Present, appearing, or found everywhere.",
+        "example": "Smartphones have become ubiquitous in modern society."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "ubiquity": {
+    "term": "ubiquity",
+    "senses": [
+      {
+        "pos": "noun",
+        "gloss": "The fact of appearing everywhere or of being very common.",
+        "example": "The ubiquity of social media has changed how we communicate."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "undergo": {
+    "term": "undergo",
+    "senses": [
+      {
+        "pos": "verb",
+        "gloss": "To experience or be subjected to something, typically something unpleasant.",
+        "example": "The building will undergo extensive renovations."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "unique": {
+    "term": "unique",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Being the only one of its kind; unlike anything else.",
+        "example": "Each person's fingerprints are unique."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "universal": {
+    "term": "universal",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Relating to or done by all people or things in the world or in a particular group; applicable to all cases.",
+        "example": "Music is a universal language."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "harmony": {
+    "term": "harmony",
+    "senses": [
+      {
+        "pos": "noun",
+        "gloss": "The quality of forming a pleasing and consistent whole.",
+        "example": "The colors in the painting exist in perfect harmony."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "harrowing": {
+    "term": "harrowing",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Extremely distressing or disturbing; acutely painful or traumatic.",
+        "example": "She gave a harrowing account of her escape from the war zone."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "hierarchy": {
+    "term": "hierarchy",
+    "senses": [
+      {
+        "pos": "noun",
+        "gloss": "A system in which members of an organization are ranked according to relative status or authority.",
+        "example": "The company has a flat hierarchy with few management levels."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "hypothesis": {
+    "term": "hypothesis",
+    "senses": [
+      {
+        "pos": "noun",
+        "gloss": "A supposition or proposed explanation made on the basis of limited evidence as a starting point for further investigation.",
+        "example": "Scientists test their hypothesis through careful experimentation."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  }
+}

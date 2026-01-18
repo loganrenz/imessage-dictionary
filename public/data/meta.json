@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "generatedAt": "2026-01-18T19:05:27.991Z",
+  "source": "seed",
+  "entries": 200,
+  "shardStrategy": "first-character"
+}

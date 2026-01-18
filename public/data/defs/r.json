@@ -1,0 +1,67 @@
+{
+  "rational": {
+    "term": "rational",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Based on or in accordance with reason or logic.",
+        "example": "She made a rational decision after weighing all options."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "reciprocate": {
+    "term": "reciprocate",
+    "senses": [
+      {
+        "pos": "verb",
+        "gloss": "To respond to a gesture or action by making a corresponding one.",
+        "example": "She smiled at him, and he reciprocated warmly."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "relevant": {
+    "term": "relevant",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Closely connected or appropriate to what is being done or considered.",
+        "example": "Please include only relevant information in your report."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "resilient": {
+    "term": "resilient",
+    "senses": [
+      {
+        "pos": "adjective",
+        "gloss": "Able to withstand or recover quickly from difficult conditions.",
+        "example": "The community proved resilient in the face of adversity."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  "restore": {
+    "term": "restore",
+    "senses": [
+      {
+        "pos": "verb",
+        "gloss": "To bring back to a former condition, place, or position.",
+        "example": "Workers are restoring the historic building."
+      }
+    ],
+    "source": "Demo Dataset",
+    "license": "CC BY-SA 4.0",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  }
+}

@@ -1,32 +1,46 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card } from '@/components/ui/card'
 import { MagnifyingGlass, Shuffle, BookOpen } from '@phosphor-icons/react'
 import { searchEntries, getRandomEntry } from '@/lib/dictionary'
-import type { DictionaryEntry } from '@/lib/types'
+import type { SearchResult } from '@/lib/types'
 
 interface HomePageProps {
   onNavigateToWord: (term: string) => void
+  onNavigateToAttribution: () => void
 }
 
-export function HomePage({ onNavigateToWord }: HomePageProps) {
+export function HomePage({ onNavigateToWord, onNavigateToAttribution }: HomePageProps) {
   const [query, setQuery] = useState('')
-  const [results, setResults] = useState<DictionaryEntry[]>([])
+  const [results, setResults] = useState<SearchResult[]>([])
 
-  const handleSearch = (value: string) => {
-    setQuery(value)
-    if (value.trim()) {
-      const searchResults = searchEntries(value)
-      setResults(searchResults)
-    } else {
-      setResults([])
+  useEffect(() => {
+    let isActive = true
+    const timeout = setTimeout(async () => {
+      if (!query.trim()) {
+        if (isActive) {
+          setResults([])
+        }
+        return
+      }
+      const searchResults = await searchEntries(query)
+      if (isActive) {
+        setResults(searchResults)
+      }
+    }, 150)
+
+    return () => {
+      isActive = false
+      clearTimeout(timeout)
     }
-  }
+  }, [query])
 
-  const handleRandomWord = () => {
-    const randomEntry = getRandomEntry()
-    onNavigateToWord(randomEntry.term)
+  const handleRandomWord = async () => {
+    const randomEntry = await getRandomEntry()
+    if (randomEntry) {
+      onNavigateToWord(randomEntry.term)
+    }
   }
 
   const popularWords = ['serendipity', 'ephemeral', 'eloquent', 'paradigm', 'ubiquitous', 'resilient', 'empathy', 'innovative']
@@ -57,7 +71,7 @@ export function HomePage({ onNavigateToWord }: HomePageProps) {
               type="text"
               placeholder="Search for a word..."
               value={query}
-              onChange={(e) => handleSearch(e.target.value)}
+              onChange={(e) => setQuery(e.target.value)}
               className="pl-12 pr-4 h-14 text-lg font-serif bg-card border-2 focus:border-accent"
             />
           </div>
@@ -79,7 +93,7 @@ export function HomePage({ onNavigateToWord }: HomePageProps) {
                       {entry.term}
                     </div>
                     <div className="font-sans text-sm text-muted-foreground line-clamp-1">
-                      {entry.senses[0].gloss}
+                      {entry.gloss}
                     </div>
                   </button>
                 ))}
@@ -122,16 +136,12 @@ export function HomePage({ onNavigateToWord }: HomePageProps) {
           <p className="font-sans text-sm text-muted-foreground">
             All definitions from Demo Dataset under CC BY-SA 4.0
             <br />
-            <a 
-              href="#/attribution" 
+            <button 
               className="text-accent hover:underline"
-              onClick={(e) => {
-                e.preventDefault()
-                window.location.hash = '/attribution'
-              }}
+              onClick={onNavigateToAttribution}
             >
               View full attribution
-            </a>
+            </button>
           </p>
         </footer>
       </div>
