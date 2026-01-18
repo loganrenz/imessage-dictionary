@@ -4,7 +4,9 @@
 The application was generating Open Graph (OG) images client-side using HTML Canvas in React components at hash routes (e.g., `/#/og/serendipity.png`). Social media crawlers, including iMessage, don't execute JavaScript, so they couldn't see these dynamically generated images. This prevented beautiful dictionary definition previews from appearing when links were shared in iMessage and other platforms.
 
 ## Solution
-Implemented a build-time pre-generation system that creates static PNG files for all dictionary entries.
+Implemented a build-time pre-generation system that creates:
+1. Static PNG files for all dictionary entries
+2. Static HTML pages with proper OG meta tags for each word
 
 ### Architecture
 
@@ -21,12 +23,18 @@ Implemented a build-time pre-generation system that creates static PNG files for
 - Outputs to `public/og/` directory
 - Includes error handling and data validation
 
-#### 3. Build Integration
-- `prebuild` script runs both export and generation
+#### 3. Word Page Generation Script (`scripts/generate-word-pages.js`)
+- Generates static HTML pages for each dictionary word
+- Includes proper OG meta tags that crawlers can read
+- Redirects users to the SPA via JavaScript
+- Outputs to `public/w/[term]/index.html`
+
+#### 4. Build Integration
+- `prebuild` script runs all three generation steps
 - Vite automatically copies `public/` to `dist/`
 - Generated files excluded from git via `.gitignore`
 
-#### 4. Client Updates (`src/components/WordPage.tsx`)
+#### 5. Client Updates (`src/components/WordPage.tsx`)
 - Meta tags now point to static paths: `/og/[term].png`
 - Removed hash-based routing for OG images
 - Crawlers can now fetch actual PNG files
@@ -37,16 +45,31 @@ project/
 ├── scripts/
 │   ├── export-dictionary-data.js    # Extract TS data to JSON
 │   ├── generate-og-images.js        # Generate PNG files
+│   ├── generate-word-pages.js       # Generate HTML pages with OG tags
 │   └── dictionary-data.json         # Temporary JSON (gitignored)
 ├── public/
-│   └── og/                          # Generated images (gitignored)
-│       ├── serendipity.png
-│       ├── eloquent.png
-│       └── ... (200 images)
+│   ├── og/                          # Generated images (gitignored)
+│   │   ├── serendipity.png
+│   │   ├── eloquent.png
+│   │   └── ... (200 images)
+│   └── w/                           # Generated word pages (gitignored)
+│       ├── serendipity/index.html
+│       ├── eloquent/index.html
+│       └── ... (200 pages)
 └── dist/
-    └── og/                          # Images copied here on build
-        └── ...
+    ├── og/                          # Images copied here on build
+    └── w/                           # Word pages copied here on build
 ```
+
+### How iMessage Link Previews Work
+
+When a user shares a link like `https://example.com/w/serendipity`, iMessage:
+1. Fetches the URL `/w/serendipity/` (served by `index.html`)
+2. Reads the OG meta tags from the static HTML
+3. Fetches the OG image from `/og/serendipity.png`
+4. Displays a rich preview with the word, definition, and image
+
+The JavaScript redirect in the page then loads the full SPA for interactive use.
 
 ### Image Specifications
 - **Dimensions**: 1200×630px (optimal for social sharing)
@@ -104,10 +127,14 @@ npm run build
 
 ### Testing Checklist
 - [x] All 200 images generated successfully
+- [x] All 200 word pages generated successfully
 - [x] Images have correct dimensions (1200×630)
 - [x] Build process completes without errors
-- [x] Images accessible via HTTP
-- [x] Meta tags point to correct paths
+- [x] Images accessible via HTTP at `/og/[term].png`
+- [x] Word pages accessible via HTTP at `/w/[term]/`
+- [x] Word pages contain correct OG meta tags
+- [x] Word pages redirect to SPA for interactive use
+- [x] Meta tags point to correct image paths
 - [x] Visual quality verified
 - [x] No security vulnerabilities
 - [ ] Manual test with iMessage (requires deployment)
