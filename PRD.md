@@ -96,7 +96,8 @@ Typography should balance **editorial authority with digital readability**, opti
 - Body (Definition): Crimson Pro Regular/20px/line-height 1.6
 - Caption (Attribution): Inter Regular/12px/line-height 1.4
 - OG Image Word: Crimson Pro Bold/96px/tight letter-spacing
-- OG Image Definition: Crimson Pro Regular/32px/line-height 1.5/max 3 lines
+- OG Image Part of Speech: Inter Semibold/28px/uppercase
+- OG Image Definition: Crimson Pro Bold/52px/line-height 1.3/max 2 lines (highly readable for iMessage previews)
 
 ## Animations
 

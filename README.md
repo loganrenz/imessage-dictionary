@@ -120,8 +120,8 @@ When a word page loads (e.g., `/w/serendipity`), the app:
 2. Points `og:image` to `/og/serendipity.png`
 3. The OG image route renders a 1200×630px canvas with:
    - Large, bold word title (Crimson Pro Bold 96px)
-   - Part of speech label (Inter Medium 24px)
-   - Definition text (Crimson Pro Regular 32px, max 3 lines)
+   - Part of speech label (Inter Semibold 28px)
+   - **Highly readable definition text (Crimson Pro Bold 52px, max 2 lines)** - designed to be as readable as the word title itself for optimal iMessage preview experience
    - Attribution footer (Inter Regular 16px)
 
 **Important for iMessage**: Social platforms cache OG images aggressively. When testing:
@@ -249,6 +249,7 @@ Then update the CSS in `src/index.css`:
 
 Modify the canvas rendering in `src/components/OGImagePage.tsx`:
 - Dimensions: 1200×630 (optimal for social sharing)
+- **Definition text**: Bold 52px for maximum readability in iMessage previews (as readable as the word title)
 - Adjust font sizes, colors, and layout
 - Test at thumbnail size for mobile readability
 

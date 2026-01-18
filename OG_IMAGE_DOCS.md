@@ -94,9 +94,11 @@ The JavaScript redirect in the page then loads the full SPA for interactive use.
 - **Layout**:
   - Background: Warm cream (#f5f3f0)
   - Word title: Deep navy (#1e2f50), bold 96px
-  - Part of speech: Amber (#c5914a), 24px uppercase
-  - Definition: Deep navy, 32px, max 3 lines with ellipsis
+  - Part of speech: Amber (#c5914a), 28px semibold uppercase
+  - Definition: Deep navy (#1e2f50), **bold 52px**, max 2 lines with ellipsis
   - Attribution: Gray footer with source and license
+
+**Design Philosophy**: The definition text is designed to be as readable as the word title itself, ensuring that iMessage users can easily read the definition directly in the preview thumbnail without needing to open the link.
 
 ### Build Process
 1. **Pre-build**: Export data → Generate images for all senses
