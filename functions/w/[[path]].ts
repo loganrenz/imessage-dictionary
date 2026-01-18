@@ -36,6 +36,7 @@ function injectMeta(template: string, meta: {
   description: string
   url: string
   ogImage: string
+  jsonLd?: string
 }): string {
   let html = template
   
@@ -51,10 +52,12 @@ function injectMeta(template: string, meta: {
   // Build meta tags
   const metaTags = `
     <meta name="description" content="${escapeHtml(meta.description)}">
+    <meta name="robots" content="index, follow">
     <meta property="og:title" content="${escapeHtml(meta.title)}">
     <meta property="og:description" content="${escapeHtml(meta.description)}">
     <meta property="og:type" content="website">
     <meta property="og:url" content="${escapeHtml(meta.url)}">
+    <meta property="og:site_name" content="Free Dictionary">
     <meta property="og:image" content="${escapeHtml(meta.ogImage)}">
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1200">
@@ -65,12 +68,15 @@ function injectMeta(template: string, meta: {
     <meta name="twitter:image" content="${escapeHtml(meta.ogImage)}">
     <link rel="canonical" href="${escapeHtml(meta.url)}">
   `
+  const jsonLdTag = meta.jsonLd
+    ? `\n    <script type="application/ld+json">${meta.jsonLd}</script>`
+    : ''
   
   // Inject meta tags right after <title>, before any script tags
   // This ensures they're early in <head> for iMessage/crawlers
   html = html.replace(
     /(<title>.*?<\/title>\s*)/s,
-    `$1${metaTags}`
+    `$1${metaTags}${jsonLdTag}`
   )
   
   return html
@@ -128,19 +134,50 @@ export async function onRequest(context: any) {
   const title = sense
     ? `${displayTerm}${posLabel}: ${truncateForTitle(sense.gloss, 60)}`
     : `${displayTerm} — Free Dictionary`
-  const description =
+  const baseDescription =
     sense?.gloss ??
     'Look up definitions and share beautiful iMessage-friendly previews.'
+  const description = baseDescription.includes('iMessage')
+    ? baseDescription
+    : `${baseDescription} View definitions in iMessage without leaving the app.`
 
   const canonicalPath = term
     ? `/w/${encodeURIComponent(displayTerm)}${validSenseIndex > 0 ? `/${validSenseIndex}` : ''}`
     : '/'
+
+  const jsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'DefinedTerm',
+      name: displayTerm,
+      description,
+      inDefinedTermSet: {
+        '@type': 'DefinedTermSet',
+        name: 'Free Dictionary',
+        url: `${baseUrl}/`,
+      },
+      isAccessibleForFree: true,
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      name: title,
+      url: `${baseUrl}${canonicalPath}`,
+      description,
+      isPartOf: {
+        '@type': 'WebSite',
+        name: 'Free Dictionary',
+        url: `${baseUrl}/`,
+      },
+    },
+  ]
 
   const meta = {
     title,
     description,
     url: `${baseUrl}${canonicalPath}`,
     ogImage: `${baseUrl}${buildOgImagePath(displayTerm, validSenseIndex)}`,
+    jsonLd: JSON.stringify(jsonLd).replace(/</g, '\\u003c'),
   }
 
   const template = await loadTemplate(request, env)
