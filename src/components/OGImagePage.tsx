@@ -78,7 +78,7 @@ export function OGImagePage({ term, onNavigateHome }: OGImagePageProps) {
     
     if (lines.length === 2) {
       const fullText = lines.join(' ')
-      if (!gloss.startsWith(fullText)) {
+      if (gloss !== fullText && !gloss.startsWith(fullText + ' ')) {
         lines[1] = lines[1].trim() + '...'
       }
     }

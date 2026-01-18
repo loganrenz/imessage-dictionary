@@ -89,7 +89,7 @@ function generateOGImage(entry, sense, senseIndex, outputPath) {
   // If we had to truncate, add ellipsis properly at word boundary
   if (lines.length === 2) {
     const fullText = lines.join(' ');
-    if (!gloss.startsWith(fullText)) {
+    if (gloss !== fullText && !gloss.startsWith(fullText + ' ')) {
       // Text was truncated, ensure ellipsis looks good
       lines[1] = lines[1].trim() + '...';
     }
