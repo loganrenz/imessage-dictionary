@@ -5,7 +5,13 @@ export const config = {
 }
 
 function parseTermAndSense(rawTerm, rawSense) {
-  const decoded = decodeURIComponent(rawTerm || '')
+  let decoded = ''
+  try {
+    decoded = decodeURIComponent(rawTerm || '')
+  } catch (e) {
+    // Invalid URI encoding - treat as empty string
+    decoded = ''
+  }
   if (!decoded) {
     return { term: '', senseIndex: 0 }
   }
