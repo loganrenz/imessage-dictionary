@@ -44,7 +44,18 @@ export async function loadShard(shardKey) {
   if (shardCache.has(shardKey)) {
     return shardCache.get(shardKey)
   }
-  const shard = await readJson(path.join('defs', `${shardKey}.json`))
+  // Ensure misc.json exists for non-alphanumeric starting characters
+  // by providing a fallback empty object if the file doesn't exist
+  let shard
+  try {
+    shard = await readJson(path.join('defs', `${shardKey}.json`))
+  } catch (err) {
+    if (err.code === 'ENOENT' && shardKey === 'misc') {
+      shard = {}
+    } else {
+      throw err
+    }
+  }
   shardCache.set(shardKey, shard)
   return shard
 }
