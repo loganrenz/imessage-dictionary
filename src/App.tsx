@@ -79,12 +79,6 @@ function App() {
     window.scrollTo(0, 0)
   }
 
-  const navigateToAdmin = () => {
-    window.history.pushState({}, '', '/admin')
-    setRoute({ type: 'admin' })
-    window.scrollTo(0, 0)
-  }
-
   return (
     <>
       {route.type === 'home' && (
