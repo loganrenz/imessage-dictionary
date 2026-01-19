@@ -20,6 +20,8 @@ A production-ready dictionary web app that generates beautiful Open Graph images
 - OG Image preview: `/og/serendipity.png`
 - Search API: `/api/search?q=serendipity`
 - Word API: `/api/word?term=serendipity`
+- Sitemap index: `/sitemap.xml`
+- Sitemaps: `/sitemaps/*.xml.gz`
 - Attribution: `/attribution`
 - Admin: `/admin`
 
@@ -123,6 +125,54 @@ These endpoints cache results in-memory for speed.
 - **`/og/[term].png`** (or `/og/[term]-N.png` for sense N) is generated **on-demand**.
 - Implemented with `@vercel/og` and cached aggressively at the edge.
 - Falls back gracefully if the word is missing.
+
+## Sitemaps (Mega Sitemap System)
+
+### Endpoints
+
+- `/sitemap.xml` — sitemap index
+- `/sitemaps/words-a.xml.gz` … `/sitemaps/words-z.xml.gz`
+- `/sitemaps/words-0-9.xml.gz` (if any numeric/other-leading terms exist)
+- `/sitemaps/phrases.xml.gz` (multi-word phrases)
+- `/sitemaps/popular.xml.gz` (from `data/popular.json`)
+- `/sitemaps/recent.xml.gz` (last X days)
+- `/sitemaps/categories.xml.gz` (only if `data/categories.json` exists)
+
+### Partitioning rules
+
+- Words are partitioned by first character (a–z, 0-9).
+- If a partition exceeds 50,000 URLs or 50MB uncompressed, it splits into `words-a-1.xml.gz`, `words-a-2.xml.gz`, etc.
+- Phrases are detected by whitespace or `/` in the term and are placed only in the phrases sitemap.
+
+### Stable lastmod
+
+- Each entry has a content fingerprint (hash of definition fields).
+- A cache file at `data/sitemap-cache.json` preserves `lastmod` across builds.
+- If the fingerprint changes, `lastmod` updates to today’s date; otherwise it stays stable.
+
+### Generate locally
+
+```bash
+npm run sitemap:build
+```
+
+Defaults to D1 if credentials are available. For local sample generation:
+
+```bash
+SITEMAP_SOURCE=local SITEMAP_SAMPLE_LIMIT=500 npm run sitemap:build
+```
+
+### Validate
+
+```bash
+npm run sitemap:validate
+```
+
+### Submit to Google Search Console
+
+Submit only the index:
+
+- `https://dict.nard.uk/sitemap.xml`
 
 ### Data Model
 

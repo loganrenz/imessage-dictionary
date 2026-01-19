@@ -1,0 +1,7 @@
+/sitemap.xml
+  Cache-Control: public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800
+
+/sitemaps/*.xml.gz
+  Cache-Control: public, max-age=86400, s-maxage=86400, stale-while-revalidate=604800
+  Content-Type: application/xml
+  Content-Encoding: gzip
