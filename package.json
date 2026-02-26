@@ -56,7 +56,8 @@
     ]
   },
   "overrides": {
-    "@cloudflare/unenv-preset": "2.12.1"
+    "@cloudflare/unenv-preset": "2.12.1",
+    "vite": "npm:rolldown-vite@latest"
   },
   "volta": {
     "node": "22.14.0"
