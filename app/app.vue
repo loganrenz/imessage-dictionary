@@ -9,9 +9,6 @@ const isDark = computed({
 
 const navItems = [
   { label: 'Home', to: '/', icon: 'i-lucide-home' },
-  { label: 'Components', to: '/components', icon: 'i-lucide-layout-grid' },
-  { label: 'Forms', to: '/forms', icon: 'i-lucide-text-cursor-input' },
-  { label: 'Todos', to: '/todos', icon: 'i-lucide-check-square' },
 ]
 
 const mobileMenuOpen = ref(false)
@@ -31,7 +28,7 @@ watch(route, () => {
   <UApp>
     <div class="app-shell min-h-screen flex flex-col">
       <!-- Header -->
-      <header class="sticky top-0 z-50 border-b border-[var(--ui-border)] bg-[var(--ui-bg)]/80 backdrop-blur-xl">
+      <header class="sticky top-0 z-50 border-b border-default bg-default/80 backdrop-blur-xl">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <NuxtLink to="/" class="flex items-center gap-2.5 group">
             <div class="size-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-sm">
@@ -49,7 +46,7 @@ watch(route, () => {
               class="px-3 py-2 text-sm font-medium rounded-lg transition-colors"
               :class="route.path === item.to
                 ? 'text-primary bg-primary/10'
-                : 'text-[var(--ui-text-muted)] hover:text-[var(--ui-text)] hover:bg-[var(--ui-bg-elevated)]'"
+                : 'text-muted hover:text-default hover:bg-elevated'"
             >
               {{ item.label }}
             </NuxtLink>
@@ -64,7 +61,7 @@ watch(route, () => {
             />
 
             <!-- Mobile hamburger -->
-            <button class="md:hidden p-2 rounded-lg hover:bg-[var(--ui-bg-elevated)]" @click="mobileMenuOpen = !mobileMenuOpen">
+            <button class="md:hidden p-2 rounded-lg hover:bg-elevated" @click="mobileMenuOpen = !mobileMenuOpen">
               <UIcon :name="mobileMenuOpen ? 'i-lucide-x' : 'i-lucide-menu'" class="size-5" />
             </button>
           </div>
@@ -72,7 +69,7 @@ watch(route, () => {
 
         <!-- Mobile nav -->
         <Transition name="slide-down">
-          <nav v-if="mobileMenuOpen" class="md:hidden border-t border-[var(--ui-border)] px-4 py-3 space-y-1">
+          <nav v-if="mobileMenuOpen" class="md:hidden border-t border-default px-4 py-3 space-y-1">
             <NuxtLink
               v-for="item in navItems"
               :key="item.to"
@@ -80,7 +77,7 @@ watch(route, () => {
               class="flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-colors"
               :class="route.path === item.to
                 ? 'text-primary bg-primary/10'
-                : 'text-[var(--ui-text-muted)] hover:text-[var(--ui-text)] hover:bg-[var(--ui-bg-elevated)]'"
+                : 'text-muted hover:text-default hover:bg-elevated'"
             >
               <UIcon :name="item.icon" class="size-4" />
               {{ item.label }}
@@ -97,9 +94,9 @@ watch(route, () => {
       </main>
 
       <!-- Footer -->
-      <footer class="border-t border-[var(--ui-border)] py-6">
+      <footer class="border-t border-default py-6">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p class="text-center text-sm text-[var(--ui-text-muted)]">
+          <p class="text-center text-sm text-muted">
             Nuxt 4 Demo Template &middot; Nuxt UI 4 &middot; Cloudflare Workers &middot; {{ new Date().getFullYear() }}
           </p>
         </div>

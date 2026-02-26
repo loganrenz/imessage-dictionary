@@ -17,13 +17,16 @@ logs
 .fleet
 .idea
 
-# Local env files
+# Local env files — use Doppler, not .env files
 .env
 .env.*
-!.env.example
 
 # Cloudflare
 .wrangler/
 
 # Build artifacts
 *.bak
+
+# Test artifacts
+playwright-report/
+test-results/

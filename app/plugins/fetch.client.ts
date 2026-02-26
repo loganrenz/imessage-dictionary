@@ -12,16 +12,9 @@ export default defineNuxtPlugin(() => {
 
   globalThis.$fetch = $fetch.create({
     onRequest({ options }) {
-      const headers = options.headers ||= {}
-
-      // Normalise to Headers object if needed
-      if (Array.isArray(headers)) {
-        headers.push(['X-Requested-With', 'XMLHttpRequest'])
-      } else if (headers instanceof Headers) {
-        headers.set('X-Requested-With', 'XMLHttpRequest')
-      } else {
-        (headers as Record<string, string>)['X-Requested-With'] = 'XMLHttpRequest'
-      }
+      // Cleanly construct a Headers object to satisfy DOM types
+      options.headers = new Headers(options.headers || {})
+      options.headers.set('X-Requested-With', 'XMLHttpRequest')
     },
   }) as typeof $fetch
 })

@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/content',
     '@nuxtjs/seo',
+    '@nuxt/eslint',
   ],
   css: ['~/assets/css/main.css'],
 

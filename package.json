@@ -12,14 +12,12 @@
     "typecheck": "npx nuxt typecheck",
     "deploy": "nuxt build && wrangler deploy",
     "generate:favicons": "node scripts/generate-favicons.mjs",
-    "test:unit": "vitest",
-    "test:e2e": "playwright test",
-    "setup": "npx jiti tools/setup-analytics.ts status",
-    "setup:all": "npx jiti tools/setup-analytics.ts all",
-    "setup:posthog": "npx jiti tools/setup-analytics.ts posthog",
-    "setup:ga": "npx jiti tools/setup-analytics.ts ga",
-    "setup:gsc": "npx jiti tools/setup-analytics.ts gsc",
-    "setup:gsc:verify": "npx jiti tools/setup-analytics.ts gsc:verify"
+    "prelint": "test -f .nuxt/eslint.config.mjs || nuxt prepare",
+    "lint": "eslint .",
+    "quality": "pnpm run lint && pnpm run typecheck",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "wrangler d1 execute nuxt-v4-template-db --local --file=drizzle/0000_initial_schema.sql",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@nuxt/content": "^3.11.2",
@@ -39,18 +37,27 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250620.0",
     "@iconify-json/lucide": "^1.2.94",
+    "@nuxt/eslint": "^1.15.2",
     "@nuxt/fonts": "^0.11.4",
-    "@nuxt/test-utils": "^4.0.0",
-    "@playwright/test": "^1.58.2",
     "@types/node": "^22.15.0",
-    "@vue/test-utils": "^2.4.6",
-    "googleapis": "^144.0.0",
-    "happy-dom": "^20.7.0",
-    "playwright": "^1.58.2",
-    "vitest": "^4.0.18",
+    "drizzle-kit": "^0.31.9",
+    "eslint": "^9.39.3",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.8.1",
+    "typescript-eslint": "^8.56.1",
+    "vue-eslint-parser": "^10.4.0",
     "wrangler": "^4.20.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "better-sqlite3",
+      "esbuild"
+    ]
   },
   "overrides": {
     "@cloudflare/unenv-preset": "2.12.1"
+  },
+  "volta": {
+    "node": "22.14.0"
   }
 }

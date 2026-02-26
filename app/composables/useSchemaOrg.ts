@@ -76,10 +76,8 @@ export function useArticleSchema(options: ArticleOptions) {
         name: a.name,
         url: a.url,
       })),
-      image,
       articleSection: section,
-      keywords: tags,
-    }),
+    } as any),
   ])
 }
 
@@ -175,13 +173,13 @@ interface LocalBusinessOptions {
 }
 
 export function useLocalBusinessSchema(options: LocalBusinessOptions) {
-  const { name, description, image, telephone, email, address, geo, openingHours, priceRange, url } = options
+  const { name, description, _image, telephone, email, address, geo, openingHours, priceRange, url } = options
 
   const business: Record<string, any> = {
     '@type': 'LocalBusiness',
     name,
     description,
-    image,
+    image: _image,
     telephone,
     email,
     url,

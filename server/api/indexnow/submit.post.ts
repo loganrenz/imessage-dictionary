@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, message: 'SITE_URL not configured' })
   }
 
-  const body = await readBody<{ urls?: string[] }>(event).catch(() => ({}))
+  const body = await readBody<{ urls?: string[] }>(event).catch(() => ({} as { urls?: string[] }))
   let urls = body?.urls || []
 
   // Default: submit the homepage + sitemap URL if no URLs provided
