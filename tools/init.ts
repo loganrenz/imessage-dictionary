@@ -151,13 +151,23 @@ async function main() {
     const wranglerPath = path.join(ROOT_DIR, 'wrangler.json')
     try {
       const wranglerContent = await fs.readFile(wranglerPath, 'utf-8')
-      // Let's rely on regex here to be safe and format-agnostic, we know the exact output from step 1
-      const updatedWrangler = wranglerContent.replace(
-        /"database_id":\s*"[a-fA-F0-9-]+"/,
-        `"database_id": "${dbId}"`
-      )
-      await fs.writeFile(wranglerPath, updatedWrangler, 'utf-8')
-      console.log(`  ✅ Injected database_id: ${dbId}`)
+      const parsedWrangler = JSON.parse(wranglerContent)
+      
+      if (parsedWrangler.d1_databases && parsedWrangler.d1_databases.length > 0) {
+        parsedWrangler.d1_databases[0].database_id = dbId
+      }
+      
+      try {
+        const urlObj = new URL(SITE_URL)
+        parsedWrangler.routes = [
+          { pattern: urlObj.hostname, custom_domain: true }
+        ]
+      } catch (_e) {
+        console.warn(`  ⚠️ Could not configure custom domain: Invalid SITE_URL (${SITE_URL})`)
+      }
+
+      await fs.writeFile(wranglerPath, JSON.stringify(parsedWrangler, null, 2) + '\n', 'utf-8')
+      console.log(`  ✅ Injected database_id: ${dbId} and configured custom domain map.`)
     } catch (e: any) {
       console.warn(`  ⚠️ Failed to update wrangler.json: ${e.message}`)
     }
