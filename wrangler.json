@@ -3,7 +3,8 @@
   "name": "imessage-dictionary",
   "main": ".output/server/index.mjs",
   "assets": {
-    "directory": ".output/public"
+    "directory": ".output/public",
+    "binding": "ASSETS"
   },
   "compatibility_date": "2025-07-15",
   "compatibility_flags": ["nodejs_compat"],

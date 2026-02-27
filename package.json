@@ -50,12 +50,13 @@
     "prettier": "^3.8.1",
     "typescript-eslint": "^8.56.1",
     "vue-eslint-parser": "^10.4.0",
-    "wrangler": "^4.20.0"
+    "wrangler": "^4.20.0",
+    "tsup": "^8.5.1",
+    "tsx": "^4.0.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
       "@parcel/watcher",
-      "better-sqlite3",
       "core-js",
       "esbuild",
       "protobufjs",
