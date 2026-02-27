@@ -1,0 +1,87 @@
+
+> imessage-dictionary@1.0.0 prelint /Users/narduk/code/imessage-dictionary
+> (test -f .nuxt/eslint.config.mjs || nuxt prepare) && (test -f eslint-plugin-nuxt-ui/dist/index.js || pnpm run build:plugins)
+
+
+> imessage-dictionary@1.0.0 lint /Users/narduk/code/imessage-dictionary
+> eslint .
+
+
+/Users/narduk/code/imessage-dictionary/app/app.vue
+   2:7  warning  'route' is assigned a value but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  15:7  error    Consider using <UMain> or <div> instead of native <main>                          atx/no-native-layout
+  20:7  error    Consider using <UFooter> or <div> instead of native <footer>                      atx/no-native-layout
+
+/Users/narduk/code/imessage-dictionary/app/components/OgImage/OgImageDefault.takumi.vue
+  24:24  error  Hardcoded hex color "#f5f0e8" — extract to a composable, CSS variable, or Tailwind token  atx/no-inline-hex
+  33:18  error  Hardcoded hex color "#1a2744" — extract to a composable, CSS variable, or Tailwind token  atx/no-inline-hex
+  46:28  error  Hardcoded hex color "#c49a6c" — extract to a composable, CSS variable, or Tailwind token  atx/no-inline-hex
+  47:18  error  Hardcoded hex color "#ffffff" — extract to a composable, CSS variable, or Tailwind token  atx/no-inline-hex
+  61:16  error  Hardcoded hex color "#2d3748" — extract to a composable, CSS variable, or Tailwind token  atx/no-inline-hex
+  78:69  error  Hardcoded hex color "#d4c9b8" — extract to a composable, CSS variable, or Tailwind token  atx/no-inline-hex
+  83:18  error  Hardcoded hex color "#8a8078" — extract to a composable, CSS variable, or Tailwind token  atx/no-inline-hex
+
+/Users/narduk/code/imessage-dictionary/app/error.vue
+   2:14  error    Raw Tailwind color "bg-gray-50" — use semantic classes instead (text-dimmed, text-muted, text-primary, bg-elevated, bg-muted, bg-default, border-default)     atx/no-raw-tailwind-colors
+   2:14  error    Raw Tailwind color "bg-gray-950" — use semantic classes instead (text-dimmed, text-muted, text-primary, bg-elevated, bg-muted, bg-default, border-default)    atx/no-raw-tailwind-colors
+  10:17  error    Raw Tailwind color "text-gray-900" — use semantic classes instead (text-dimmed, text-muted, text-primary, bg-elevated, bg-muted, bg-default, border-default)  atx/no-raw-tailwind-colors
+  15:16  error    Raw Tailwind color "text-gray-500" — use semantic classes instead (text-dimmed, text-muted, text-primary, bg-elevated, bg-muted, bg-default, border-default)  atx/no-raw-tailwind-colors
+  15:16  error    Raw Tailwind color "text-gray-400" — use semantic classes instead (text-dimmed, text-muted, text-primary, bg-elevated, bg-muted, bg-default, border-default)  atx/no-raw-tailwind-colors
+  42:1   warning  '<script setup lang=ts>' should be above '<template>' on line 1                                                                                               vue/block-order
+  71:3   error    Unguarded window access may cause SSR errors. Use onMounted() or guard with import.meta.client. See: https://nuxt.com/docs/4.x/guide/concepts/rendering       nuxt-guardrails/no-ssr-dom-access
+
+/Users/narduk/code/imessage-dictionary/app/layouts/landing.vue
+  18:7  error  Consider using <UHeader> or <div> instead of native <header>  atx/no-native-layout
+  39:7  error  Consider using <UMain> or <div> instead of native <main>      atx/no-native-layout
+  46:7  error  Consider using <UFooter> or <div> instead of native <footer>  atx/no-native-layout
+
+/Users/narduk/code/imessage-dictionary/app/pages/admin.vue
+   35:11  error    Move `$fetch()` to a composable in `app/composables/`. Pages should receive data via composable return values           atx/no-fetch-in-component
+   88:11  warning  Use <UForm> instead of native <form> for validation and loading-auto support. See: https://ui.nuxt.com/components/form  nuxt-ui/prefer-uform
+   88:11  error    Use <UForm> instead of native <form>                                                                                    atx/no-native-form
+  122:11  warning  Use <UForm> instead of native <form> for validation and loading-auto support. See: https://ui.nuxt.com/components/form  nuxt-ui/prefer-uform
+  122:11  error    Use <UForm> instead of native <form>                                                                                    atx/no-native-form
+
+/Users/narduk/code/imessage-dictionary/app/pages/attribution.vue
+  69:7   error  Consider using <UFooter> or <div> instead of native <footer>  atx/no-native-layout
+  72:11  error  Use <ULink> instead of <a> for consistent theming             atx/prefer-ulink
+
+/Users/narduk/code/imessage-dictionary/app/pages/index.vue
+   17:28  error  Move `useFetch()` to a composable in `app/composables/`. Pages should receive data via composable return values                                                          atx/no-fetch-in-component
+   28:22  error  Move `$fetch()` to a composable in `app/composables/`. Pages should receive data via composable return values                                                            atx/no-fetch-in-component
+   49:7   error  Consider using <UHeader> or <div> instead of native <header>                                                                                                             atx/no-native-layout
+   82:20  error  Avoid multi-statement inline event handlers. Extract the logic into a named function in the <script> block for better readability and to avoid template compiler errors  atx/no-multi-statement-inline-handler
+   96:9   error  Use <UButton> instead of native <button>                                                                                                                                 atx/no-native-button
+  125:7   error  Consider using <UFooter> or <div> instead of native <footer>                                                                                                             atx/no-native-layout
+
+/Users/narduk/code/imessage-dictionary/app/pages/w/[term].vue
+    7:39  error  Move `useFetch()` to a composable in `app/composables/`. Pages should receive data via composable return values                                          atx/no-fetch-in-component
+   12:37  error  Move `useFetch()` to a composable in `app/composables/`. Pages should receive data via composable return values                                          atx/no-fetch-in-component
+   43:20  error  Unguarded window access may cause SSR errors. Use onMounted() or guard with import.meta.client. See: https://nuxt.com/docs/4.x/guide/concepts/rendering  nuxt-guardrails/no-ssr-dom-access
+   59:17  error  Unguarded window access may cause SSR errors. Use onMounted() or guard with import.meta.client. See: https://nuxt.com/docs/4.x/guide/concepts/rendering  nuxt-guardrails/no-ssr-dom-access
+   75:20  error  Unguarded window access may cause SSR errors. Use onMounted() or guard with import.meta.client. See: https://nuxt.com/docs/4.x/guide/concepts/rendering  nuxt-guardrails/no-ssr-dom-access
+  140:11  error  Consider using <UHeader> or <div> instead of native <header>                                                                                             atx/no-native-layout
+  169:17  error  Use <UButton> instead of native <button>                                                                                                                 atx/no-native-button
+  184:11  error  Use <UButton> instead of native <button>                                                                                                                 atx/no-native-button
+  191:11  error  Use <UButton> instead of native <button>                                                                                                                 atx/no-native-button
+  216:9   error  Consider using <UFooter> or <div> instead of native <footer>                                                                                             atx/no-native-layout
+
+/Users/narduk/code/imessage-dictionary/server/api/admin/entries.post.ts
+  11:22  error  readBody() result must be validated with Zod .parse() or .safeParse(). See login.post.ts for the pattern  atx/require-validated-body
+
+/Users/narduk/code/imessage-dictionary/server/api/words/search.get.ts
+  4:17  error  getQuery() result must be validated with Zod .parse() or .safeParse(). See radar/keywords.get.ts for the pattern  atx/require-validated-query
+
+/Users/narduk/code/imessage-dictionary/tools/gsc-toolbox.ts
+  141:9  error  Unexpected lexical declaration in case block  no-case-declarations
+  178:9  error  Unexpected lexical declaration in case block  no-case-declarations
+
+/Users/narduk/code/imessage-dictionary/tools/setup-analytics.ts
+   10:10  warning  'httpsJson' is defined but never used. Allowed unused vars must match /^_/u  @typescript-eslint/no-unused-vars
+  257:29  error    A `require()` style import is forbidden                                      @typescript-eslint/no-require-imports
+  480:29  error    A `require()` style import is forbidden                                      @typescript-eslint/no-require-imports
+
+✖ 50 problems (45 errors, 5 warnings)
+  0 errors and 1 warning potentially fixable with the `--fix` option.
+
+ ELIFECYCLE  Command failed with exit code 1.
