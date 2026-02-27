@@ -1,0 +1,32 @@
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+
+# Node dependencies
+node_modules
+
+# Logs
+logs
+*.log
+
+# Misc
+.DS_Store
+.fleet
+.idea
+
+# Local env files — use Doppler, not .env files
+.env
+.env.*
+
+# Cloudflare
+.wrangler/
+
+# Build artifacts
+*.bak
+
+# Test artifacts
+playwright-report/
+test-results/

@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+
+@import 'tailwindcss';
+@import '@nuxt/ui';
+
+@theme {
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Outfit', system-ui, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Animated gradient background */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* Count-up animation */
+@keyframes count-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-count-in {
+  animation: count-in 0.6s ease-out forwards;
+}
+
+/* Glassmorphism — theme-aware */
+.glass {
+  background: var(--color-surface);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-border);
+}
+
+.glass-card {
+  background: var(--color-surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+}
+
+/* Pulse glow for live indicator */
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 8px currentColor;
+  }
+  50% {
+    opacity: 0.5;
+    box-shadow: 0 0 16px currentColor;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Page transitions */
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.3s ease;
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+/* ─── Form Layout Standards ─── */
+
+/* Nuxt UI components (UInput, UTextarea, USelect) need class="w-full"
+   on each instance to stretch. CSS descendant selectors cannot target
+   their internal wrapper structure. */
+
+/* Base form container — constrains width and centers the form */
+.form-container {
+  width: 100%;
+  max-width: 32rem; /* 512px — ideal for single-column forms */
+  margin-inline: auto;
+}
+
+/* Narrow variant for login/signup (max 24rem / 384px) */
+.form-narrow {
+  max-width: 24rem;
+}
+
+/* Wide variant for multi-column contact/settings forms (max 40rem / 640px) */
+.form-wide {
+  max-width: 40rem;
+}
+
+/* Full-width variant — no max-width, used inside cards or sidebars */
+.form-full {
+  max-width: none;
+}
+
+/* Consistent vertical spacing between form field groups */
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem; /* 20px — matches Nuxt UI's space-y-5 */
+}
+
+/* Two-column row for side-by-side fields (name + email, etc.) */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .form-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Standardized button row — right-aligned with gap */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding-top: 0.5rem;
+}
+
+/* Center-aligned actions variant for login/signup */
+.form-actions-center {
+  justify-content: center;
+}
+
+/* Full-width single button variant */
+.form-actions-full {
+  flex-direction: column;
+}
+
+.form-actions-full > * {
+  width: 100%;
+}

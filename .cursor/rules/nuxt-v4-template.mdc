@@ -1,0 +1,16 @@
+---
+description: Nuxt 4 + Nuxt UI 4 edge template conventions
+globs: '**/*.{vue,ts,css}'
+alwaysApply: true
+---
+
+- Nuxt 4 structure: all frontend code in `app/`, Nitro server in `server/`
+- Cloudflare Workers: NO Node.js modules (`fs`, `path`, `crypto`). Use Web Crypto API.
+- Nuxt UI 4: `USeparator` not `UDivider`. Icons use `i-` prefix. Use token colors.
+- Tailwind CSS 4: configure via `@theme` in `app/assets/css/main.css`
+- SEO: every page must call `useSeo()` + a `useSchemaOrg()` helper
+- Data fetching: use `useAsyncData`/`useFetch`, never raw `$fetch` in `<script setup>`
+- SSR state: use `useState()` or Pinia, never bare `ref()` at module scope
+- Architecture: thin components, thick composables. No inline business logic in templates.
+- **CRITICAL**: If building a new app, change package.json `name` and remove `origin` remote. NEVER commit back to the template repo.
+- See `AGENTS.md` at project root for full details and audit workflows.
