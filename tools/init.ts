@@ -316,14 +316,15 @@ Pushes to \`main\` are automatically built and deployed via the GitHub Actions C
     const toolsDir = path.join(ROOT_DIR, 'tools')
     if (await fs.stat(path.join(toolsDir, 'setup-analytics.ts')).catch(() => null)) {
       console.log('  Installing ephemeral dependencies (googleapis, google-auth-library)...')
-      execSync('pnpm add --save-dev googleapis google-auth-library', { encoding: 'utf-8', stdio: 'pipe' })
+      execSync('pnpm add -w --save-dev googleapis google-auth-library', { encoding: 'utf-8', stdio: 'pipe' })
       
       console.log('  Executing Narduk Analytics provisioning pipeline...')
-      execSync(`doppler run --project narduk-analytics --config prd -- npx jiti tools/setup-analytics.ts setup:all`, {
+      // Run against the app's own Doppler project (prd config) so SITE_URL, GSC creds,
+      // and hub references all resolve correctly. Command is `all`, not `setup:all`.
+      execSync(`doppler run --project ${APP_NAME} --config prd -- npx jiti tools/setup-analytics.ts all`, {
         stdio: 'inherit',
         env: {
           ...process.env,
-          SITE_URL,
           APP_NAME,
           GSC_USER_EMAIL: 'narduk@gmail.com'
         }
