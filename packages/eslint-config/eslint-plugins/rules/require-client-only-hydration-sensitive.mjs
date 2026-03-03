@@ -17,10 +17,6 @@ const HYDRATION_SENSITIVE = [
   'u-color-mode-select',
 ]
 
-const selector = HYDRATION_SENSITIVE.map(
-  (name) => `VElement[name="${name}"]`
-).join(', ')
-
 /** @type {import('eslint').Rule.RuleModule} */
 export default {
   meta: {

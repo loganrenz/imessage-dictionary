@@ -77,7 +77,6 @@ async function main() {
       console.log('\n  ✅ Layer is already up to date — no changes needed.')
     } else {
       console.log('\n  Changed files:\n')
-      const diff = getOutput('git diff HEAD -- layers/narduk-nuxt-layer || true')
       const diffAgainstTemplate = getOutput('git diff HEAD:layers/narduk-nuxt-layer template/main:layers/narduk-nuxt-layer --stat 2>/dev/null || echo "  (unable to compute stat diff)"')
       console.log(diffAgainstTemplate || '  (no stat diff available)')
       console.log('\n  Run without --dry-run to apply these changes.')
@@ -95,7 +94,7 @@ async function main() {
     try {
       const originUrl = getOutput('git remote get-url origin')
       if (originUrl) {
-        let pkgContent = await fs.readFile(LAYER_PKG_PATH, 'utf-8')
+        const pkgContent = await fs.readFile(LAYER_PKG_PATH, 'utf-8')
         const pkg = JSON.parse(pkgContent)
         
         if (pkg.repository?.url !== originUrl) {
