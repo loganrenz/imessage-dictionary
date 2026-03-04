@@ -14,7 +14,7 @@
     "generate:favicons": "npx tsx tools/generate-favicons.ts",
     "prelint": "pnpm run build:plugins",
     "lint": "eslint .",
-    "quality": "pnpm run lint && pnpm run typecheck",
+    "quality": "turbo run quality --filter='./apps/*'",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "wrangler d1 execute imessage-dictionary-db --local --file=drizzle/0000_initial_schema.sql",
     "db:studio": "drizzle-kit studio",
