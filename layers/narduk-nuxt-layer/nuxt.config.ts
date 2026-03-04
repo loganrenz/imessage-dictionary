@@ -71,6 +71,7 @@ export default defineNuxtConfig({
     colorMode: true
   },
 
+  // @ts-expect-error -- colorMode is provided by @nuxt/ui's color-mode integration
   colorMode: {
     preference: 'system'
   },

@@ -90,23 +90,31 @@ interface ProductOptions {
   image?: string | string[]
   brand?: string
   sku?: string
+  mpn?: string
   price?: number
   priceCurrency?: string
   availability?: 'InStock' | 'OutOfStock' | 'PreOrder' | 'Discontinued'
+  itemCondition?: 'NewCondition' | 'UsedCondition' | 'RefurbishedCondition'
+  url?: string
+  seller?: { name: string; url?: string }
   ratingValue?: number
   reviewCount?: number
 }
 
 export function useProductSchema(options: ProductOptions) {
-  const { name, description, image, brand, sku, price, priceCurrency = 'USD', availability, ratingValue, reviewCount } = options
+  const { name, description, image, brand, sku, mpn, price, priceCurrency = 'USD', availability, itemCondition, url, seller, ratingValue, reviewCount } = options
 
   useSchemaOrg([
     defineProduct({
       name,
       description,
       image,
+      url,
       ...(brand && { brand: { '@type': 'Brand' as const, name: brand } }),
       ...(sku && { sku }),
+      ...(mpn && { mpn }),
+      ...(itemCondition && { itemCondition: `https://schema.org/${itemCondition}` }),
+      ...(seller && { seller: { '@type': 'Organization' as const, name: seller.name, url: seller.url } }),
       ...(price !== undefined && {
         offers: {
           '@type': 'Offer' as const,

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const route = useRoute()
-const colorMode = useColorMode()
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Color Mode types depend on build-time module resolution
+const colorMode = useColorMode() as any
 const appName = useRuntimeConfig().public.appName || ''
 
 const colorModeIcon = computed(() => {

@@ -8,6 +8,10 @@ export const GSC_SCOPES = [
   'https://www.googleapis.com/auth/webmasters.readonly',
 ]
 
+export const GSC_WRITE_SCOPES = [
+  'https://www.googleapis.com/auth/webmasters',
+]
+
 export const INDEXING_SCOPES = [
   'https://www.googleapis.com/auth/indexing',
 ]

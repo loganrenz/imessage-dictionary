@@ -822,8 +822,8 @@ watch(
   { deep: false },
 )
 
-// Dark mode sync
-const colorMode = useColorMode()
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Color Mode types depend on build-time module resolution
+const colorMode = useColorMode() as any
 watch(
   () => colorMode.value,
   (mode) => {
