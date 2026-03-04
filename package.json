@@ -2,7 +2,7 @@
   "name": "imessage-dictionary",
   "type": "module",
   "private": true,
-  "version": "1.0.7",
+  "version": "1.0.8",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
