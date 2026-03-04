@@ -71,6 +71,7 @@ export default defineNuxtConfig({
     colorMode: true
   },
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore -- colorMode may not be in the type depending on module resolution order
   colorMode: {
     preference: 'system'
