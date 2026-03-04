@@ -158,7 +158,7 @@ let _texasCoords: Array<[number, number]> | null = null
 
 async function fetchTexasCoords(): Promise<Array<[number, number]>> {
   if (_texasCoords) return _texasCoords
-  // eslint-disable-next-line atx/no-fetch-in-component, nuxt-guardrails/no-raw-fetch
+  // eslint-disable-next-line atx/no-fetch-in-component
   const data = await $fetch<{ geometry: { coordinates: Array<Array<[number, number]>> } }>(
     '/api/geo/texas-outline',
   )
@@ -167,7 +167,10 @@ async function fetchTexasCoords(): Promise<Array<[number, number]>> {
 }
 
 function getTexasMaskColor(): string {
-  const isDark = import.meta.client && document.documentElement.classList.contains('dark')
+  let isDark = false
+  if (import.meta.client) {
+    isDark = document.documentElement.classList.contains('dark')
+  }
   /* eslint-disable atx/no-inline-hex -- MapKit overlay mask colours */
   return isDark ? '#0a0a0a' : '#ffffff'
   /* eslint-enable atx/no-inline-hex */
@@ -449,7 +452,6 @@ function buildPolygonRings(geometry: GeoJSONGeometry): Array<InstanceType<typeof
 function buildClusterElement(cluster: { coordinate: unknown; memberAnnotations: unknown[] }): HTMLElement {
   const count = cluster.memberAnnotations?.length ?? 0
 
-  // Use custom factory if provided, otherwise default
   let el: HTMLElement
   if (props.createClusterElement) {
     el = props.createClusterElement(cluster, count)
@@ -481,6 +483,11 @@ function initMap() {
 
   overviewRegion = computeBoundingRegion()
 
+  let isDark = false
+  if (import.meta.client) {
+    isDark = document.documentElement.classList.contains('dark')
+  }
+
   const mapOpts: Record<string, unknown> = {
     center: overviewRegion.center,
     region: overviewRegion,
@@ -488,7 +495,7 @@ function initMap() {
     showsMapTypeControl: false,
     showsZoomControl: props.isZoomEnabled,
     showsScale: mapkit.FeatureVisibility.Adaptive,
-    colorScheme: (import.meta.client && document.documentElement.classList.contains('dark'))
+    colorScheme: isDark
       ? mapkit.Map.ColorSchemes.Dark
       : mapkit.Map.ColorSchemes.Light,
     padding: new mapkit.Padding(10, 10, 10, 10),
@@ -596,6 +603,7 @@ function addAnnotations() {
         const isSelected = selectedId.value === item.id
         const { element, cleanup } = props.createPinElement!(item, isSelected)
 
+        // eslint-disable-next-line nuxt-guardrails/no-ssr-dom-access
         const wrapper = import.meta.client ? document.createElement('div') : ({} as HTMLElement)
         wrapper.setAttribute('data-map-pin', '')
         wrapper.style.cursor = 'pointer'
@@ -676,8 +684,12 @@ function addCenterLabel() {
   const region = computeBoundingRegion()
   const center = region.center
 
-  const isDark = import.meta.client && document.documentElement.classList.contains('dark')
+  let isDark = false
+  if (import.meta.client) {
+    isDark = document.documentElement.classList.contains('dark')
+  }
 
+  // eslint-disable-next-line nuxt-guardrails/no-ssr-dom-access
   const el = import.meta.client ? document.createElement('div') : ({} as HTMLElement)
   el.style.cssText = `
     font-size: 18px;

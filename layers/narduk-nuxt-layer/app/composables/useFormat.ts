@@ -3,7 +3,7 @@
  * Exported as plain functions for tree-shaking, and aliased in `useFormat()` for composable usage.
  */
 
-/* eslint-disable vue-official/require-use-prefix-for-composables */
+
 const DEFAULT_LOCALE = 'en-US';
 
 export function formatCents(
