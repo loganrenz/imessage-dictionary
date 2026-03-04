@@ -156,7 +156,7 @@ async function main() {
     const hubChecks: Array<{ key: string, hub: string, config: string }> = [
       { key: 'CLOUDFLARE_API_TOKEN', hub: 'narduk-nuxt-template', config: 'prd' },
       { key: 'CLOUDFLARE_ACCOUNT_ID', hub: 'narduk-nuxt-template', config: 'prd' },
-      { key: 'POSTHOG_PUBLIC_KEY', hub: 'narduk-analytics', config: 'prd' },
+      { key: 'POSTHOG_PUBLIC_KEY', hub: 'narduk-nuxt-template', config: 'prd' },
     ]
 
     for (const { key, hub, config } of hubChecks) {

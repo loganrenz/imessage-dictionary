@@ -1,0 +1,27 @@
+#!/bin/sh
+#
+# Pre-commit hook: Prevent lockfile drift
+# Ensures pnpm-lock.yaml is updated when package.json or .npmrc change.
+#
+# Install: git config core.hooksPath .githooks
+# This hook is automatically synced to all fleet apps by sync-template.ts.
+
+STAGED=$(git diff --cached --name-only)
+
+# Check if package.json or .npmrc changed (root or any workspace)
+PKG_CHANGED=$(echo "$STAGED" | grep -E '(^|\/)package\.json$' || true)
+NPMRC_CHANGED=$(echo "$STAGED" | grep -E '(^|\/)\.npmrc$' || true)
+
+if [ -n "$PKG_CHANGED" ] || [ -n "$NPMRC_CHANGED" ]; then
+  LOCK_CHANGED=$(echo "$STAGED" | grep 'pnpm-lock.yaml' || true)
+  if [ -z "$LOCK_CHANGED" ]; then
+    echo ""
+    echo "⚠️  Lockfile drift detected!"
+    echo ""
+    echo "   package.json or .npmrc changed but pnpm-lock.yaml was not updated."
+    echo "   Run: pnpm install --no-frozen-lockfile"
+    echo "   Then: git add pnpm-lock.yaml"
+    echo ""
+    exit 1
+  fi
+fi

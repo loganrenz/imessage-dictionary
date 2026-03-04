@@ -447,11 +447,11 @@ Pushes to \`main\` are automatically built and deployed via the GitHub Actions C
       const hubRefs: Record<string, string> = {
         CLOUDFLARE_API_TOKEN: '${narduk-nuxt-template.prd.CLOUDFLARE_API_TOKEN}',
         CLOUDFLARE_ACCOUNT_ID: '${narduk-nuxt-template.prd.CLOUDFLARE_ACCOUNT_ID}',
-        POSTHOG_PUBLIC_KEY: '${narduk-analytics.prd.POSTHOG_PUBLIC_KEY}',
-        POSTHOG_PROJECT_ID: '${narduk-analytics.prd.POSTHOG_PROJECT_ID}',
-        POSTHOG_HOST: '${narduk-analytics.prd.POSTHOG_HOST}',
-        GA_ACCOUNT_ID: '${narduk-analytics.prd.GA_ACCOUNT_ID}',
-        GSC_SERVICE_ACCOUNT_JSON: '${narduk-analytics.prd.GSC_SERVICE_ACCOUNT_JSON}',
+        POSTHOG_PUBLIC_KEY: '${narduk-nuxt-template.prd.POSTHOG_PUBLIC_KEY}',
+        POSTHOG_PROJECT_ID: '${narduk-nuxt-template.prd.POSTHOG_PROJECT_ID}',
+        POSTHOG_HOST: '${narduk-nuxt-template.prd.POSTHOG_HOST}',
+        GA_ACCOUNT_ID: '${narduk-nuxt-template.prd.GA_ACCOUNT_ID}',
+        GSC_SERVICE_ACCOUNT_JSON: '${narduk-nuxt-template.prd.GSC_SERVICE_ACCOUNT_JSON}',
       }
 
       // Per-app secrets (only set if missing — don't overwrite app-specific values)
