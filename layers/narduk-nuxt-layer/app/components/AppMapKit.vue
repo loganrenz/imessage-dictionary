@@ -158,7 +158,7 @@ let _texasCoords: Array<[number, number]> | null = null
 
 async function fetchTexasCoords(): Promise<Array<[number, number]>> {
   if (_texasCoords) return _texasCoords
-  // eslint-disable-next-line atx/no-fetch-in-component
+  // eslint-disable-next-line atx/no-fetch-in-component, nuxt-guardrails/no-raw-fetch -- client-only GeoJSON load inside async fn, not setup-level
   const data = await $fetch<{ geometry: { coordinates: Array<Array<[number, number]>> } }>(
     '/api/geo/texas-outline',
   )
@@ -603,7 +603,6 @@ function addAnnotations() {
         const isSelected = selectedId.value === item.id
         const { element, cleanup } = props.createPinElement!(item, isSelected)
 
-        // eslint-disable-next-line nuxt-guardrails/no-ssr-dom-access
         const wrapper = import.meta.client ? document.createElement('div') : ({} as HTMLElement)
         wrapper.setAttribute('data-map-pin', '')
         wrapper.style.cursor = 'pointer'
@@ -689,7 +688,6 @@ function addCenterLabel() {
     isDark = document.documentElement.classList.contains('dark')
   }
 
-  // eslint-disable-next-line nuxt-guardrails/no-ssr-dom-access
   const el = import.meta.client ? document.createElement('div') : ({} as HTMLElement)
   el.style.cssText = `
     font-size: 18px;

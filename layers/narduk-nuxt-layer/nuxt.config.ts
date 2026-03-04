@@ -76,10 +76,6 @@ export default defineNuxtConfig({
   },
 
   ogImage: {
-    defaults: {
-      component: 'OgImageDefaultTakumi',
-      cacheMaxAgeSeconds: 60 * 10,
-    },
     runtimeCacheStorage: {
       driver: 'memory',
     },
