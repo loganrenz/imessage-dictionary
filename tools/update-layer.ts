@@ -46,7 +46,7 @@ async function main() {
   // 1. Check/Add remote
   const remotes = getOutput('git remote -v')
   const hasTemplate = remotes.split('\n').some(line => line.startsWith('template\t') && line.includes(TEMPLATE_URL))
-  
+
   if (!hasTemplate) {
     if (remotes.includes('template\t')) {
       // remote 'template' exists but URL is different, set it
@@ -96,13 +96,13 @@ async function main() {
       if (originUrl) {
         const pkgContent = await fs.readFile(LAYER_PKG_PATH, 'utf-8')
         const pkg = JSON.parse(pkgContent)
-        
+
         if (pkg.repository?.url !== originUrl) {
           pkg.repository = pkg.repository || {}
           pkg.repository.type = 'git'
           pkg.repository.url = originUrl
           pkg.repository.directory = 'layers/narduk-nuxt-layer'
-          
+
           await fs.writeFile(LAYER_PKG_PATH, JSON.stringify(pkg, null, 2) + '\n', 'utf-8')
           run('git add layers/narduk-nuxt-layer/package.json')
           console.log(`  ✅ Updated repository.url to ${originUrl} and staged the change`)
@@ -130,6 +130,7 @@ async function main() {
         `updated=${new Date().toISOString()}`,
         '',
       ].join('\n')
+      await fs.readFile(path.join(ROOT_DIR, '.template-version'), 'utf-8').catch(() => '')
       await fs.writeFile(path.join(ROOT_DIR, '.template-version'), versionContent, 'utf-8')
       run('git add .template-version')
       console.log(`  ✅ Recorded template SHA: ${templateSha.slice(0, 12)}`)
@@ -138,9 +139,33 @@ async function main() {
     console.warn(`  ⚠️ Could not record template version: ${e.message}`)
   }
 
-  // 6. pnpm install
+  // 5.5 Enforce canonical pnpm overrides
+  console.log('\n🔧 Enforcing canonical pnpm overrides...')
+  try {
+    const pkgPath = path.join(ROOT_DIR, 'package.json')
+    const pkgContent = await fs.readFile(pkgPath, 'utf-8')
+    const pkg = JSON.parse(pkgContent)
+
+    pkg.pnpm = pkg.pnpm || {}
+    pkg.pnpm.overrides = pkg.pnpm.overrides || {}
+
+    // The v6 beta is strictly required for Cloudflare Workers (fixes proxy-cjs.js ENOTDIR)
+    if (pkg.pnpm.overrides['nuxt-og-image'] !== '6.0.0-beta.47') {
+      pkg.pnpm.overrides['nuxt-og-image'] = '6.0.0-beta.47'
+      await fs.writeFile(pkgPath, JSON.stringify(pkg, null, 2) + '\n', 'utf-8')
+      run('git add package.json')
+      console.log('  ✅ Applied canonical pnpm.overrides for nuxt-og-image')
+    } else {
+      console.log('  ⏭ pnpm.overrides already canonical.')
+    }
+  } catch (e: any) {
+    console.warn(`  ⚠️ Could not enforce pnpm overrides: ${e.message}`)
+  }
+
+  // 6. pnpm install (--no-frozen-lockfile because overrides may change lockfile config)
   console.log('\n📦 Running pnpm install to sync dependencies...')
-  run('pnpm install')
+  run('pnpm install --no-frozen-lockfile')
+  run('git add pnpm-lock.yaml')
 
   console.log('\n🎉 Layer update complete!')
   console.log('⚠️  Note: Local layer customizations (if any) have been overwritten.')
