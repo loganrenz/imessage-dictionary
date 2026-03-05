@@ -22,33 +22,26 @@ export default defineNuxtPlugin(() => {
     return
   }
 
-  // Initialize dataLayer
+  // Initialize standard dataLayer
   window.dataLayer = window.dataLayer || []
   function gtag(command: string, ...args: unknown[]) {
     window.dataLayer.push([command, ...args])
   }
-  gtag('js', new Date())
-  gtag('config', measurementId, {
-    send_page_view: false // We handle SPA navigations manually
-  })
 
-  // Load the gtag.js script
+  // Define global function immediately
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  ;(window as any).gtag = gtag
+
+  gtag('js', new Date())
+  
+  // Let Google handle page_views automatically via Enhanced Measurement
+  gtag('config', measurementId)
+
+  // Load the gtag.js script asynchronously
   const script = document.createElement('script')
   script.async = true
   script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`
   document.head.appendChild(script)
-
-  // Track page views on route changes
-  const router = useRouter()
-  router.afterEach((to) => {
-    nextTick(() => {
-      gtag('event', 'page_view', {
-        page_location: window.location.origin + to.fullPath,
-        page_path: to.fullPath,
-        page_title: document.title
-      })
-    })
-  })
 })
 
 // Extend window type for dataLayer
