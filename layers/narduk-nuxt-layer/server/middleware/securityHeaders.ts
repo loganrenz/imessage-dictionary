@@ -14,11 +14,11 @@ export default defineEventHandler((event) => {
     'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
     'Content-Security-Policy': [
       "default-src 'self'",
-      `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://us.i.posthog.com https://us-assets.i.posthog.com https://static.cloudflareinsights.com https://cdn.apple-mapkit.com https://pagead2.googlesyndication.com`,
+      `script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googletagmanager.com https://us.i.posthog.com https://us-assets.i.posthog.com https://static.cloudflareinsights.com https://cdn.apple-mapkit.com https://pagead2.googlesyndication.com`,
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "img-src 'self' data: https:",
       "font-src 'self' https://fonts.gstatic.com",
-      `connect-src 'self' https://www.google-analytics.com https://us.i.posthog.com https://us-assets.i.posthog.com https://*.apple-mapkit.com https://*.apple.com${import.meta.dev ? ' http: https: ws: wss:' : ''}`,
+      `connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://us.i.posthog.com https://us-assets.i.posthog.com https://*.apple-mapkit.com https://*.apple.com${import.meta.dev ? ' http: https: ws: wss:' : ''}`,
       "frame-ancestors 'none'",
     ].join('; '),
   })
