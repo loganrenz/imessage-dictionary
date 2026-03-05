@@ -5,7 +5,7 @@
   "description": "Narduk Nuxt 4 Layer — shared components, composables, server routes, and Drizzle schema for Cloudflare Workers apps",
   "repository": {
     "type": "git",
-    "url": "https://github.com/narduk-enterprises/imessage-dictionary",
+    "url": "https://github.com/narduk-enterprises/imessage-dictionary.git",
     "directory": "layers/narduk-nuxt-layer"
   },
   "publishConfig": {
@@ -20,7 +20,7 @@
     "prepare": "nuxt prepare",
     "typecheck": "nuxt typecheck",
     "prelint": "test -f .nuxt/eslint.config.mjs || nuxt prepare",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings 0",
     "test:unit": "vitest run",
     "db:generate": "drizzle-kit generate",
     "db:studio": "drizzle-kit studio"

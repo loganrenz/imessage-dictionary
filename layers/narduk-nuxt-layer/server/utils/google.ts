@@ -36,15 +36,19 @@ export class GoogleApiError extends Error {
 // INTENTIONAL module-scope cache: within a Worker isolate's lifetime, this avoids
 // redundant JWT exchanges with Google. The cache is scoped to a single isolate and
 // is NOT shared across Workers — it acts as a per-instance optimization, not global state.
-let cachedToken: { token: string; expiry: number } | null = null
+// We must cache by scopes to prevent a GSC token from mistakenly being used for a GA request!
+let cachedTokens: Record<string, { token: string; expiry: number }> = {}
 
 /**
  * Obtain a Google access token via service account JWT assertion.
- * Caches the token until 60s before expiry.
+ * Caches the token until 60s before expiry, partitioned by the requested scopes.
  */
 async function getAccessToken(scopes: string[]): Promise<string> {
-  if (cachedToken && cachedToken.expiry > Date.now() + 60_000) {
-    return cachedToken.token
+  const scopeKey = scopes.join(' ')
+  const cached = cachedTokens[scopeKey]
+  
+  if (cached && cached.expiry > Date.now() + 60_000) {
+    return cached.token
   }
 
   const config = useRuntimeConfig()
@@ -87,12 +91,12 @@ async function getAccessToken(scopes: string[]): Promise<string> {
   }
 
   const tokenData = await tokenResponse.json() as { access_token: string; expires_in: number }
-  cachedToken = {
+  cachedTokens[scopeKey] = {
     token: tokenData.access_token,
     expiry: Date.now() + tokenData.expires_in * 1000,
   }
 
-  return cachedToken.token
+  return cachedTokens[scopeKey].token
 }
 
 /**
