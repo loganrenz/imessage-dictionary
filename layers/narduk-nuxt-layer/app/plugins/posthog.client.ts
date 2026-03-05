@@ -4,12 +4,12 @@ export default defineNuxtPlugin(() => {
   const runtimeConfig = useRuntimeConfig()
   const posthogApiKey = runtimeConfig.public.posthogPublicKey
   const posthogHost = runtimeConfig.public.posthogHost
-  const appName = runtimeConfig.public.appName || 'Unknown App'
+  const appName = (runtimeConfig.public.appName as string) || 'Unknown App'
 
   if (!posthogApiKey || import.meta.server) return
 
-  const posthogClient = posthog.init(posthogApiKey, {
-    api_host: posthogHost || 'https://us.i.posthog.com',
+  const posthogClient = posthog.init(posthogApiKey as string, {
+    api_host: (posthogHost as string) || 'https://us.i.posthog.com',
     capture_pageview: false, // We'll handle this manually for Nuxt SPA navigation
     capture_pageleave: true,
     loaded: (ph) => {
@@ -33,7 +33,7 @@ export default defineNuxtPlugin(() => {
   (window as any).$nuxt.$posthog = posthog
 
   // Tag internal traffic and uniquely identify the fleet application
-  const superProperties: Record<string, unknown> = { app: appName }
+  const superProperties: Record<string, any> = { app: appName }
   if (window.location.hostname.endsWith('.pages.dev')) {
     superProperties.is_internal_user = true
   }
