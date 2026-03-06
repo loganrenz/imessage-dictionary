@@ -9,13 +9,13 @@ import { fileURLToPath } from 'node:url'
  * ----------------------------------------------------------------
  * Automates the transformation of a fresh `narduk-nuxt-template` clone into a ready-to-deploy app.
  * Safe to re-run — all steps check for existing state before making changes.
- * 
+ *
  * Usage:
  *   pnpm run setup -- --name="my-app" --display="My App Name" --url="https://myapp.com"
- * 
+ *
  * Re-run (repair mode — skip string replacement and README):
  *   pnpm run setup -- --name="my-app" --display="My App Name" --url="https://myapp.com" --repair
- * 
+ *
  * What this does:
  * 1. Safely finds and replaces all boilerplate strings (skipped in --repair mode)
  * 2. Provisions the Cloudflare D1 database (skips if exists)
@@ -487,6 +487,8 @@ Deployment is done locally via \`pnpm run ship\` (see AGENTS.md).
         APPLE_KEY_ID: '${narduk-nuxt-template.prd.APPLE_KEY_ID}',
         APPLE_SECRET_KEY: '${narduk-nuxt-template.prd.APPLE_SECRET_KEY}',
         APPLE_TEAM_ID: '${narduk-nuxt-template.prd.APPLE_TEAM_ID}',
+        CSP_SCRIPT_SRC: '${narduk-nuxt-template.prd.CSP_SCRIPT_SRC}',
+        CSP_CONNECT_SRC: '${narduk-nuxt-template.prd.CSP_CONNECT_SRC}',
       }
 
       // Per-app secrets (only set if missing — don't overwrite app-specific values)
@@ -628,7 +630,7 @@ Deployment is done locally via \`pnpm run ship\` (see AGENTS.md).
 
   // 6.5. Local Doppler Setup (skip if in CI)
   console.log('\nStep 6.5/10: Configuring local Doppler environment...')
-  
+
   // Write doppler.yaml for local development convenience.
   // Note: this file is gitignored and must be recreated by each developer.
   const dopplerYamlPath = path.join(ROOT_DIR, 'doppler.yaml')
@@ -795,14 +797,14 @@ Deployment is done locally via \`pnpm run ship\` (see AGENTS.md).
         for (const script of scriptsToRemove) {
           delete rootPkg.scripts[script]
         }
-        
+
         // Update web filter scripts to target APP_NAME
         for (const [key, value] of Object.entries(rootPkg.scripts)) {
           if (typeof value === 'string') {
             rootPkg.scripts[key] = value.replace(/--filter web\b/g, `--filter ${APP_NAME}`)
           }
         }
-        
+
         await fs.writeFile(rootPkgPath, JSON.stringify(rootPkg, null, 2) + '\n', 'utf-8')
       }
 

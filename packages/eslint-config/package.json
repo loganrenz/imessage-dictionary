@@ -1,6 +1,6 @@
 {
   "name": "@narduk/eslint-config",
-  "version": "1.0.21",
+  "version": "1.17.0",
   "type": "module",
   "private": true,
   "exports": {
