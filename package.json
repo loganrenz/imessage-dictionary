@@ -22,12 +22,13 @@
     "build:plugins": "pnpm --filter @narduk/eslint-config build",
     "predev": "node tools/check-setup.cjs",
     "prebuild": "node tools/check-setup.cjs",
-    "preship": "node tools/check-setup.cjs && pnpm run quality",
+    "preship": "node tools/check-setup.cjs && pnpm install --frozen-lockfile && npx tsx tools/check-drift-ci.ts && npx tsx tools/check-sync-health.ts && pnpm run quality",
     "update-layer": "npx tsx tools/update-layer.ts",
     "predeploy": "node tools/check-setup.cjs",
     "format": "prettier --write \"**/*.{ts,mts,vue,js,mjs,json,yaml,yml,css,md}\" --ignore-path .gitignore",
     "format:check": "prettier --check \"**/*.{ts,mts,vue,js,mjs,json,yaml,yml,css,md}\" --ignore-path .gitignore",
-    "tail": "npx tsx tools/tail.ts"
+    "tail": "npx tsx tools/tail.ts",
+    "check:sync-health": "npx tsx tools/check-sync-health.ts"
   },
   "dependencies": {
     "@nuxt/image": "^2.0.0",

@@ -89,6 +89,7 @@
     "./server/*": "./server/*",
     "./app/*": "./app/*",
     "./components/*": "./components/*",
+    "./testing/*": "./testing/*",
     "./server/database/schema": {
       "import": "./server/database/schema.ts"
     },
@@ -99,6 +100,7 @@
     "components/",
     "public/",
     "server/",
+    "testing/",
     "drizzle/",
     "nuxt.config.ts",
     "tsconfig.json",

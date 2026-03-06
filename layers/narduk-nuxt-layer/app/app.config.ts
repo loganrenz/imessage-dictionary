@@ -5,4 +5,7 @@ export default defineAppConfig({
       neutral: 'slate',
     },
   },
+  auth: {
+    redirectPath: '/dashboard/',
+  },
 })

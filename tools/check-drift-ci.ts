@@ -28,6 +28,7 @@ const CRITICAL_FILES = [
   // Tooling
   'tools/update-layer.ts',
   'tools/check-drift-ci.ts',
+  'tools/check-sync-health.ts',
   'tools/generate-favicons.ts',
   'tools/check-setup.cjs',
   'tools/validate.ts',

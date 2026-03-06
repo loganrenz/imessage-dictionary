@@ -877,6 +877,7 @@ Deployment is done locally via \`pnpm run ship\` (see AGENTS.md).
             s.includes('marketing') ||
             s.includes('og-image') ||
             s.includes('apple-maps') ||
+            s === 'dev:e2e' ||
             s === 'dev:all' ||
             s === 'db:ready:all',
         )
