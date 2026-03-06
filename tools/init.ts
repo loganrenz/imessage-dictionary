@@ -543,6 +543,12 @@ Deployment is done locally via \`pnpm run ship\` (see AGENTS.md).
         toSet.push(`CRON_SECRET='${cronSecret}'`)
       }
 
+      // NUXT_SESSION_PASSWORD: per-app secure random value for session encryption
+      if (!existing.has('NUXT_SESSION_PASSWORD')) {
+        const sessionPassword = crypto.randomBytes(32).toString('hex')
+        toSet.push(`NUXT_SESSION_PASSWORD='${sessionPassword}'`)
+      }
+
       if (toSet.length > 0) {
         execSync(`doppler secrets set ${toSet.join(' ')} --project ${APP_NAME} --config prd`, { stdio: 'pipe' })
         console.log(`  ✅ Synced ${toSet.length} credentials: ${toSet.map(s => s.split('=')[0]).join(', ')}`)

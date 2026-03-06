@@ -26,7 +26,8 @@
     "update-layer": "npx tsx tools/update-layer.ts",
     "predeploy": "node tools/check-setup.cjs",
     "format": "prettier --write \"**/*.{ts,mts,vue,js,mjs,json,yaml,yml,css,md}\" --ignore-path .gitignore",
-    "format:check": "prettier --check \"**/*.{ts,mts,vue,js,mjs,json,yaml,yml,css,md}\" --ignore-path .gitignore"
+    "format:check": "prettier --check \"**/*.{ts,mts,vue,js,mjs,json,yaml,yml,css,md}\" --ignore-path .gitignore",
+    "tail": "npx tsx tools/tail.ts"
   },
   "dependencies": {
     "@nuxt/image": "^2.0.0",
