@@ -14,6 +14,9 @@ const SCHEMA_COMPOSABLES = new Set([
   'useOrganizationSchema',
   'usePersonSchema',
   'useBreadcrumbSchema',
+  'useFAQSchema',
+  'useLocalBusinessSchema',
+  'useSchemaOrg', // raw nuxt-schema-org composable
 ])
 
 export default {

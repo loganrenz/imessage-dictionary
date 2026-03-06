@@ -809,7 +809,11 @@ var SCHEMA_COMPOSABLES = /* @__PURE__ */ new Set([
   "useProductSchema",
   "useOrganizationSchema",
   "usePersonSchema",
-  "useBreadcrumbSchema"
+  "useBreadcrumbSchema",
+  "useFAQSchema",
+  "useLocalBusinessSchema",
+  "useSchemaOrg"
+  // raw nuxt-schema-org composable
 ]);
 var require_schema_on_pages_default = {
   meta: {
