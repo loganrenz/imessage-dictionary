@@ -10,10 +10,10 @@
  */
 
 import { spawn } from 'node:child_process'
-import { join } from 'node:path'
+import { basename } from 'node:path'
 
-const appRoot = join(import.meta.dirname, '..')
-const appName = appRoot.split('/').pop() || 'unknown'
+const appRoot = process.cwd()
+const appName = basename(appRoot) || 'unknown'
 
 console.log(`\n🚀 Starting log tailing for: \x1b[36m${appName}\x1b[0m`)
 console.log(`Press Ctrl+C to stop.\n`)
