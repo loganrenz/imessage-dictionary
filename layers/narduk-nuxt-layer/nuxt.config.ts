@@ -51,7 +51,7 @@ export default defineNuxtConfig({
     description: 'A Nuxt 4 application deployed on Cloudflare Workers.',
   },
 
-  compatibilityDate: '2026-03-06',
+  compatibilityDate: '2026-03-03',
 
   hooks: {
     // Workaround for nuxt/ui#6118: @nuxt/ui@4.5.0 auto-import scanner

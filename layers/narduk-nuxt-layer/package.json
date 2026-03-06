@@ -5,7 +5,7 @@
   "description": "Narduk Nuxt 4 Layer — shared components, composables, server routes, and Drizzle schema for Cloudflare Workers apps",
   "repository": {
     "type": "git",
-    "url": "https://github.com/narduk-enterprises/imessage-dictionary.git",
+    "url": "https://github.com/narduk-enterprises/imessage-dictionary",
     "directory": "layers/narduk-nuxt-layer"
   },
   "publishConfig": {

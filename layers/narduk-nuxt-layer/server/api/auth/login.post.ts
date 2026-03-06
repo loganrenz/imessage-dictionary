@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { users } from '../../database/schema'
 import { eq } from 'drizzle-orm'
-import { verifyPassword } from '../../utils/password'
+import { verifyUserPassword } from '../../utils/password'
 import { createSession } from '../../utils/auth'
 
 const loginSchema = z.object({
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const isValid = await verifyPassword(body.password, user.passwordHash)
+  const isValid = await verifyUserPassword(body.password, user.passwordHash)
   if (!isValid) {
     throw createError({
       statusCode: 401,

@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { users } from '../../database/schema'
 import { eq } from 'drizzle-orm'
-import { hashPassword } from '../../utils/password'
+import { hashUserPassword } from '../../utils/password'
 import { createSession } from '../../utils/auth'
 
 const registerSchema = z.object({
@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const hashedPassword = await hashPassword(body.password)
+  const hashedPassword = await hashUserPassword(body.password)
   const newUserId = crypto.randomUUID()
 
   await db.insert(users).values({
