@@ -46,7 +46,12 @@ export function useAuth() {
     return data.user
   }
 
-  async function register(params: { email: string; name: string; password: string; [key: string]: unknown }) {
+  async function register(params: {
+    email: string
+    name: string
+    password: string
+    [key: string]: unknown
+  }) {
     const data = await csrfFetch<{ user: AuthUser }>('/api/auth/register', {
       method: 'POST',
       body: params,
@@ -67,5 +72,8 @@ export function useAuth() {
     login,
     register,
     logout,
+    // Backwards compatibility aliases for older fleet applications
+    loggedIn: isAuthenticated,
+    signup: register,
   }
 }

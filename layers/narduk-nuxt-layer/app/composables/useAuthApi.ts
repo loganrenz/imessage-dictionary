@@ -15,7 +15,7 @@ export function useAuthApi() {
     })
   }
 
-  async function register(payload: { name: string; email: string; password: string }) {
+  async function register(payload: { name?: string; email: string; password: string }) {
     return $fetch<{ user: { id: string; name: string; email: string } }>('/api/auth/register', {
       method: 'POST',
       body: payload,
