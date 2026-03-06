@@ -15,6 +15,12 @@ export default defineNuxtConfig({
   ],
   css: [fileURLToPath(new URL('./app/assets/css/main.css', import.meta.url))],
 
+  icon: {
+    serverBundle: {
+      collections: ['lucide'],
+    },
+  },
+
   app: {
     head: {
       link: [
