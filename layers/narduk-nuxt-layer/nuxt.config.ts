@@ -2,7 +2,7 @@ import { fileURLToPath } from 'node:url'
 
 export default defineNuxtConfig({
   alias: {
-    '#layer': fileURLToPath(new URL('./', import.meta.url))
+    '#layer': fileURLToPath(new URL('./', import.meta.url)),
   },
 
   modules: [
@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxtjs/seo',
     '@nuxt/eslint',
+    'nuxt-auth-utils',
   ],
   css: [fileURLToPath(new URL('./app/assets/css/main.css', import.meta.url))],
 
@@ -22,8 +23,8 @@ export default defineNuxtConfig({
         { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
         { rel: 'manifest', href: '/site.webmanifest' },
-      ]
-    }
+      ],
+    },
   },
 
   runtimeConfig: {
@@ -59,9 +60,9 @@ export default defineNuxtConfig({
       for (let i = imports.length - 1; i >= 0; i--) {
         const entry = imports[i]
         if (
-          entry?.name === 'options'
-          && typeof entry.from === 'string'
-          && entry.from.includes('useResizable')
+          entry?.name === 'options' &&
+          typeof entry.from === 'string' &&
+          entry.from.includes('useResizable')
         ) {
           imports.splice(i, 1)
         }
@@ -70,18 +71,20 @@ export default defineNuxtConfig({
   },
 
   future: {
-    compatibilityVersion: 4
+    compatibilityVersion: 4,
   },
 
   ui: {
-    colorMode: true
+    colorMode: true,
   },
 
-  ...(import.meta.dev ? {
-    colorMode: {
-      preference: 'system'
-    }
-  } : {}),
+  ...(import.meta.dev
+    ? {
+        colorMode: {
+          preference: 'system',
+        },
+      }
+    : {}),
 
   ogImage: {
     runtimeCacheStorage: {
@@ -102,16 +105,16 @@ export default defineNuxtConfig({
     preset: 'cloudflare-module',
     esbuild: {
       options: {
-        target: 'esnext'
-      }
+        target: 'esnext',
+      },
     },
     externals: {
-      inline: ['drizzle-orm']
+      inline: ['drizzle-orm'],
     },
   },
 
   // Expose the layer configurations and files to consumers
   components: [
-    { path: fileURLToPath(new URL('./app/components', import.meta.url)), pathPrefix: false }
-  ]
+    { path: fileURLToPath(new URL('./app/components', import.meta.url)), pathPrefix: false },
+  ],
 })

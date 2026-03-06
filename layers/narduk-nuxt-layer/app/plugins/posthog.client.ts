@@ -12,9 +12,21 @@ export default defineNuxtPlugin(() => {
     api_host: (posthogHost as string) || 'https://us.i.posthog.com',
     capture_pageview: false, // We'll handle this manually for Nuxt SPA navigation
     capture_pageleave: true,
+
+    // --- Prevent sendBeacon 64KB payload limit ---
+    // Flush more frequently so less accumulates for the unload beacon
+    flush_interval: 5000, // default 10000ms
+    flush_batch_size: 10, // default 50 — smaller batches = less queued at unload
+
+    // Disable session recording — biggest payload contributor
+    disable_session_recording: true,
+
+    // Use XHR instead of sendBeacon on page unload (avoids 64KB cap entirely)
+    transport: 'XHR',
+
     loaded: (ph) => {
       if (import.meta.dev) ph.debug()
-    }
+    },
   })
 
   // Opt out on localhost
@@ -27,10 +39,10 @@ export default defineNuxtPlugin(() => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   if (!(window as any).$nuxt) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (window as any).$nuxt = {}
+    ;(window as any).$nuxt = {}
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (window as any).$nuxt.$posthog = posthog
+  ;(window as any).$nuxt.$posthog = posthog
 
   // Tag internal traffic and uniquely identify the fleet application
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -43,7 +55,7 @@ export default defineNuxtPlugin(() => {
   // Capture initial pageview since Nuxt router.afterEach does not fire on SSR hydration
   nextTick(() => {
     posthog.capture('$pageview', {
-      $current_url: window.location.href
+      $current_url: window.location.href,
     })
   })
 
@@ -52,14 +64,14 @@ export default defineNuxtPlugin(() => {
   router.afterEach((to) => {
     nextTick(() => {
       posthog.capture('$pageview', {
-        $current_url: window.location.origin + to.fullPath
+        $current_url: window.location.origin + to.fullPath,
       })
     })
   })
 
   return {
     provide: {
-      posthog: posthogClient
-    }
+      posthog: posthogClient,
+    },
   }
 })

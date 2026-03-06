@@ -26,7 +26,6 @@ const strict = args.includes('--strict')
 
 const CRITICAL_FILES = [
   '.github/workflows/ci.yml',
-  '.github/workflows/version-bump.yml',
   'tools/init.ts',
   'tools/validate.ts',
   'tools/update-layer.ts',
@@ -51,8 +50,7 @@ const STALE_FILES = [
 function run(cmd: string): string {
   try {
     return execSync(cmd, { encoding: 'utf-8', stdio: 'pipe', cwd: ROOT_DIR }).trim()
-  }
-  catch {
+  } catch {
     return ''
   }
 }
@@ -61,8 +59,7 @@ function isTemplateRepo(): boolean {
   try {
     const pkg = JSON.parse(readFileSync(join(ROOT_DIR, 'package.json'), 'utf-8'))
     return pkg.name === 'narduk-nuxt-template'
-  }
-  catch {
+  } catch {
     return false
   }
 }
@@ -84,8 +81,7 @@ function getFileAtRef(ref: string, filePath: string): string | null {
       stdio: 'pipe',
       cwd: ROOT_DIR,
     })
-  }
-  catch {
+  } catch {
     return null
   }
 }
@@ -127,11 +123,9 @@ async function main() {
     const localContent = getLocalFile(file)
     if (!localContent) {
       missing.push(file)
-    }
-    else if (localContent !== templateContent) {
+    } else if (localContent !== templateContent) {
       drifted.push(file)
-    }
-    else {
+    } else {
       matched.push(file)
     }
   }
@@ -178,8 +172,7 @@ async function main() {
   if (drifted.length === 0 && missing.length === 0 && stale.length === 0) {
     console.log(' ✅ All infrastructure files are in sync!')
     process.exit(0)
-  }
-  else {
+  } else {
     console.log(` ❌ ${drifted.length} drifted, ${missing.length} missing, ${stale.length} stale`)
     if (strict) {
       console.log('\n  --strict mode: failing CI.')
