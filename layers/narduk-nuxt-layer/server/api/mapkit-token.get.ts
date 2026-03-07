@@ -30,13 +30,16 @@ function getOriginFromRequest(event: H3Event): string {
 }
 
 export default defineEventHandler(async (event) => {
+  const log = useLogger(event).child('MapKit')
   const origin = getOriginFromRequest(event)
 
   try {
     const token = await getMapKitJsToken(event, origin)
+    log.debug('MapKit token generated', { origin })
     return { token }
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Failed to generate MapKit JS token'
+    log.error('MapKit token generation failed', { origin, error: message })
     throw createError({ statusCode: 500, message })
   }
 })

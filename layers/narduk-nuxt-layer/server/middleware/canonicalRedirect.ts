@@ -25,8 +25,9 @@ export default defineEventHandler((event) => {
 
   // Check if the request host matches the canonical host
   if (requestUrl.host !== canonicalOrigin.host) {
-    // Redirect to the canonical host, preserving path and query
+    const log = useLogger(event).child('Redirect')
     const redirectUrl = new URL(requestUrl.pathname + requestUrl.search, canonicalOrigin)
+    log.debug('Canonical redirect', { from: requestUrl.host, to: canonicalOrigin.host })
     return sendRedirect(event, redirectUrl.toString(), 301)
   }
 })

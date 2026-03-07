@@ -1,19 +1,22 @@
 ---
-description: Build and deploy locally via wrangler — refuses to deploy a dirty repo
+description:
+  Build and deploy locally via wrangler — refuses to deploy a dirty repo
 ---
 
 // turbo-all
 
 ## Steps
 
-1. **Guard: Refuse to deploy a dirty repo.** The working tree must be clean (all changes committed).
+1. **Guard: Refuse to deploy a dirty repo.** The working tree must be clean (all
+   changes committed).
 
 ```bash
 git status --porcelain
 ```
 
 - If the output is **empty** → working tree is clean. Continue to step 2.
-- If the output is **non-empty** → there are uncommitted changes. **Stop here.** Stage and commit all changes first:
+- If the output is **non-empty** → there are uncommitted changes. **Stop here.**
+  Stage and commit all changes first:
   ```bash
   git add -A && git commit -m "<conventional commit message>"
   ```

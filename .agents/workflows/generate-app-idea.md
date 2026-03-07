@@ -1,53 +1,84 @@
 ---
-description: Generate an app idea suited for the stack and create an agent prompt to build it
+description:
+  Generate an app idea suited for the stack and create an agent prompt to build
+  it
 ---
 
-This workflow helps you brainstorm app ideas that perfectly fit the template's architecture (Nuxt 4, Cloudflare Workers, D1, Nuxt UI 4), bootstrap a new repo, and generate a prompt for another agent to build the app while auditing the template.
+This workflow helps you brainstorm app ideas that perfectly fit the template's
+architecture (Nuxt 4, Cloudflare Workers, D1, Nuxt UI 4), bootstrap a new repo,
+and generate a prompt for another agent to build the app while auditing the
+template.
 
 ## Step 1: Brainstorm App Ideas
 
 1. Consider what the `narduk-nuxt-template` provides:
-   - **Full-stack SSR** (Nuxt 4 + Cloudflare Workers) — perfect for SEO-heavy content sites
-   - **SQL database** (Cloudflare D1 via Drizzle ORM) — great for CRUD apps, dashboards, user-generated content
-   - **Rich UI components** (Nuxt UI 4 with Pro components — Dashboard, Page, Pricing, Blog, Auth, Chat, Editor)
+   - **Full-stack SSR** (Nuxt 4 + Cloudflare Workers) — perfect for SEO-heavy
+     content sites
+   - **SQL database** (Cloudflare D1 via Drizzle ORM) — great for CRUD apps,
+     dashboards, user-generated content
+   - **Rich UI components** (Nuxt UI 4 with Pro components — Dashboard, Page,
+     Pricing, Blog, Auth, Chat, Editor)
    - **Monorepo architecture** (apps + shared packages)
-   - **Edge-first** — sub-50ms responses globally, ideal for tools people Google for
+   - **Edge-first** — sub-50ms responses globally, ideal for tools people Google
+     for
 
-2. Generate **10** short, diverse app ideas. Each idea should be 1–2 sentences max. **You MUST include a mix of complexity levels and SEO potential:**
+2. Generate **10** short, diverse app ideas. Each idea should be 1–2 sentences
+   max. **You MUST include a mix of complexity levels and SEO potential:**
 
-   **Include at least 2–3 "SEO magnets"** — simple, content-rich tools that target high-volume search queries people Google every day:
-   - Calculators & converters (mortgage, BMI, unit, currency, tip, age, date diff, color, timezone)
-   - Generators (password, QR code, lorem ipsum, UUID, regex, color palette, gradient, favicon, OG image)
-   - Checkers & validators (DNS lookup, SSL checker, broken link finder, email validator, JSON formatter, contrast checker)
-   - Reference & lookup tools (HTTP status codes, HTML entities, cron expression builder, chmod calculator, subnet calculator)
-   - "What is my \_\_\_?" tools (IP address, screen resolution, browser, user agent, location)
+   **Include at least 2–3 "SEO magnets"** — simple, content-rich tools that
+   target high-volume search queries people Google every day:
+   - Calculators & converters (mortgage, BMI, unit, currency, tip, age, date
+     diff, color, timezone)
+   - Generators (password, QR code, lorem ipsum, UUID, regex, color palette,
+     gradient, favicon, OG image)
+   - Checkers & validators (DNS lookup, SSL checker, broken link finder, email
+     validator, JSON formatter, contrast checker)
+   - Reference & lookup tools (HTTP status codes, HTML entities, cron expression
+     builder, chmod calculator, subnet calculator)
+   - "What is my \_\_\_?" tools (IP address, screen resolution, browser, user
+     agent, location)
 
-   **Include at least 2–3 "full-stack complex" ideas** that exercise the entire stack (auth, D1, CRUD, real-time, dashboards):
-   - SaaS dashboards & admin panels (invoice tracker, CRM, project board, analytics dashboard)
-   - Multi-user collaborative tools (shared lists, kanban, polls, wikis, code snippet sharing)
-   - Marketplace & directory platforms (job board, recipe collection, event calendar, resource directory)
-   - Data-intensive apps (expense tracker with charts, habit tracker with streaks, workout logger with progress)
-   - API-powered tools (weather dashboard, stock watchlist, news aggregator, social media scheduler)
+   **Include at least 2–3 "full-stack complex" ideas** that exercise the entire
+   stack (auth, D1, CRUD, real-time, dashboards):
+   - SaaS dashboards & admin panels (invoice tracker, CRM, project board,
+     analytics dashboard)
+   - Multi-user collaborative tools (shared lists, kanban, polls, wikis, code
+     snippet sharing)
+   - Marketplace & directory platforms (job board, recipe collection, event
+     calendar, resource directory)
+   - Data-intensive apps (expense tracker with charts, habit tracker with
+     streaks, workout logger with progress)
+   - API-powered tools (weather dashboard, stock watchlist, news aggregator,
+     social media scheduler)
 
    **Fill the remaining slots with mid-complexity ideas** from any category:
-   - Productivity & planning (pomodoro timer, bookmark manager, reading list, meal planner)
-   - Creative & media (meme maker, image compressor, markdown editor, font previewer)
-   - Education & learning (flashcards, quiz builder, typing speed test, language vocab trainer)
-   - Community & social (forum, link aggregator, review board, anonymous feedback wall)
+   - Productivity & planning (pomodoro timer, bookmark manager, reading list,
+     meal planner)
+   - Creative & media (meme maker, image compressor, markdown editor, font
+     previewer)
+   - Education & learning (flashcards, quiz builder, typing speed test, language
+     vocab trainer)
+   - Community & social (forum, link aggregator, review board, anonymous
+     feedback wall)
    - Personal tools (journal, budget tracker, countdown timer, wishlist manager)
-   - Niche verticals (pet tracker, plant care log, D&D character sheet, recipe scaler, wine cellar)
-   - Games & entertainment (trivia, word puzzle, daily challenge, leaderboard app)
+   - Niche verticals (pet tracker, plant care log, D&D character sheet, recipe
+     scaler, wine cellar)
+   - Games & entertainment (trivia, word puzzle, daily challenge, leaderboard
+     app)
 
 3. For each idea, tag it with a complexity indicator:
-   - 🟢 **Simple** — 1–3 pages, minimal/no D1, high SEO value, can be built in one session
+   - 🟢 **Simple** — 1–3 pages, minimal/no D1, high SEO value, can be built in
+     one session
    - 🟡 **Medium** — 3–6 pages, some D1 tables, moderate features
-   - 🔴 **Complex** — full dashboard/auth/CRUD, multiple D1 tables, rich interactions
+   - 🔴 **Complex** — full dashboard/auth/CRUD, multiple D1 tables, rich
+     interactions
 
 4. Present all 10 to the user and let them pick (or remix).
 
 ## Step 2: Bootstrap the Repository
 
-Once the user selects an app idea, **you** (the current agent) perform the bootstrap directly:
+Once the user selects an app idea, **you** (the current agent) perform the
+bootstrap directly:
 
 // turbo-all
 
@@ -72,11 +103,13 @@ Once the user selects an app idea, **you** (the current agent) perform the boots
    cd ~/new-code/<app-name> && git add . && git commit -m "chore: initialize from narduk-nuxt-template" && git push -u origin main
    ```
 
-**Do NOT run `pnpm run setup`.** That will be handled by the next agent in the project workspace.
+**Do NOT run `pnpm run setup`.** That will be handled by the next agent in the
+project workspace.
 
 ## Step 3: Generate the Build Prompt and Copy to Clipboard
 
-Generate a single prompt for the user to paste into a new Antigravity window opened at `~/new-code/<app-name>`. Copy it to the clipboard using `pbcopy`.
+Generate a single prompt for the user to paste into a new Antigravity window
+opened at `~/new-code/<app-name>`. Copy it to the clipboard using `pbcopy`.
 
 The prompt **must** contain three sections:
 
@@ -96,16 +129,19 @@ Then instruct the agent to:
 
 1. Run `pnpm run validate` to confirm infrastructure is correctly provisioned.
 2. Run `pnpm run db:migrate` to apply the base schema to local D1.
-3. Run `pnpm --filter <app-name> run quality` to confirm zero pre-existing errors in the app scope.
+3. Run `pnpm --filter <app-name> run quality` to confirm zero pre-existing
+   errors in the app scope.
 4. Read `AGENTS.md` and `tools/AGENTS.md`.
 
 ### Section 2: Build the App
 
 Define the specific features:
 
-- **Database Schema:** Tables, columns, and Drizzle models in `apps/web/server/database/schema.ts`.
+- **Database Schema:** Tables, columns, and Drizzle models in
+  `apps/web/server/database/schema.ts`.
 - **API Routes:** Nitro/Worker endpoints, D1 interactions, validation logic.
-- **Frontend UI:** Pages, components, design requirements using Nuxt UI 4 and the shared `narduk-nuxt-layer` design system.
+- **Frontend UI:** Pages, components, design requirements using Nuxt UI 4 and
+  the shared `narduk-nuxt-layer` design system.
 
 **CRITICAL: Include these setup-saving instructions in Section 2:**
 
@@ -113,9 +149,14 @@ Define the specific features:
 >
 > When adding app-specific tables beyond the layer's base schema:
 >
-> 1. Create `apps/web/server/database/schema.ts` — re-export the layer schema first (`export * from '#layer/server/database/schema'`), then define your app tables below.
-> 2. Create `apps/web/server/utils/database.ts` — export `useAppDatabase(event)` using YOUR full schema (layer + app tables).
-> 3. Use `useAppDatabase(event)` in ALL app server routes — **NEVER** use the auto-imported `useDatabase` from the layer (it only sees layer tables and Nitro will warn about "Duplicated imports" if you shadow its name).
+> 1. Create `apps/web/server/database/schema.ts` — re-export the layer schema
+>    first (`export * from '#layer/server/database/schema'`), then define your
+>    app tables below.
+> 2. Create `apps/web/server/utils/database.ts` — export `useAppDatabase(event)`
+>    using YOUR full schema (layer + app tables).
+> 3. Use `useAppDatabase(event)` in ALL app server routes — **NEVER** use the
+>    auto-imported `useDatabase` from the layer (it only sees layer tables and
+>    Nitro will warn about "Duplicated imports" if you shadow its name).
 >
 > ### Server Import Rule
 >
@@ -123,23 +164,31 @@ Define the specific features:
 >
 > - ✅ `import { schema } from '#server/database/schema'`
 > - ✅ `import { useAppDatabase } from '#server/utils/database'`
-> - ❌ `import { schema } from '../../../database/schema'` (breaks `nuxt typecheck`)
+> - ❌ `import { schema } from '../../../database/schema'` (breaks
+>   `nuxt typecheck`)
 >
 > ### Quality Scope
 >
-> Only run quality/typecheck scoped to the app: `pnpm --filter <app-name> run quality`.
-> Do NOT run workspace-root quality — layer warnings are pre-existing and not your concern.
+> Only run quality/typecheck scoped to the app:
+> `pnpm --filter <app-name> run quality`. Do NOT run workspace-root quality —
+> layer warnings are pre-existing and not your concern.
 
 ### Section 2b: Brand Identity
 
-Instruct the agent to run the `/generate-brand-identity` workflow (`.agents/workflows/generate-brand-identity.md`) after the app is built and functional. This ensures every new app ships with an intentional visual identity — theme colors, typography, favicons, imagery, and design polish — instead of default template styling.
+Instruct the agent to run the `/generate-brand-identity` workflow
+(`.agents/workflows/generate-brand-identity.md`) after the app is built and
+functional. This ensures every new app ships with an intentional visual identity
+— theme colors, typography, favicons, imagery, and design polish — instead of
+default template styling.
 
 ### Section 3: Template Audit & Issue Reporting
 
 Instruct the agent to create `audit_report.md` capturing friction across:
 
-- **Initialization:** `pnpm run setup` results, string replacements, missing dependencies.
-- **Database & CLI:** Drizzle migrations, `wrangler`, `nitro-cloudflare-dev` binding.
+- **Initialization:** `pnpm run setup` results, string replacements, missing
+  dependencies.
+- **Database & CLI:** Drizzle migrations, `wrangler`, `nitro-cloudflare-dev`
+  binding.
 - **Monorepo Layers:** Module resolution, layer inheritance issues.
 - **Type Safety:** TypeScript errors, auto-import type failures.
 - **Agent Experience:** Adequacy of `AGENTS.md` and documentation.
@@ -149,7 +198,8 @@ Instruct the agent to create `audit_report.md` capturing friction across:
 
 After copying the prompt to clipboard, tell the user:
 
-> Bootstrap complete! Open `~/new-code/<app-name>` in a new Antigravity window and paste (Cmd+V).
+> Bootstrap complete! Open `~/new-code/<app-name>` in a new Antigravity window
+> and paste (Cmd+V).
 
 ---
 
@@ -158,11 +208,13 @@ After copying the prompt to clipboard, tell the user:
 ```markdown
 # Role and Objective
 
-You are an expert Nuxt 4, Cloudflare Workers, and Vue developer. You have been dropped into a newly cloned monorepo based on `narduk-nuxt-template`.
+You are an expert Nuxt 4, Cloudflare Workers, and Vue developer. You have been
+dropped into a newly cloned monorepo based on `narduk-nuxt-template`.
 
 **You have a triple mission:**
 
-1. **Build "[App Name]"**: [app description] using Nuxt 4, Cloudflare D1, and Nuxt UI 4.
+1. **Build "[App Name]"**: [app description] using Nuxt 4, Cloudflare D1, and
+   Nuxt UI 4.
 2. **Brand Identity & SEO Excellence**: Make it stunning and discoverable.
 3. **Template Audit**: Report any friction, broken types, or tooling failures.
 
@@ -170,7 +222,8 @@ You are an expert Nuxt 4, Cloudflare Workers, and Vue developer. You have been d
 
 ## Step 0: Project Setup
 
-First, verify your git remote is correctly set (setup needs this for GitHub secrets):
+First, verify your git remote is correctly set (setup needs this for GitHub
+secrets):
 ```
 
 git remote -v
@@ -179,14 +232,16 @@ git remote -v
 If no remote exists, or it still points to `narduk-nuxt-template`, fix it:
 ```
 
-git remote remove origin 2>/dev/null; git remote add origin https://github.com/narduk-enterprises/<app-name>.git
+git remote remove origin 2>/dev/null; git remote add origin
+https://github.com/narduk-enterprises/<app-name>.git
 
 ```
 
 Run the setup script (the script is NOT interactive). This handles ALL initialization including D1 provisioning, Doppler setup, example app cleanup, and favicon generation:
 ```
 
-pnpm run setup -- --name="<app-name>" --display="<Display Name>" --url="https://<app-name>.nard.uk"
+pnpm run setup -- --name="<app-name>" --display="<Display Name>"
+--url="https://<app-name>.nard.uk"
 
 ```
 
@@ -194,13 +249,11 @@ pnpm run setup -- --name="<app-name>" --display="<Display Name>" --url="https://
 
 After setup completes, verify everything is healthy:
 
-```
-
+```bash
 pnpm run validate
 pnpm run db:migrate
 pnpm --filter <app-name> run quality
-
-````
+```
 
 If quality passes with zero errors and zero warnings, proceed. If not, fix any issues before building.
 
@@ -313,8 +366,4 @@ Create `audit_report.md` answering:
 - `audit_report.md` with brutally honest feedback.
 
 **CRITICAL RULE:** If you encounter errors or warnings, you must fix them properly. Do NOT use hacky monkey fixes, `@ts-expect-error`, or suppressions. Solve the actual root cause.
-
 ```
-
-```
-````

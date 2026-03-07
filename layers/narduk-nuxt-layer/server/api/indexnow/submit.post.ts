@@ -13,8 +13,9 @@
  *     -d '{"urls": ["https://your-site.com/", "https://your-site.com/about"]}'
  */
 export default defineEventHandler(async (event) => {
-  // Rate limit: max 5 submissions per minute per IP
-  await enforceRateLimit(event, 'indexnow', 5, 60_000)
+  const log = useLogger(event).child('IndexNow')
+  // Rate limit: max 30 submissions per minute per IP
+  await enforceRateLimit(event, 'indexnow', 30, 60_000)
 
   const config = useRuntimeConfig(event)
   const key = String(config.public.indexNowKey ?? '')
@@ -66,7 +67,7 @@ export default defineEventHandler(async (event) => {
       })
     } catch (_error: unknown) {
       const message = _error instanceof Error ? _error.message : String(_error)
-      console.warn(`[IndexNow] Failed to ping ${engine}:`, message)
+      log.warn(`Failed to ping ${engine}`, { error: message })
       results.push({
         engine,
         status: 0,
@@ -74,6 +75,8 @@ export default defineEventHandler(async (event) => {
       })
     }
   }
+
+  log.info('IndexNow submitted', { count: urls.length, results })
 
   return {
     submitted: urls.length,

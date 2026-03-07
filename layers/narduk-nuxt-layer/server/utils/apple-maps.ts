@@ -14,26 +14,13 @@ export interface AppleMapsCreds {
   appleSecretKey: string
 }
 
-interface AppleTokenResponse {
-  accessToken?: string
-  expiresInSeconds?: number | string
-}
-
-let cachedAccessToken = ''
-let cachedAccessTokenExpiresAt = 0
 let cachedDeveloperToken = ''
 let cachedDeveloperTokenExpiresAt = 0
 
-const ACCESS_TOKEN_REFRESH_WINDOW_MS = 60_000
 const DEVELOPER_TOKEN_REFRESH_WINDOW_MS = 60_000
 
 function normalizePrivateKey(secretKey: string) {
   return secretKey.includes('\\n') ? secretKey.replaceAll('\\n', '\n') : secretKey
-}
-
-function toNumber(value: unknown, fallback: number) {
-  const parsed = Number(value)
-  return Number.isFinite(parsed) ? parsed : fallback
 }
 
 function decodeJwtPayload(token: string) {
@@ -106,30 +93,6 @@ export async function getDeveloperToken(config: AppleMapsCreds) {
   cachedDeveloperTokenExpiresAt = expiresAtSeconds * 1000
 
   return token
-}
-
-export async function getAccessToken(developerToken: string) {
-  const now = Date.now()
-  if (cachedAccessToken && cachedAccessTokenExpiresAt > now + ACCESS_TOKEN_REFRESH_WINDOW_MS) {
-    return cachedAccessToken
-  }
-
-  const tokenResponse = await $fetch<AppleTokenResponse>('https://maps-api.apple.com/v1/token', {
-    headers: {
-      Authorization: `Bearer ${developerToken}`,
-    },
-  })
-
-  const accessToken = String(tokenResponse.accessToken || '')
-  if (!accessToken) {
-    throw new Error('Apple Maps access token exchange failed')
-  }
-
-  const expiresInSeconds = Math.max(toNumber(tokenResponse.expiresInSeconds, 1800), 60)
-  cachedAccessToken = accessToken
-  cachedAccessTokenExpiresAt = now + expiresInSeconds * 1000
-
-  return accessToken
 }
 
 // --- Search API ---

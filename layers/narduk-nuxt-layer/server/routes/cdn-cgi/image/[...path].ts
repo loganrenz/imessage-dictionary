@@ -8,6 +8,7 @@
  * Only allows redirects to `/_og/` paths to prevent open-redirect abuse.
  */
 export default defineEventHandler(async (event) => {
+  const log = useLogger(event).child('Images')
   const rawPath = getRouterParam(event, 'path') || ''
 
   const segments = rawPath.split('/').filter(Boolean)
@@ -28,5 +29,6 @@ export default defineEventHandler(async (event) => {
     forwarded.searchParams.set(key, value)
   }
 
+  log.debug('CDN image redirect', { targetPath })
   return sendRedirect(event, `${forwarded.pathname}${forwarded.search}`, 302)
 })

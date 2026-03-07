@@ -1,18 +1,26 @@
 ---
-description: Generate and persist a complete design system using the uipro skill — styles, palettes, typography, effects, and anti-patterns
+description:
+  Generate and persist a complete design system using the uipro skill — styles,
+  palettes, typography, effects, and anti-patterns
 ---
 
 # Enhance Design System
 
-This workflow uses the `ui-ux-pro-max` skill (installed via `uipro` CLI) to generate a comprehensive, project-specific design system. The design system provides curated styles, color palettes, typography, effects, and anti-patterns tailored to your app's domain.
+This workflow uses the `ui-ux-pro-max` skill (installed via `uipro` CLI) to
+generate a comprehensive, project-specific design system. The design system
+provides curated styles, color palettes, typography, effects, and anti-patterns
+tailored to your app's domain.
 
-> **Prerequisite:** The `uipro` skill must be installed. Run `uipro init --ai antigravity` from the project root if `.agent/skills/ui-ux-pro-max/` does not exist.
+> **Prerequisite:** The `uipro` skill must be installed. Run
+> `uipro init --ai antigravity` from the project root if
+> `.agent/skills/ui-ux-pro-max/` does not exist.
 
 > **Related workflows:**
 >
 > - `/audit-nuxt-ui-pro` — Nuxt UI Pro component adoption audit
 > - `/enhance-ui-ux` — UX enhancement & polish using uipro skill
-> - `/generate-brand-identity` — Full brand identity workflow (logo, colors, fonts)
+> - `/generate-brand-identity` — Full brand identity workflow (logo, colors,
+>   fonts)
 
 ---
 
@@ -20,22 +28,23 @@ This workflow uses the `ui-ux-pro-max` skill (installed via `uipro` CLI) to gene
 
 Before generating, understand what you're designing for.
 
-// turbo
-`cat nuxt.config.ts | head -30`
+// turbo `cat nuxt.config.ts | head -30`
 
 // turbo
 `cat app/app.config.ts 2>/dev/null | head -30 || echo "No app.config.ts found"`
 
-// turbo
-`ls app/pages/ 2>/dev/null`
+// turbo `ls app/pages/ 2>/dev/null`
 
 Identify:
 
 - **App name** — from `nuxt.config.ts` or `package.json`
-- **Product type** — SaaS, e-commerce, portfolio, dashboard, landing page, content site, etc.
+- **Product type** — SaaS, e-commerce, portfolio, dashboard, landing page,
+  content site, etc.
 - **Industry** — fintech, healthcare, gaming, education, beauty, etc.
-- **Style keywords** — minimal, playful, professional, elegant, dark mode, industrial, etc.
-- **Current theme** — check `app/assets/css/main.css` for existing `@theme` tokens
+- **Style keywords** — minimal, playful, professional, elegant, dark mode,
+  industrial, etc.
+- **Current theme** — check `app/assets/css/main.css` for existing `@theme`
+  tokens
 
 ---
 
@@ -127,7 +136,8 @@ For Vue/Nuxt implementation best practices:
 python3 .agent/skills/ui-ux-pro-max/scripts/search.py "layout responsive form animation" --stack vue
 ```
 
-Available stacks: `html-tailwind`, `react`, `nextjs`, `vue`, `svelte`, `swiftui`, `react-native`, `flutter`, `shadcn`, `jetpack-compose`
+Available stacks: `html-tailwind`, `react`, `nextjs`, `vue`, `svelte`,
+`swiftui`, `react-native`, `flutter`, `shadcn`, `jetpack-compose`
 
 ---
 
@@ -135,12 +145,15 @@ Available stacks: `html-tailwind`, `react`, `nextjs`, `vue`, `svelte`, `swiftui`
 
 Take the generated design system and apply it to the app:
 
-1. **Colors** → Update `app/assets/css/main.css` `@theme` block with recommended palette
-2. **Typography** → Update `@theme` font families, ensure `@nuxt/fonts` loads them
+1. **Colors** → Update `app/assets/css/main.css` `@theme` block with recommended
+   palette
+2. **Typography** → Update `@theme` font families, ensure `@nuxt/fonts` loads
+   them
 3. **Effects** → Add recommended shadows, gradients, and animations to the theme
 4. **Anti-patterns** → Remove any flagged patterns from existing code
 
-Cross-reference with `/generate-brand-identity` for full logo, favicon, and OG image generation.
+Cross-reference with `/generate-brand-identity` for full logo, favicon, and OG
+image generation.
 
 ---
 

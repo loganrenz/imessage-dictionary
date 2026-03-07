@@ -8,6 +8,21 @@ vi.stubGlobal('createError', (opts: { statusCode: number; message: string }) => 
   return err
 })
 
+// Mock useRuntimeConfig auto-import (required by useLogger → resolveLogLevel)
+vi.stubGlobal('useRuntimeConfig', () => ({ logLevel: 'silent' }))
+
+// Stub useLogger auto-import — returns a silent no-op logger with child() support
+function createNoopLogger(): {
+  debug: () => void
+  info: () => void
+  warn: () => void
+  error: () => void
+  child: () => ReturnType<typeof createNoopLogger>
+} {
+  return { debug() {}, info() {}, warn() {}, error() {}, child: () => createNoopLogger() }
+}
+vi.stubGlobal('useLogger', () => createNoopLogger())
+
 describe('withD1Cache', () => {
   beforeEach(() => {
     vi.clearAllMocks()

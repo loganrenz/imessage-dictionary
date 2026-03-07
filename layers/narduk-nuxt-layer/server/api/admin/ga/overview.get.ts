@@ -3,9 +3,33 @@ import { z } from 'zod'
 const querySchema = z.object({
   startDate: z.string().optional(),
   endDate: z.string().optional(),
+  noCache: z.coerce.boolean().optional(),
 })
 
+interface GaMetricValue {
+  value: string
+}
+
+interface GaTotalsRow {
+  metricValues?: GaMetricValue[]
+}
+
+interface GaDimensionValue {
+  value: string
+}
+
+interface GaRow {
+  dimensionValues?: GaDimensionValue[]
+  metricValues?: GaMetricValue[]
+}
+
+interface GaReportResponse {
+  totals?: GaTotalsRow[]
+  rows?: GaRow[]
+}
+
 export default defineEventHandler(async (event) => {
+  const log = useLogger(event).child('Analytics')
   await requireAdmin(event)
 
   const config = useRuntimeConfig()
@@ -16,47 +40,60 @@ export default defineEventHandler(async (event) => {
   }
 
   const query = await getValidatedQuery(event, querySchema.parse)
+  const { startDate, endDate } = resolveAnalyticsDateRange(query)
 
-  const endDate = query.endDate
-    ? String(query.endDate)
-    : (new Date().toISOString().split('T')[0] ?? '')
-  const start = new Date(endDate)
-  start.setDate(start.getDate() - 30)
-  const startDate = query.startDate
-    ? String(query.startDate)
-    : (start.toISOString().split('T')[0] ?? '')
+  const cacheKey = `ga:overview:${propertyId}:${startDate}:${endDate}`
 
   try {
-    const data = (await googleApiFetch(
-      `https://analyticsdata.googleapis.com/v1beta/properties/${propertyId}:runReport`,
-      GA_SCOPES,
-      {
-        method: 'POST',
-        body: JSON.stringify({
-          dateRanges: [{ startDate, endDate }],
-          metrics: [
-            { name: 'activeUsers' },
-            { name: 'sessions' },
-            { name: 'screenPageViews' },
-            { name: 'bounceRate' },
-            { name: 'averageSessionDuration' },
-          ],
-          dimensions: [{ name: 'date' }],
-        }),
-      },
-    )) as Record<string, unknown>
+    const { data, cached, fetchedAt } = await cachedAnalyticsFetch(
+      cacheKey,
+      async () => {
+        const raw = (await googleApiFetch(
+          `https://analyticsdata.googleapis.com/v1beta/properties/${propertyId}:runReport`,
+          GA_SCOPES,
+          {
+            method: 'POST',
+            body: JSON.stringify({
+              dateRanges: [{ startDate, endDate }],
+              metrics: [
+                { name: 'activeUsers' },
+                { name: 'sessions' },
+                { name: 'screenPageViews' },
+                { name: 'bounceRate' },
+                { name: 'averageSessionDuration' },
+              ],
+              dimensions: [{ name: 'date' }],
+            }),
+          },
+        )) as GaReportResponse
 
-    const totals = data.totals as Array<{ metricValues?: Array<{ value: string }> }> | undefined
-    const rows = data.rows as Array<Record<string, unknown>> | undefined
+        return {
+          totals: raw.totals?.[0]?.metricValues || [],
+          rows: raw.rows || [],
+        }
+      },
+      query.noCache ? 0 : undefined,
+    )
+
+    log.debug('GA overview fetched', { startDate, endDate, cached })
 
     return {
-      totals: totals?.[0]?.metricValues || [],
-      rows: rows || [],
+      ...data,
       startDate,
       endDate,
+      cached,
+      fetchedAt,
     }
   } catch (error: unknown) {
+    if (error instanceof GoogleApiError) {
+      log.error('GA overview failed', { status: error.status, error: error.message })
+      throw createError({
+        statusCode: error.status,
+        statusMessage: `GA4 Error: ${error.message}`,
+      })
+    }
     const err = error as { statusCode?: number; statusMessage?: string; message?: string }
+    log.error('GA overview failed', { error: err.statusMessage || err.message })
     throw createError({
       statusCode: err.statusCode || 500,
       statusMessage: `GA4 Error: ${err.statusMessage || err.message}`,

@@ -11,6 +11,7 @@
 import { useR2 } from '../../utils/r2'
 
 export default defineEventHandler(async (event) => {
+  const log = useLogger(event).child('Images')
   const slug = getRouterParam(event, 'slug')
   if (!slug) {
     throw createError({ statusCode: 400, message: 'Missing image path' })
@@ -20,6 +21,7 @@ export default defineEventHandler(async (event) => {
   const object = await r2.get(slug)
 
   if (!object) {
+    log.warn('Image not found', { slug })
     throw createError({ statusCode: 404, message: 'Image not found' })
   }
 
@@ -31,5 +33,6 @@ export default defineEventHandler(async (event) => {
     ETag: object.httpEtag,
   })
 
+  log.debug('Image served', { slug, contentType })
   return object.body
 })

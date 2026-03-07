@@ -198,43 +198,63 @@ async function main() {
 
   // 4. GitHub Secret
   console.log('\nStep 4/6: Validating GitHub Secrets...')
-  let targetRepoFlag = ''
+
+  // Check if gh CLI is available before attempting to list secrets
+  let ghAvailable = false
   try {
-    const remotesOutput = execSync('git remote -v', { encoding: 'utf-8', stdio: 'pipe' })
-    const remotes = remotesOutput.split('\n').filter(Boolean)
-    const targetRemoteLine = remotes.find(
-      (line) => !line.includes('narduk-nuxt-template') && line.includes('(push)'),
-    )
-    if (targetRemoteLine) {
-      let url = targetRemoteLine.split(/\s+/)[1]
-      url = url
-        .replace(/^(https?:\/\/|git@)/, '')
-        .replace(/^github\.com[:/]/, '')
-        .replace(/\.git$/, '')
-      if (url) {
-        targetRepoFlag = `--repo "${url}"`
-        console.log(`  🎯 Checking secrets for repository: ${url}`)
-      }
-    }
+    execSync('gh --version', { encoding: 'utf-8', stdio: 'pipe' })
+    ghAvailable = true
   } catch {
-    // Ignore error
+    /* gh not installed */
   }
 
-  try {
-    const ghOutput = execSync(`gh secret list ${targetRepoFlag}`, {
-      encoding: 'utf-8',
-      stdio: 'pipe',
-    })
-    if (ghOutput.includes('DOPPLER_TOKEN')) {
-      console.log(`  ✅ DOPPLER_TOKEN is set in GitHub repository.`)
-    } else {
-      console.error('  ❌ DOPPLER_TOKEN is missing from GitHub repository.')
-      allGood = false
+  if (!ghAvailable) {
+    console.log('  ⏭ GitHub CLI (gh) not installed — skipping secret validation.')
+    console.log('     Install: https://cli.github.com/ then run `gh auth login`.')
+  } else {
+    let targetRepoFlag = ''
+    try {
+      const remotesOutput = execSync('git remote -v', { encoding: 'utf-8', stdio: 'pipe' })
+      const remotes = remotesOutput.split('\n').filter(Boolean)
+      const targetRemoteLine = remotes.find(
+        (line) => !line.includes('narduk-nuxt-template') && line.includes('(push)'),
+      )
+      if (targetRemoteLine) {
+        let url = targetRemoteLine.split(/\s+/)[1]
+        url = url
+          .replace(/^(https?:\/\/|git@)/, '')
+          .replace(/^github\.com[:/]/, '')
+          .replace(/\.git$/, '')
+        if (url) {
+          targetRepoFlag = `--repo "${url}"`
+          console.log(`  🎯 Checking secrets for repository: ${url}`)
+        }
+      }
+    } catch {
+      // Ignore error
     }
-  } catch (error: any) {
-    const stderr = error.stderr || error.message || ''
-    console.error(`  ❌ Failed to list GitHub secrets: ${stderr}`)
-    allGood = false
+
+    try {
+      const ghOutput = execSync(`gh secret list ${targetRepoFlag}`, {
+        encoding: 'utf-8',
+        stdio: 'pipe',
+      })
+      if (ghOutput.includes('DOPPLER_TOKEN')) {
+        console.log(`  ✅ DOPPLER_TOKEN is set in GitHub repository.`)
+      } else {
+        console.error('  ❌ DOPPLER_TOKEN is missing from GitHub repository.')
+        allGood = false
+      }
+    } catch (error: any) {
+      const stderr = error.stderr || error.message || ''
+      if (stderr.includes('not logged') || stderr.includes('auth login')) {
+        console.log('  ⏭ GitHub CLI not authenticated — skipping secret validation.')
+        console.log('     Run `gh auth login` and re-run validate.')
+      } else {
+        console.error(`  ❌ Failed to list GitHub secrets: ${stderr}`)
+        allGood = false
+      }
+    }
   }
 
   // 5. Package.json health (critical deps + script database names)

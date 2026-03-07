@@ -1,10 +1,17 @@
 ---
-description: Google Antigravity workflow — Nuxt 4 + narduk-nuxt-template compliance audit & mechanical refactor. Eliminates broad runtime warning classes (transition roots, routing invariants, suspense/async boundaries, hydration drift) plus monorepo + Cloudflare edge gotchas.
+description:
+  Google Antigravity workflow — Nuxt 4 + narduk-nuxt-template compliance audit &
+  mechanical refactor. Eliminates broad runtime warning classes (transition
+  roots, routing invariants, suspense/async boundaries, hydration drift) plus
+  monorepo + Cloudflare edge gotchas.
 ---
 
 # /nuxt-4-compliance-and-runtime-warnings
 
-You are an autonomous Nuxt 4 auditor + refactor agent operating inside the **narduk-nuxt-template PNPM monorepo**. Harden the repo to Nuxt 4 best practices and eliminate **classes** of runtime warnings/dev-console noise (no one-off symptom chasing).
+You are an autonomous Nuxt 4 auditor + refactor agent operating inside the
+**narduk-nuxt-template PNPM monorepo**. Harden the repo to Nuxt 4 best practices
+and eliminate **classes** of runtime warnings/dev-console noise (no one-off
+symptom chasing).
 
 Do not ask the user questions.
 
@@ -36,7 +43,8 @@ Capture and record exact versions + paths:
 Record (per app):
 
 - Rendering posture: SSR vs hybrid vs prerender usage, route rules strategy
-- Deployment posture: Cloudflare target, Nitro preset, wrangler config source of truth
+- Deployment posture: Cloudflare target, Nitro preset, wrangler config source of
+  truth
 - Module inventory (Nuxt UI 4, SEO suite, analytics, security)
 
 Write into `NUXT_4_COMPLIANCE_REPORT.md`:
@@ -111,12 +119,14 @@ Inventory:
 
 Standardize ONE pattern:
 
-- If a target is invalid/missing, render a non-link element with identical visuals/ARIA.
+- If a target is invalid/missing, render a non-link element with identical
+  visuals/ARIA.
 - No `to=undefined`, no empty strings, no malformed route objects.
 
 Actions:
 
-- Introduce a small `safeLinkTarget()` helper (or typed prop guard) if it reduces repetition.
+- Introduce a small `safeLinkTarget()` helper (or typed prop guard) if it
+  reduces repetition.
 - Refactor all conditional-link UI to enforce invariants.
 
 Report: “Routing Invariants” (patterns + files)
@@ -173,10 +183,14 @@ Audit:
 
 Actions:
 
-- Enforce request-time access for Cloudflare env/bindings (no module-top-level reads).
-- Ensure D1 is accessed via the existing fleet pattern (do not invent a new adapter layer).
-- Normalize wrangler config strategy (Nitro-generated vs repo-owned) and stop drift.
-- Add a minimal “edge runtime assertions” utility that throws clear errors in dev if bindings are missing.
+- Enforce request-time access for Cloudflare env/bindings (no module-top-level
+  reads).
+- Ensure D1 is accessed via the existing fleet pattern (do not invent a new
+  adapter layer).
+- Normalize wrangler config strategy (Nitro-generated vs repo-owned) and stop
+  drift.
+- Add a minimal “edge runtime assertions” utility that throws clear errors in
+  dev if bindings are missing.
 
 Report: “Edge Runtime & D1”
 
@@ -196,7 +210,8 @@ Actions:
 
 - Normalize to one Nuxt UI generation per repo (or isolate intentionally).
 - Remove accidental duplicates and align versions in root constraints.
-- If icon collections are used, centralize config in the layer and avoid per-app duplication.
+- If icon collections are used, centralize config in the layer and avoid per-app
+  duplication.
 
 Report: “Monorepo Resolution”
 
@@ -217,7 +232,8 @@ Actions:
 
 - Ensure a single consistent SEO config source (prefer layer).
 - Normalize canonical/base URL and absolute OG image URLs.
-- If sitemap images are expected, implement the module-supported images strategy and ensure layout structure supports scanning when used.
+- If sitemap images are expected, implement the module-supported images strategy
+  and ensure layout structure supports scanning when used.
 - Ensure robots/sitemap endpoints are correct per app.
 
 Report: “SEO Gotchas”

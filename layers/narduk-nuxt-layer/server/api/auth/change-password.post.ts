@@ -9,7 +9,8 @@ const changePasswordSchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-  await enforceRateLimit(event, 'auth-change-password', 5, 60_000)
+  const log = useLogger(event).child('Auth')
+  await enforceRateLimit(event, 'auth-change-password', 20, 60_000)
 
   const user = await requireAuth(event)
   const body = await readValidatedBody(event, changePasswordSchema.parse)
@@ -26,6 +27,7 @@ export default defineEventHandler(async (event) => {
 
   const isValid = await verifyUserPassword(body.currentPassword, dbUser.passwordHash)
   if (!isValid) {
+    log.warn('Password change failed — invalid current password', { userId: user.id })
     throw createError({
       statusCode: 400,
       statusMessage: 'Invalid current password',
@@ -43,5 +45,6 @@ export default defineEventHandler(async (event) => {
     .where(eq(users.id, user.id))
     .run()
 
+  log.info('Password changed', { userId: user.id })
   return { success: true }
 })

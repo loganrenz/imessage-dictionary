@@ -154,7 +154,7 @@ async function onDemoLogin() {
     <!-- Extra content above the form -->
     <slot name="before-form" />
 
-    <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+    <UForm :schema="schema" :state="state" class="space-y-4" @submit.prevent="onSubmit">
       <UFormField name="email" label="Email">
         <UInput
           v-model="state.email"
@@ -176,13 +176,12 @@ async function onDemoLogin() {
       </UFormField>
 
       <UButton
-        type="button"
+        type="submit"
         color="primary"
         class="w-full"
         :loading="loading"
         block
         data-testid="auth-login-submit"
-        @click="onSubmit"
       >
         Sign In
       </UButton>
