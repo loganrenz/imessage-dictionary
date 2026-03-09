@@ -1,22 +1,35 @@
 ---
-description: Holistic brand identity workflow — audits the app's purpose, reinvents or refines its visual identity, generates all creative assets, and applies end-to-end design polish
+description:
+  Holistic brand identity workflow — audits the app's purpose, reinvents or
+  refines its visual identity, generates all creative assets, and applies
+  end-to-end design polish
 ---
 
 # /generate-brand-identity
 
-Transform a Nuxt 4 app from functional skeleton into a visually stunning, emotionally resonant product with a unified brand identity. This is not a checklist — it is a creative brief. Study the app, understand its soul, and craft something beautiful.
+Transform a Nuxt 4 app from functional skeleton into a visually stunning,
+emotionally resonant product with a unified brand identity. This is not a
+checklist — it is a creative brief. Study the app, understand its soul, and
+craft something beautiful.
 
-> **Your mandate:** Every decision — color, type, radius, shadow, animation — should feel _intentional_, as though a senior brand designer spent a week on it. Generic is failure. Boring is unacceptable.
+> **Your mandate:** Every decision — color, type, radius, shadow, animation —
+> should feel _intentional_, as though a senior brand designer spent a week on
+> it. Generic is failure. Boring is unacceptable.
 
-> **Autonomy:** You are the creative director. **Do not ask the user any questions.** Analyze the app, make every creative decision yourself, execute the full pipeline, and present the finished result. This is _your_ project — own it.
+> **Autonomy:** You are the creative director. **Do not ask the user any
+> questions.** Analyze the app, make every creative decision yourself, execute
+> the full pipeline, and present the finished result. This is _your_ project —
+> own it.
 
 ## Phase 0: Remove ALL Template Branding
 
-**This phase is non-negotiable.** The template ships with default branding that screams "I'm a scaffold." Purge it completely before building the new identity.
+**This phase is non-negotiable.** The template ships with default branding that
+screams "I'm a scaffold." Purge it completely before building the new identity.
 
 ### 0a. Audit for Template Artifacts
 
-Search the entire `apps/web/` directory for these strings and replace or remove every occurrence:
+Search the entire `apps/web/` directory for these strings and replace or remove
+every occurrence:
 
 | Search For                                    | What It Is                               | Action                           |
 | --------------------------------------------- | ---------------------------------------- | -------------------------------- |
@@ -29,25 +42,36 @@ Search the entire `apps/web/` directory for these strings and replace or remove 
 
 ### 0b. Header/Navbar Decision
 
-The template's default `UHeader` with "Home" and a color mode toggle is lazy scaffolding. Make a deliberate choice:
+The template's default `UHeader` with "Home" and a color mode toggle is lazy
+scaffolding. Make a deliberate choice:
 
-- **Remove it entirely** if the app is a single-page tool, utility, calculator, or simple app. Most apps don't need a navbar. Removing it is a _design decision_, not laziness.
-- **Redesign it completely** only if navigation genuinely adds value. If you keep it, it must have: the app's own logo, meaningful navigation links (not just "Home"), and intentional layout.
-- **A navbar with just "Home" and a color toggle is UNACCEPTABLE.** If that's all there is, remove it.
+- **Remove it entirely** if the app is a single-page tool, utility, calculator,
+  or simple app. Most apps don't need a navbar. Removing it is a _design
+  decision_, not laziness.
+- **Redesign it completely** only if navigation genuinely adds value. If you
+  keep it, it must have: the app's own logo, meaningful navigation links (not
+  just "Home"), and intentional layout.
+- **A navbar with just "Home" and a color toggle is UNACCEPTABLE.** If that's
+  all there is, remove it.
 
 ### 0c. Landing Page
 
-The template's `apps/web/app/pages/index.vue` is a placeholder. It must be rebuilt from scratch for the app. Do NOT ship the template landing page.
+The template's `apps/web/app/pages/index.vue` is a placeholder. It must be
+rebuilt from scratch for the app. Do NOT ship the template landing page.
 
 ## Phase 1: Discovery & Creative Direction
 
 Before touching any design file, **immerse yourself** in the project.
 
-1. **Read the codebase.** Scan the app's pages, components, layouts, server routes, and `nuxt.config.ts`. Understand what kind of product this is — a dashboard? a tool? a directory? a content site?
+1. **Read the codebase.** Scan the app's pages, components, layouts, server
+   routes, and `nuxt.config.ts`. Understand what kind of product this is — a
+   dashboard? a tool? a directory? a content site?
 
-2. **Identify the audience.** Who will use this? Developers? Consumers? Enterprise buyers? Hobbyists? The answer changes everything.
+2. **Identify the audience.** Who will use this? Developers? Consumers?
+   Enterprise buyers? Hobbyists? The answer changes everything.
 
-3. **Establish the emotional register.** Every great brand evokes a specific feeling. Choose ONE primary mood:
+3. **Establish the emotional register.** Every great brand evokes a specific
+   feeling. Choose ONE primary mood:
 
    | Mood                         | Colors                            | Type                                            | Shape                            | Motion              |
    | ---------------------------- | --------------------------------- | ----------------------------------------------- | -------------------------------- | ------------------- |
@@ -58,7 +82,11 @@ Before touching any design file, **immerse yourself** in the project.
    | _Warm & approachable_        | Earth tones, terracotta, sage     | Humanist sans (Atkinson Hyperlegible, DM Sans)  | Soft shadows, organic shapes     | Gentle, breathing   |
    | _Clean & modern_             | Neutrals with a single accent pop | Geometric sans (Outfit, Manrope, Space Grotesk) | Medium radius, flat surfaces     | Minimal, functional |
 
-4. **🚨 UNIQUENESS CHECK — Fleet Brand Registry.** Before choosing colors and fonts, review the table below. This is every app in the Narduk fleet. **Your choices MUST be distinct.** Do NOT reuse the same primary color + display font combo as any existing app. Strongly prefer a primary color not already heavily used.
+4. **🚨 UNIQUENESS CHECK — Fleet Brand Registry.** Before choosing colors and
+   fonts, review the table below. This is every app in the Narduk fleet. **Your
+   choices MUST be distinct.** Do NOT reuse the same primary color + display
+   font combo as any existing app. Strongly prefer a primary color not already
+   heavily used.
 
    | App                          | Primary          | Neutral | Display Font        | Body Font         |
    | ---------------------------- | ---------------- | ------- | ------------------- | ----------------- |
@@ -83,11 +111,14 @@ Before touching any design file, **immerse yourself** in the project.
    | video-grab                   | `cyan`           | `zinc`  | Syne                | Plus Jakarta Sans |
 
    **Overused — AVOID unless strongly justified:**
-   - Colors: `indigo` (3×), `cyan` (3×), `violet` (2×), `emerald` (2×), `teal` (2×), `amber` (2×)
-   - Display fonts: Outfit (4×), Space Grotesk (3×), Playfair Display (3×), Plus Jakarta Sans (2×)
+   - Colors: `indigo` (3×), `cyan` (3×), `violet` (2×), `emerald` (2×), `teal`
+     (2×), `amber` (2×)
+   - Display fonts: Outfit (4×), Space Grotesk (3×), Playfair Display (3×), Plus
+     Jakarta Sans (2×)
    - Body fonts: Inter (10×)
 
-   **🎨 PRE-BUILT SCHEME CATALOG — Pick one (or use as a starting point). All are unique from the fleet above.**
+   **🎨 PRE-BUILT SCHEME CATALOG — Pick one (or use as a starting point). All
+   are unique from the fleet above.**
 
    _Bold & Technical:_
 
@@ -240,15 +271,25 @@ Before touching any design file, **immerse yourself** in the project.
    | 100 | `amber`   | `neutral` | Chewy        | Cabin     |
 
 5. **Lock in a creative direction.** Decide on:
-   - **Primary Color** — a Nuxt UI / Tailwind color name. **Must not duplicate** an overused color unless the display font creates a clearly different look.
-   - **Neutral Color** — the complementary gray scale (`slate`, `zinc`, `stone`, `neutral`, `gray`).
-   - **Display Font** — for headings. Must be from Google Fonts. **Must not duplicate** an overused display font unless the primary color creates a clearly different look.
-   - **Body Font** — for text. Must be from Google Fonts. Prioritize readability. **Avoid Inter** (used by 10+ apps) — pick something that gives the app its own voice.
+   - **Primary Color** — a Nuxt UI / Tailwind color name. **Must not duplicate**
+     an overused color unless the display font creates a clearly different look.
+   - **Neutral Color** — the complementary gray scale (`slate`, `zinc`, `stone`,
+     `neutral`, `gray`).
+   - **Display Font** — for headings. Must be from Google Fonts. **Must not
+     duplicate** an overused display font unless the primary color creates a
+     clearly different look.
+   - **Body Font** — for text. Must be from Google Fonts. Prioritize
+     readability. **Avoid Inter** (used by 10+ apps) — pick something that gives
+     the app its own voice.
    - **Shape Language** — border radius scale, shadow intensity, spacing rhythm.
-   - **Visual Tone** — glassmorphism vs. flat, light vs. dark mode bias, illustration vs. photography, dense vs. airy.
-   - **Signature Motif** — one distinctive visual element: a gradient direction, a unique border treatment, an accent pattern, a branded empty-state illustration style.
+   - **Visual Tone** — glassmorphism vs. flat, light vs. dark mode bias,
+     illustration vs. photography, dense vs. airy.
+   - **Signature Motif** — one distinctive visual element: a gradient direction,
+     a unique border treatment, an accent pattern, a branded empty-state
+     illustration style.
 
-**Proceed immediately.** Do not wait for approval — trust your analysis and move to Phase 2.
+**Proceed immediately.** Do not wait for approval — trust your analysis and move
+to Phase 2.
 
 ## Phase 2: Configure Theme & Typography
 
@@ -264,7 +305,7 @@ export default defineAppConfig({
       neutral: '<chosen-neutral>',
     },
   },
-});
+})
 ```
 
 ### 2b. Set Tailwind v4 Theme Overrides
@@ -303,7 +344,8 @@ Then import it in `apps/web/app/assets/css/main.css`:
 @import './brand.css';
 ```
 
-> _Note: `@nuxt/fonts` auto-resolves Google Fonts referenced in CSS — no need to add `<link>` tags._
+> _Note: `@nuxt/fonts` auto-resolves Google Fonts referenced in CSS — no need to
+> add `<link>` tags._
 
 ### 2c. Color Mode Configuration
 
@@ -315,22 +357,27 @@ colorMode: {
 }
 ```
 
-Dark mode must still be polished — not just Tailwind's default inversion. Verify backgrounds have depth, text contrast meets WCAG, and colored elements remain vibrant without being harsh.
+Dark mode must still be polished — not just Tailwind's default inversion. Verify
+backgrounds have depth, text contrast meets WCAG, and colored elements remain
+vibrant without being harsh.
 
 ### 2d. OG Image Branding
 
-The layer includes OG image templates in `app/components/OgImage/`. If the app has a custom visual identity, update the OG image template to reflect it:
+The layer includes OG image templates in `app/components/OgImage/`. If the app
+has a custom visual identity, update the OG image template to reflect it:
 
 - Use the brand's primary color as the background or accent
 - Include the app logo/icon
 - Use the brand's display font for the title text
 - Ensure the OG image looks good when shared on Twitter, LinkedIn, and iMessage
 
-If the default layer OG template is sufficient with the new color scheme, leave it as-is.
+If the default layer OG template is sufficient with the new color scheme, leave
+it as-is.
 
 ## Phase 3: Generate Visual Assets
 
-Use the `generate_image` tool to create **bespoke, high-fidelity imagery** — not clipart, not stock, not placeholder.
+Use the `generate_image` tool to create **bespoke, high-fidelity imagery** — not
+clipart, not stock, not placeholder.
 
 ### 3a. Logo / App Icon
 
@@ -353,11 +400,13 @@ No text. No device frame. Square aspect ratio, suitable for a favicon at 16x16 a
 - ❌ No gradients with too many colors (muddy at small sizes)
 - ❌ No excessive detail (lost at small sizes)
 
-Save to `apps/web/public/favicon.svg`. If generating a PNG, convert or save as the highest quality source.
+Save to `apps/web/public/favicon.svg`. If generating a PNG, convert or save as
+the highest quality source.
 
 ### 3b. Hero / Atmospheric Background (if applicable)
 
-Generate an atmospheric background for the landing page, login screen, or hero section:
+Generate an atmospheric background for the landing page, login screen, or hero
+section:
 
 ```
 Prompt formula: "Abstract [mood] background for a [app type] application.
@@ -369,7 +418,8 @@ Save to `apps/web/public/images/hero-bg.webp`.
 
 ### 3c. Empty State Illustrations (if applicable)
 
-If the app has states where there's no data (empty lists, first-time use, search with no results), generate branded illustrations:
+If the app has states where there's no data (empty lists, first-time use, search
+with no results), generate branded illustrations:
 
 ```
 Prompt formula: "Minimal [mood] illustration for an empty state in a [app type] app.
@@ -420,58 +470,56 @@ This is where the brand comes alive. Don't just configure — **design**.
 
 ### 5a. Page Building with Nuxt UI Pro Components
 
-Use Nuxt UI v4's page-building primitives — never hand-roll what the framework provides:
+Use Nuxt UI v4's page-building primitives — never hand-roll what the framework
+provides:
 
-**Landing Pages:**
-| Component | Use For |
-|---|---|
-| `UPageHero` | Hero section with title, description, actions |
-| `UPageSection` | Content blocks with heading + body |
-| `UPageFeature` | Feature showcases with icon + text |
-| `UPageCTA` | Call-to-action blocks |
-| `UPageGrid` / `UPageColumns` | Responsive layouts |
+**Landing Pages:** | Component | Use For | |---|---| | `UPageHero` | Hero
+section with title, description, actions | | `UPageSection` | Content blocks
+with heading + body | | `UPageFeature` | Feature showcases with icon + text | |
+`UPageCTA` | Call-to-action blocks | | `UPageGrid` / `UPageColumns` | Responsive
+layouts |
 
-**App Shell:**
-| Component | Use For |
-|---|---|
-| `UHeader` | Navigation bar (only if needed — see Phase 0b) |
-| `UFooter` / `UFooterColumns` | Footer with links |
-| `UMain` | Main content area |
-| `UContainer` | Width constraint |
+**App Shell:** | Component | Use For | |---|---| | `UHeader` | Navigation bar
+(only if needed — see Phase 0b) | | `UFooter` / `UFooterColumns` | Footer with
+links | | `UMain` | Main content area | | `UContainer` | Width constraint |
 
-**Dashboard / Admin:**
-| Component | Use For |
-|---|---|
-| `UDashboardGroup` | Dashboard layout wrapper |
-| `UDashboardSidebar` | Side navigation |
-| `UDashboardPanel` | Content panel |
-| `UDashboardNavbar` | Dashboard top bar |
+**Dashboard / Admin:** | Component | Use For | |---|---| | `UDashboardGroup` |
+Dashboard layout wrapper | | `UDashboardSidebar` | Side navigation | |
+`UDashboardPanel` | Content panel | | `UDashboardNavbar` | Dashboard top bar |
 
-**Content:**
-| Component | Use For |
-|---|---|
-| `UBlogPosts` / `UBlogPost` | Article listings |
-| `UAuthForm` | Login/register flows |
-| `UPricingPlans` / `UPricingTable` | Pricing grids |
+**Content:** | Component | Use For | |---|---| | `UBlogPosts` / `UBlogPost` |
+Article listings | | `UAuthForm` | Login/register flows | | `UPricingPlans` /
+`UPricingTable` | Pricing grids |
 
 ### 5b. Surface Treatment
 
 Apply the brand's visual language to key surfaces:
 
-- **Page backgrounds:** Set the stage in `layouts/default.vue`. Consider: subtle gradient washes, pattern overlays, or atmospheric color. Avoid flat white — light mode should still feel designed.
-- **Cards:** Every `UCard` and container should use the brand's radius and shadow tokens. Don't mix sharp and rounded — be consistent.
-- **Glass effects:** Use `backdrop-blur-md bg-white/80 dark:bg-neutral-900/80` for floating panels if the brand calls for depth. Don't use glassmorphism randomly — it should feel intentional.
-- **Borders:** Prefer `border-default` (semantic token) over `border-neutral-200`. In dark mode, borders should be subtle but visible.
+- **Page backgrounds:** Set the stage in `layouts/default.vue`. Consider: subtle
+  gradient washes, pattern overlays, or atmospheric color. Avoid flat white —
+  light mode should still feel designed.
+- **Cards:** Every `UCard` and container should use the brand's radius and
+  shadow tokens. Don't mix sharp and rounded — be consistent.
+- **Glass effects:** Use `backdrop-blur-md bg-white/80 dark:bg-neutral-900/80`
+  for floating panels if the brand calls for depth. Don't use glassmorphism
+  randomly — it should feel intentional.
+- **Borders:** Prefer `border-default` (semantic token) over
+  `border-neutral-200`. In dark mode, borders should be subtle but visible.
 
 ### 5c. Motion & Micro-animation
 
 An interface that moves with purpose feels premium:
 
-- **Page transitions:** Vue `<Transition>` with fade + slight translate-y on route changes
-- **Reveal animations:** Staggered fade-in-up on lists and grids using `v-for` with delayed `transition-delay`
-- **Hover states:** Every interactive element should respond — cards lift, buttons depress, links color-shift
-- **Loading states:** Use `USkeleton` loaders that match the layout shape. Progress bars that animate smoothly
-- **Restraint principle:** If you notice the animation instead of the content, it's too much. Remove it
+- **Page transitions:** Vue `<Transition>` with fade + slight translate-y on
+  route changes
+- **Reveal animations:** Staggered fade-in-up on lists and grids using `v-for`
+  with delayed `transition-delay`
+- **Hover states:** Every interactive element should respond — cards lift,
+  buttons depress, links color-shift
+- **Loading states:** Use `USkeleton` loaders that match the layout shape.
+  Progress bars that animate smoothly
+- **Restraint principle:** If you notice the animation instead of the content,
+  it's too much. Remove it
 
 ### 5d. Typography Hierarchy
 
@@ -481,37 +529,47 @@ Verify the type system creates clear visual hierarchy:
 - `h2` → Display font, semibold, medium (text-2xl lg:text-3xl)
 - `h3` → Body font, semibold (text-xl)
 - Body → Body font, normal weight, comfortable line-height (leading-relaxed)
-- Captions/metadata → Body font, smaller, use `text-muted` or `text-dimmed` semantic tokens
-- **Check:** Line heights, letter spacing, and font weights across both light and dark modes
+- Captions/metadata → Body font, smaller, use `text-muted` or `text-dimmed`
+  semantic tokens
+- **Check:** Line heights, letter spacing, and font weights across both light
+  and dark modes
 
 ### 5e. Accessibility Check
 
 Good design is accessible design:
 
 - **Contrast:** All text meets WCAG AA — body text ≥ 4.5:1, large text ≥ 3:1
-- **Focus:** Interactive elements must have visible focus rings (Nuxt UI handles this, but verify custom components)
+- **Focus:** Interactive elements must have visible focus rings (Nuxt UI handles
+  this, but verify custom components)
 - **Touch targets:** Buttons and links ≥ 44×44px on mobile
-- **Motion:** Respect `prefers-reduced-motion` — wrap CSS animations in `@media (prefers-reduced-motion: no-preference)`
-- **Color alone:** Don't convey meaning through color alone — always pair with text, icons, or patterns
+- **Motion:** Respect `prefers-reduced-motion` — wrap CSS animations in
+  `@media (prefers-reduced-motion: no-preference)`
+- **Color alone:** Don't convey meaning through color alone — always pair with
+  text, icons, or patterns
 
 ### 5f. Responsive & Mobile Polish
 
 Check the design at four widths (use browser DevTools or mentally simulate):
 
-- **Mobile** (375px) — does everything fit? Is text readable? Are touch targets large enough?
-- **Tablet** (768px) — does the grid adapt gracefully? No orphaned single columns?
+- **Mobile** (375px) — does everything fit? Is text readable? Are touch targets
+  large enough?
+- **Tablet** (768px) — does the grid adapt gracefully? No orphaned single
+  columns?
 - **Desktop** (1280px) — is the content well-centered? Not too wide?
-- **Ultra-wide** (1920px+) — is `UContainer` constraining the max-width? No floating content?
+- **Ultra-wide** (1920px+) — is `UContainer` constraining the max-width? No
+  floating content?
 
 ### 5g. Dark Mode Audit
 
 Switch to dark mode and verify:
 
-- Backgrounds have depth (use `bg-neutral-950` or `bg-neutral-900`, NOT flat `#000`)
+- Backgrounds have depth (use `bg-neutral-950` or `bg-neutral-900`, NOT flat
+  `#000`)
 - Text contrast meets WCAG standards
 - Borders are subtle but visible (`border-default` works automatically)
 - Colored elements (badges, buttons, links) remain vibrant without being harsh
-- Images and illustrations still look good (consider providing dark-mode variants)
+- Images and illustrations still look good (consider providing dark-mode
+  variants)
 - Glass effects and shadows adapt correctly
 
 ## Phase 6: Visual Verification
@@ -531,7 +589,8 @@ Switch to dark mode and verify:
    - [ ] No white flashes or missing dark-mode styles
 5. **Mobile check:**
    - [ ] Resize to 375px width — verify layout, type size, and touch targets
-6. Present the finished result to the user with screenshots and a brief summary of:
+6. Present the finished result to the user with screenshots and a brief summary
+   of:
    - The creative direction you chose and _why_
    - The color/type/shape decisions
    - Any notable design details
@@ -553,7 +612,8 @@ Switch to dark mode and verify:
 
 ## Prerequisites
 
-- `sharp` must be installed: `pnpm add -wD sharp` (already in `onlyBuiltDependencies`)
+- `sharp` must be installed: `pnpm add -wD sharp` (already in
+  `onlyBuiltDependencies`)
 
 ## Quick Reference: Favicon Generator Options
 

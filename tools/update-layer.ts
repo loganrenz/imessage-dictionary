@@ -26,7 +26,8 @@ const skipRewrite = args.includes('--no-rewrite-repo')
 const skipQuality = args.includes('--skip-quality')
 const dryRun = args.includes('--dry-run')
 const fromIdx = args.indexOf('--from')
-const localTemplatePath = fromIdx !== -1 ? args[fromIdx + 1]?.replace(/^~/, process.env.HOME || '') : ''
+const localTemplatePath =
+  fromIdx !== -1 ? args[fromIdx + 1]?.replace(/^~/, process.env.HOME || '') : ''
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const ROOT_DIR = path.resolve(__dirname, '..')

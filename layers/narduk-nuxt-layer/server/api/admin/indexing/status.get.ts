@@ -18,8 +18,9 @@ const querySchema = z.object({
  *   curl "https://your-site.com/api/admin/indexing/status?url=https%3A%2F%2Fyour-site.com%2Fjobs%2F42"
  */
 export default defineEventHandler(async (event) => {
+  const log = useLogger(event).child('Indexing')
   await requireAdmin(event)
-  await enforceRateLimit(event, 'google-indexing-status', 10, 60_000)
+  await enforceRateLimit(event, 'google-indexing-status', 60, 60_000)
 
   const query = await getValidatedQuery(event, querySchema.parse)
   const encodedUrl = encodeURIComponent(query.url)
@@ -30,12 +31,18 @@ export default defineEventHandler(async (event) => {
       INDEXING_SCOPES,
     )
 
+    log.debug('Indexing status checked', { url: query.url })
+
     return {
       url: query.url,
       metadata: data,
     }
   } catch (error: unknown) {
     const err = error as { statusCode?: number; statusMessage?: string; message?: string }
+    log.error('Indexing status check failed', {
+      url: query.url,
+      error: err.statusMessage || err.message,
+    })
     throw createError({
       statusCode: err.statusCode || 500,
       statusMessage: `Google Indexing API error: ${err.statusMessage || err.message}`,

@@ -8,6 +8,7 @@
  * GET /api/health
  */
 export default defineEventHandler(async (event) => {
+  const log = useLogger(event).child('Health')
   let dbStatus: 'ok' | 'not_available' | 'error' = 'not_available'
 
   try {
@@ -17,6 +18,7 @@ export default defineEventHandler(async (event) => {
       dbStatus = 'ok'
     }
   } catch {
+    log.error('Health check DB probe failed')
     dbStatus = 'error'
   }
 

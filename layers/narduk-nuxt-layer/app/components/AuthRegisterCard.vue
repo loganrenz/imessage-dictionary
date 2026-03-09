@@ -126,7 +126,7 @@ async function onSubmit() {
     <!-- Extra content above the form -->
     <slot name="before-form" />
 
-    <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+    <UForm :schema="schema" :state="state" class="space-y-4" @submit.prevent="onSubmit">
       <UFormField name="name" label="Name">
         <UInput
           v-model="state.name"
@@ -157,13 +157,12 @@ async function onSubmit() {
       </UFormField>
 
       <UButton
-        type="button"
+        type="submit"
         color="primary"
         class="w-full"
         :loading="loading"
         block
         data-testid="auth-register-submit"
-        @click="onSubmit"
       >
         Create Account
       </UButton>

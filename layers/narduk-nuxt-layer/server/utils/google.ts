@@ -35,7 +35,7 @@ const cachedTokens: Record<string, { token: string; expiry: number }> = {}
  * Obtain a Google access token via service account JWT assertion.
  * Caches the token until 60s before expiry, partitioned by the requested scopes.
  */
-async function getAccessToken(scopes: string[]): Promise<string> {
+export async function getAccessToken(scopes: string[]): Promise<string> {
   const scopeKey = scopes.join(' ')
   const cached = cachedTokens[scopeKey]
 

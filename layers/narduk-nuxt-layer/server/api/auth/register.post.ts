@@ -10,7 +10,8 @@ const registerSchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-  await enforceRateLimit(event, 'auth-register', 5, 60_000)
+  const log = useLogger(event).child('Auth')
+  await enforceRateLimit(event, 'auth-register', 20, 60_000)
 
   const body = await readValidatedBody(event, registerSchema.parse)
   const db = useDatabase(event)
@@ -18,6 +19,7 @@ export default defineEventHandler(async (event) => {
 
   const existingUser = await db.select().from(users).where(eq(users.email, normalizedEmail)).get()
   if (existingUser) {
+    log.warn('Registration rejected — email exists', { email: normalizedEmail })
     throw createError({
       statusCode: 409,
       statusMessage: 'Email already in use',
@@ -41,6 +43,7 @@ export default defineEventHandler(async (event) => {
     isAdmin: false,
   }
   await setUserSession(event, { user })
+  log.info('User registered', { email: normalizedEmail, userId: newUserId })
 
   return { user }
 })
