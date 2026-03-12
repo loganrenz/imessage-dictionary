@@ -32,7 +32,8 @@
     "clean": "find . -type d \\( -name node_modules -o -name .nuxt -o -name .output -o -name .nitro -o -name .wrangler -o -name .turbo -o -name .data -o -name dist \\) -not -path './.git/*' -prune -exec rm -rf {} +",
     "clean:install": "pnpm run clean && pnpm install && pnpm run db:ready:all",
     "dev:kill": "sh scripts/dev-kill.sh",
-    "quality:fix": "turbo run lint --force -- --fix && pnpm run format"
+    "quality:fix": "turbo run lint --force -- --fix && pnpm run format",
+    "sync-template": "npx tsx tools/sync-template.ts ."
   },
   "dependencies": {
     "@nuxt/image": "^2.0.0",

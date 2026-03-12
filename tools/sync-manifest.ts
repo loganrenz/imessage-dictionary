@@ -2,7 +2,9 @@ import { existsSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 
 export const VERBATIM_SYNC_FILES = [
+  '.githooks/pre-commit',
   'tools/update-layer.ts',
+  'tools/sync-template.ts',
   'tools/sync-core.ts',
   'tools/sync-manifest.ts',
   'tools/check-drift-ci.ts',
@@ -58,6 +60,7 @@ export const FLEET_ROOT_SCRIPT_PATCHES: Readonly<Record<string, string>> = {
   preship:
     'node tools/check-setup.cjs && pnpm install --frozen-lockfile && npx tsx tools/check-drift-ci.ts && npx tsx tools/check-sync-health.ts && pnpm run quality',
   ship: 'npx tsx tools/ship.ts',
+  'sync-template': 'npx tsx tools/sync-template.ts .',
   'update-layer': 'npx tsx tools/update-layer.ts',
   'check:sync-health': 'npx tsx tools/check-sync-health.ts',
   clean:
