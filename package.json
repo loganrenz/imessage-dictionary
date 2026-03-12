@@ -10,7 +10,7 @@
     "preview": "nuxt preview",
     "postinstall": "node -e \"if(!require('fs').existsSync('.setup-complete'))console.log('\\n⚠️  Run pnpm run setup before doing anything else! See AGENTS.md.\\n')\"",
     "typecheck": "npx nuxt typecheck",
-    "ship": "git add -A && git diff --cached --quiet || git commit -m \"chore: ship $(date -u +%Y-%m-%dT%H:%M:%SZ)\" && git fetch && (git merge-base --is-ancestor @{u} HEAD || (echo '\\\\n❌ Remote has changes not in local branch. Run: git pull --rebase && pnpm ship\\\\n' && false)) && git push && doppler run -- pnpm --filter web run deploy",
+    "ship": "npx tsx tools/ship.ts",
     "generate:favicons": "npx tsx tools/generate-favicons.ts",
     "prelint": "pnpm run build:plugins",
     "lint": "eslint .",
@@ -28,7 +28,11 @@
     "format": "prettier --write \"**/*.{ts,mts,vue,js,mjs,json,yaml,yml,css,md}\" --ignore-path .gitignore",
     "format:check": "prettier --check \"**/*.{ts,mts,vue,js,mjs,json,yaml,yml,css,md}\" --ignore-path .gitignore",
     "tail": "npx tsx tools/tail.ts",
-    "check:sync-health": "npx tsx tools/check-sync-health.ts"
+    "check:sync-health": "npx tsx tools/check-sync-health.ts",
+    "clean": "find . -type d \\( -name node_modules -o -name .nuxt -o -name .output -o -name .nitro -o -name .wrangler -o -name .turbo -o -name .data -o -name dist \\) -not -path './.git/*' -prune -exec rm -rf {} +",
+    "clean:install": "pnpm run clean && pnpm install && pnpm run db:ready:all",
+    "dev:kill": "sh scripts/dev-kill.sh",
+    "quality:fix": "turbo run lint --force -- --fix && pnpm run format"
   },
   "dependencies": {
     "@nuxt/image": "^2.0.0",
@@ -62,7 +66,7 @@
     "vue-eslint-parser": "^10.4.0",
     "wrangler": "^4.20.0",
     "tsup": "^8.5.1",
-    "tsx": "^4.0.0",
+    "tsx": "^4.21.0",
     "turbo": "^2.8.12"
   },
   "pnpm": {
@@ -72,7 +76,11 @@
       "@cloudflare/unenv-preset": "2.12.1",
       "nuxt-og-image": "6.0.0-beta.47",
       "@takumi-rs/core": ">=0.70.1",
-      "@takumi-rs/wasm": ">=0.70.1"
+      "@takumi-rs/wasm": ">=0.70.1",
+      "@cloudflare/workers-types": "4.20260307.1",
+      "@typescript-eslint/utils": "^8.57.0",
+      "@nuxt/eslint": "^1.15.2",
+      "eslint-plugin-unicorn": "^63.0.0"
     },
     "onlyBuiltDependencies": [
       "@parcel/watcher",

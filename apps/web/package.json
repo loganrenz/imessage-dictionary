@@ -6,7 +6,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "db:migrate": "wrangler d1 execute dict-nard-uk-db --local --file=drizzle/0000_initial_schema.sql",
+    "db:migrate": "bash ../../tools/db-migrate.sh dict-nard-uk-db --local --dir drizzle",
     "db:studio": "drizzle-kit studio",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -14,15 +14,17 @@
     "deploy": "nuxt build && wrangler deploy",
     "prelint": "test -f .nuxt/eslint.config.mjs || nuxt prepare",
     "lint": "eslint . --max-warnings 0",
-    "quality": "echo 'Turbo dependsOn handles lint + typecheck + format:check'"
+    "quality": "echo 'Turbo dependsOn handles lint + typecheck + format:check'",
+    "db:reset": "bash ../../tools/db-migrate.sh dict-nard-uk-db --local --dir drizzle --reset && pnpm run db:seed",
+    "db:ready": "pnpm run db:migrate && pnpm run db:seed"
   },
   "dependencies": {
     "@narduk-enterprises/narduk-nuxt-template-layer": "workspace:*",
-    "@narduk/eslint-config": "workspace:*",
     "drizzle-orm": "^0.45.1",
     "nuxt": "^4.3.1",
     "zod": "^4.3.6",
-    "@takumi-rs/core": "^0.69.2"
+    "@takumi-rs/core": "^0.69.2",
+    "@narduk-enterprises/eslint-config": "^1.0.11"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.0.0",

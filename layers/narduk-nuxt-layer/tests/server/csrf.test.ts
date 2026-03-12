@@ -25,6 +25,16 @@ vi.stubGlobal('defineEventHandler', (fn: (event: MockEvent) => void) => fn)
 vi.stubGlobal('getHeader', mockGetHeader)
 vi.stubGlobal('createError', mockCreateError)
 
+// Mock useLogger — CSRF middleware logs on block
+const noopLogger = {
+  debug: vi.fn(),
+  info: vi.fn(),
+  warn: vi.fn(),
+  error: vi.fn(),
+  child: () => noopLogger,
+}
+vi.stubGlobal('useLogger', () => noopLogger)
+
 // Now safe to import
 const { default: handler } = await import('../../server/middleware/csrf')
 

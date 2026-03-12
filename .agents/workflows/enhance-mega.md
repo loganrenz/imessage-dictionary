@@ -1,16 +1,31 @@
 ---
-description: Nuclear-grade UI/UX enhancement — design system generation, full UX audit, feature injection, accessibility sweep, motion polish, and bulletproof pre-delivery validation using every uipro capability
+description:
+  Nuclear-grade UI/UX enhancement — design system generation, full UX audit,
+  feature injection, accessibility sweep, motion polish, and bulletproof
+  pre-delivery validation using every uipro capability
 ---
 
 # /mega-enhance — The Ultimate UI/UX Transformation
 
-This is the **maximum-power** enhancement workflow. It combines design system generation, UX audit, feature injection, accessibility verification, motion design, and bulletproof pre-delivery validation into a single, relentless pipeline. When this workflow runs, the app should emerge looking like a $50M startup product.
+This is the **maximum-power** enhancement workflow. It combines design system
+generation, UX audit, feature injection, accessibility verification, motion
+design, and bulletproof pre-delivery validation into a single, relentless
+pipeline. When this workflow runs, the app should emerge looking like a $50M
+startup product.
 
-> **Prerequisite:** The `uipro` skill must be installed. Run `uipro init --ai antigravity` from the project root if `.agent/skills/ui-ux-pro-max/` does not exist.
+> **Prerequisite:** The `uipro` skill must be installed. Run
+> `uipro init --ai antigravity` from the project root if
+> `.agent/skills/ui-ux-pro-max/` does not exist.
 
-> **Your mandate:** You are the lead designer AND the lead engineer. Do not hold back. Do not ask "should I add this?" — add it. Do not wonder "is this too much?" — it's not enough. Every page should feel premium. Every interaction should feel intentional. Every pixel should feel designed. Generic is failure. Boring is unacceptable. "Good enough" does not exist.
+> **Your mandate:** You are the lead designer AND the lead engineer. Do not hold
+> back. Do not ask "should I add this?" — add it. Do not wonder "is this too
+> much?" — it's not enough. Every page should feel premium. Every interaction
+> should feel intentional. Every pixel should feel designed. Generic is failure.
+> Boring is unacceptable. "Good enough" does not exist.
 
-> **Autonomy level: MAXIMUM.** Make every creative and engineering decision yourself. The user wants you to go wild — so go wild. Add features. Add animations. Add polish. Add refinement. Then add more.
+> **Autonomy level: MAXIMUM.** Make every creative and engineering decision
+> yourself. The user wants you to go wild — so go wild. Add features. Add
+> animations. Add polish. Add refinement. Then add more.
 
 > **Related workflows:**
 >
@@ -26,28 +41,22 @@ This is the **maximum-power** enhancement workflow. It combines design system ge
 
 ## Phase 0: Reconnaissance — Know the Battlefield
 
-Before you touch anything, you must _deeply_ understand what you're working with.
+Before you touch anything, you must _deeply_ understand what you're working
+with.
 
-// turbo
-`cat package.json | head -5`
+// turbo `cat package.json | head -5`
 
-// turbo
-`cat nuxt.config.ts | head -50`
+// turbo `cat nuxt.config.ts | head -50`
 
-// turbo
-`cat app/app.config.ts 2>/dev/null || echo "No app.config.ts"`
+// turbo `cat app/app.config.ts 2>/dev/null || echo "No app.config.ts"`
 
-// turbo
-`ls app/pages/ 2>/dev/null`
+// turbo `ls app/pages/ 2>/dev/null`
 
-// turbo
-`ls app/components/ 2>/dev/null`
+// turbo `ls app/components/ 2>/dev/null`
 
-// turbo
-`ls app/layouts/ 2>/dev/null`
+// turbo `ls app/layouts/ 2>/dev/null`
 
-// turbo
-`cat app/assets/css/main.css 2>/dev/null | head -40`
+// turbo `cat app/assets/css/main.css 2>/dev/null | head -40`
 
 // turbo
 `ls design-system/ 2>/dev/null && echo "Design system exists" || echo "No design system yet"`
@@ -74,7 +83,8 @@ Use every relevant keyword to get the richest possible design system:
 python3 .agent/skills/ui-ux-pro-max/scripts/search.py "<product_type> <industry> <audience> <style_keywords> premium modern polished" --design-system --persist -p "<App Name>" -f markdown
 ```
 
-**Critical:** Use `--persist` to save to `design-system/MASTER.md`. This becomes the source of truth for ALL subsequent work.
+**Critical:** Use `--persist` to save to `design-system/MASTER.md`. This becomes
+the source of truth for ALL subsequent work.
 
 ### Generate Page-Specific Overrides
 
@@ -106,7 +116,8 @@ Only generate overrides for page types that actually exist in the app.
 
 ## Phase 2: Deep Domain Intelligence Extraction
 
-Exhaust every uipro domain to extract maximum design intelligence. Run ALL of these:
+Exhaust every uipro domain to extract maximum design intelligence. Run ALL of
+these:
 
 ### 2a. Style Deep-Dive
 
@@ -307,7 +318,7 @@ export default defineAppConfig({
       neutral: '<chosen-neutral>',
     },
   },
-});
+})
 ```
 
 ### 3c. Remove Anti-Patterns
@@ -324,7 +335,8 @@ Check against the design system's anti-pattern list and proactively remove:
 
 ## Phase 4: Feature Injection — Go Wild
 
-This is where you earn your keep. **Add real features and enhancements.** Not someday. NOW.
+This is where you earn your keep. **Add real features and enhancements.** Not
+someday. NOW.
 
 ### 4a. Page Transitions
 
@@ -337,7 +349,7 @@ export default defineNuxtConfig({
     pageTransition: { name: 'page', mode: 'out-in' },
     layoutTransition: { name: 'layout', mode: 'out-in' },
   },
-});
+})
 ```
 
 ```css
@@ -379,15 +391,17 @@ export function useScrollReveal() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('revealed');
-            observer.unobserve(entry.target);
+            entry.target.classList.add('revealed')
+            observer.unobserve(entry.target)
           }
-        });
+        })
       },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
-    );
-    document.querySelectorAll('.reveal-on-scroll').forEach((el) => observer.observe(el));
-  });
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' },
+    )
+    document
+      .querySelectorAll('.reveal-on-scroll')
+      .forEach((el) => observer.observe(el))
+  })
 }
 ```
 
@@ -405,8 +419,7 @@ Compare mutation count vs toast count. **Every mutation needs toast feedback.**
 
 ### 4d. Loading States — Every Data-Driven Page
 
-// turbo
-`grep -rnl 'USkeleton' app/ 2>/dev/null | wc -l`
+// turbo `grep -rnl 'USkeleton' app/ 2>/dev/null | wc -l`
 
 // turbo
 `grep -rnl 'useFetch\|useAsyncData\|$fetch' app/pages/ app/components/ 2>/dev/null | wc -l`
@@ -419,10 +432,10 @@ Every page/component that fetches data MUST have:
 
 ### 4e. Empty States — No Blank Pages, Ever
 
-// turbo
-`grep -rnl 'UEmpty' app/ 2>/dev/null | wc -l`
+// turbo `grep -rnl 'UEmpty' app/ 2>/dev/null | wc -l`
 
-If any list, table, or search result page can have zero items, it MUST have a beautiful empty state with:
+If any list, table, or search result page can have zero items, it MUST have a
+beautiful empty state with:
 
 - A relevant icon
 - A clear message
@@ -442,25 +455,27 @@ Consider adding keyboard shortcuts for common actions using `defineShortcuts()`.
 // turbo
 `grep -rn 'ColorModeButton\|ColorModeSelect' app/ 2>/dev/null | head -5`
 
-If missing, add `<UColorModeButton />` to the header/navbar. **Every app needs a color mode toggle.**
+If missing, add `<UColorModeButton />` to the header/navbar. **Every app needs a
+color mode toggle.**
 
 ### 4h. Breadcrumbs for Deep Navigation
 
-// turbo
-`grep -rn 'UBreadcrumb\|Breadcrumb' app/ 2>/dev/null | head -5`
+// turbo `grep -rn 'UBreadcrumb\|Breadcrumb' app/ 2>/dev/null | head -5`
 
 Add breadcrumbs to any page more than 1 level deep.
 
 ### 4i. Scroll-to-Top
 
-For long content pages, add a smooth scroll-to-top button that appears after scrolling down.
+For long content pages, add a smooth scroll-to-top button that appears after
+scrolling down.
 
 ### 4j. Image Optimization
 
 // turbo
 `grep -rn '<img ' app/ 2>/dev/null | grep -v 'NuxtImg\|nuxt-img' | head -10`
 
-Replace all `<img>` tags with `<NuxtImg>` for automatic optimization, lazy loading, and responsive sizing.
+Replace all `<img>` tags with `<NuxtImg>` for automatic optimization, lazy
+loading, and responsive sizing.
 
 ---
 
@@ -473,7 +488,8 @@ Verify the app uses Nuxt UI Pro primitives instead of reinventing layout:
 // turbo
 `grep -rnl 'PageHero\|PageSection\|PageFeature\|PageCTA\|PageGrid\|PageColumns' app/ 2>/dev/null || echo "No Pro landing components"`
 
-If landing pages exist but use raw `<div>` layouts, **refactor to Pro components**.
+If landing pages exist but use raw `<div>` layouts, **refactor to Pro
+components**.
 
 ### 5b. Dashboard Pages
 
@@ -490,7 +506,8 @@ If landing pages exist but use raw `<div>` layouts, **refactor to Pro components
 // turbo
 `grep -c 'UApp' app/app.vue 2>/dev/null || echo "UApp not found in app.vue — CRITICAL"`
 
-`app.vue` MUST wrap everything in `<UApp>` for toast, modal, and color mode support.
+`app.vue` MUST wrap everything in `<UApp>` for toast, modal, and color mode
+support.
 
 ---
 
@@ -501,7 +518,8 @@ If landing pages exist but use raw `<div>` layouts, **refactor to Pro components
 // turbo
 `grep -rn '🎨\|🚀\|⚙️\|📊\|💡\|🔥\|✨\|🎯\|📈\|🔒\|📱\|🌟\|💪\|🎉\|❌\|✅\|⚠️\|🔑\|📋\|🏆' app/pages/ app/components/ 2>/dev/null | head -20 || echo "No emoji icons (good)"`
 
-**Zero tolerance.** Replace every emoji used as a UI icon with Lucide SVG equivalents:
+**Zero tolerance.** Replace every emoji used as a UI icon with Lucide SVG
+equivalents:
 
 - 🚀 → `i-lucide-rocket`
 - ⚙️ → `i-lucide-settings`
@@ -520,7 +538,8 @@ If landing pages exist but use raw `<div>` layouts, **refactor to Pro components
 // turbo
 `grep -rn '@click\|v-on:click\|NuxtLink\|to=' app/pages/ app/components/ 2>/dev/null | wc -l`
 
-**Rule:** Every clickable element MUST have `cursor-pointer`. Compare counts and fix the gap.
+**Rule:** Every clickable element MUST have `cursor-pointer`. Compare counts and
+fix the gap.
 
 ### 6c. Hover State Audit
 
@@ -534,8 +553,9 @@ Every interactive element needs visual hover feedback:
 | Nav items  | Background highlight                                    |
 | Table rows | Background highlight                                    |
 
-**Avoid:** Scale transforms that cause layout shift. Use color/opacity/shadow transitions only.
-**Require:** `transition-colors duration-200` or `transition-all duration-200` on all interactive elements.
+**Avoid:** Scale transforms that cause layout shift. Use color/opacity/shadow
+transitions only. **Require:** `transition-colors duration-200` or
+`transition-all duration-200` on all interactive elements.
 
 ### 6d. Light Mode Contrast Audit
 
@@ -555,11 +575,9 @@ Every interactive element needs visual hover feedback:
 
 ### 6e. Layout & Spacing Audit
 
-// turbo
-`grep -rn 'top-0.*left-0\|fixed.*inset-0' app/ 2>/dev/null | head -10`
+// turbo `grep -rn 'top-0.*left-0\|fixed.*inset-0' app/ 2>/dev/null | head -10`
 
-// turbo
-`grep -rn 'max-w-' app/pages/ app/layouts/ 2>/dev/null | head -10`
+// turbo `grep -rn 'max-w-' app/pages/ app/layouts/ 2>/dev/null | head -10`
 
 | Rule                    | Do                                         | Don't                                  |
 | ----------------------- | ------------------------------------------ | -------------------------------------- |
@@ -576,8 +594,7 @@ Every page must work at these breakpoints:
 - **1024px** — iPad landscape / laptop
 - **1440px** — Desktop
 
-// turbo
-`grep -rn 'sm:\|md:\|lg:\|xl:' app/pages/ 2>/dev/null | wc -l`
+// turbo `grep -rn 'sm:\|md:\|lg:\|xl:' app/pages/ 2>/dev/null | wc -l`
 
 Flag any page with zero responsive breakpoint usage.
 
@@ -586,7 +603,8 @@ Flag any page with zero responsive breakpoint usage.
 // turbo
 `grep -rn 'overflow-x-auto\|overflow-x-hidden\|overflow-x-scroll' app/ 2>/dev/null | head -10`
 
-Ensure no unintended horizontal scroll on mobile. Tables should use `overflow-x-auto` wrappers.
+Ensure no unintended horizontal scroll on mobile. Tables should use
+`overflow-x-auto` wrappers.
 
 ---
 
@@ -608,19 +626,20 @@ Every form input needs an associated `<label>` or `aria-label`.
 
 ### 7c. Color-Only Indicators
 
-Ensure color is never the ONLY way to communicate information. Add icons, text, or patterns alongside color coding.
+Ensure color is never the ONLY way to communicate information. Add icons, text,
+or patterns alongside color coding.
 
 ### 7d. Focus Visibility
 
 // turbo
 `grep -rn 'focus:ring\|focus-visible\|focus:outline' app/ 2>/dev/null | head -10`
 
-Keyboard focus must be visible on all interactive elements. Nuxt UI handles this for its components, but verify custom elements.
+Keyboard focus must be visible on all interactive elements. Nuxt UI handles this
+for its components, but verify custom elements.
 
 ### 7e. Heading Hierarchy
 
-// turbo
-`grep -rn '<h1\|<h2\|<h3\|<h4' app/pages/ 2>/dev/null | head -20`
+// turbo `grep -rn '<h1\|<h2\|<h3\|<h4' app/pages/ 2>/dev/null | head -20`
 
 - Exactly ONE `<h1>` per page
 - No skipped levels (h1→h3 without h2)
@@ -628,7 +647,8 @@ Keyboard focus must be visible on all interactive elements. Nuxt UI handles this
 
 ### 7f. Reduced Motion
 
-Verify `prefers-reduced-motion` is respected (should be covered by the CSS added in Phase 3).
+Verify `prefers-reduced-motion` is respected (should be covered by the CSS added
+in Phase 3).
 
 ---
 
@@ -641,8 +661,10 @@ An interface that moves with purpose feels alive and premium. Motion should:
 - **Guide attention** — draw the eye to what changed
 - **Provide feedback** — confirm user actions immediately
 - **Create continuity** — smooth transitions between states
-- **Feel natural** — ease-out for elements entering, ease-in for elements leaving
-- **Never distract** — if you notice the animation before the content, it's too much
+- **Feel natural** — ease-out for elements entering, ease-in for elements
+  leaving
+- **Never distract** — if you notice the animation before the content, it's too
+  much
 
 ### What to Add
 
@@ -691,7 +713,8 @@ Don't just flip colors — _design_ for dark mode.
 | Borders        | `border-gray-200` | `border-neutral-700/50`                           |
 | Accents        | Full saturation   | Slightly reduced saturation for eye comfort       |
 
-**Test both modes.** Toggle back and forth. Every element should look _intentional_ in both modes.
+**Test both modes.** Toggle back and forth. Every element should look
+_intentional_ in both modes.
 
 ---
 
@@ -849,8 +872,14 @@ Then re-run the checklist to verify zero remaining issues.
 
 ## Philosophy: What Makes This Workflow Different
 
-1. **Exhaustive, not selective.** Every uipro domain gets queried. Every page type gets an override. Every audit check gets run.
-2. **Additive, not just corrective.** Don't just fix problems — add features the user didn't ask for but will love.
-3. **Opinionated, not neutral.** Make strong design decisions. Pick the perfect font, not "a font." Choose the exact right animation timing, not "some animation."
-4. **Zero tolerance.** The checklist is pass/fail. Every ⛔ item must be resolved before delivery.
-5. **Show, don't ask.** Apply changes, take screenshots, present the result. Don't ask "should I add page transitions?" — add them and show the result.
+1. **Exhaustive, not selective.** Every uipro domain gets queried. Every page
+   type gets an override. Every audit check gets run.
+2. **Additive, not just corrective.** Don't just fix problems — add features the
+   user didn't ask for but will love.
+3. **Opinionated, not neutral.** Make strong design decisions. Pick the perfect
+   font, not "a font." Choose the exact right animation timing, not "some
+   animation."
+4. **Zero tolerance.** The checklist is pass/fail. Every ⛔ item must be
+   resolved before delivery.
+5. **Show, don't ask.** Apply changes, take screenshots, present the result.
+   Don't ask "should I add page transitions?" — add them and show the result.

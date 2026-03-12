@@ -36,6 +36,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     /** Optional: secret for cron routes (e.g. cache warming). Set CRON_SECRET in Doppler; init.ts provisions it. */
     cronSecret: process.env.CRON_SECRET || '',
+    /** Log level for server route logging. Supports: debug | info | warn | error | silent. Set LOG_LEVEL in env. */
+    logLevel: process.env.LOG_LEVEL || (import.meta.dev ? 'debug' : 'warn'),
     session: {
       password:
         process.env.NUXT_SESSION_PASSWORD ||

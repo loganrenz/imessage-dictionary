@@ -1,12 +1,19 @@
 ---
-description: Comprehensive UI/UX enhancement and polish using the uipro skill — icons, interactions, contrast, layout, accessibility, and pre-delivery checklist
+description:
+  Comprehensive UI/UX enhancement and polish using the uipro skill — icons,
+  interactions, contrast, layout, accessibility, and pre-delivery checklist
 ---
 
 # Enhance UI/UX
 
-This workflow uses the `ui-ux-pro-max` skill (installed via `uipro` CLI) to audit and enhance the visual quality, interaction design, and accessibility of the app. It applies the skill's professional UI rules and pre-delivery checklist to catch common issues that make interfaces look unpolished.
+This workflow uses the `ui-ux-pro-max` skill (installed via `uipro` CLI) to
+audit and enhance the visual quality, interaction design, and accessibility of
+the app. It applies the skill's professional UI rules and pre-delivery checklist
+to catch common issues that make interfaces look unpolished.
 
-> **Prerequisite:** The `uipro` skill must be installed. Run `uipro init --ai antigravity` from the project root if `.agent/skills/ui-ux-pro-max/` does not exist.
+> **Prerequisite:** The `uipro` skill must be installed. Run
+> `uipro init --ai antigravity` from the project root if
+> `.agent/skills/ui-ux-pro-max/` does not exist.
 
 > **Related workflows:**
 >
@@ -23,9 +30,11 @@ Check for an existing persisted design system:
 // turbo
 `ls design-system/MASTER.md 2>/dev/null && echo "Design system found" || echo "No design system — run /enhance-design-system first"`
 
-If no design system exists, run `/enhance-design-system` to generate one before proceeding.
+If no design system exists, run `/enhance-design-system` to generate one before
+proceeding.
 
-If one exists, read `design-system/MASTER.md` to understand the app's intended visual language.
+If one exists, read `design-system/MASTER.md` to understand the app's intended
+visual language.
 
 ---
 
@@ -78,7 +87,8 @@ Scan for common visual quality issues:
 // turbo
 `grep -rn '@click\|v-on:click\|NuxtLink\|to=' app/pages/ app/components/ 2>/dev/null | wc -l`
 
-Compare clickable element count vs `cursor-pointer` usage. Every clickable element needs a pointer cursor.
+Compare clickable element count vs `cursor-pointer` usage. Every clickable
+element needs a pointer cursor.
 
 **Rules:**
 
@@ -111,8 +121,7 @@ Compare clickable element count vs `cursor-pointer` usage. Every clickable eleme
 
 ## Step 6: Layout & Spacing Audit
 
-// turbo
-`grep -rn 'top-0.*left-0\|fixed.*inset-0' app/ 2>/dev/null | head -10`
+// turbo `grep -rn 'top-0.*left-0\|fixed.*inset-0' app/ 2>/dev/null | head -10`
 
 // turbo
 `grep -rn 'max-w-[0-9]\|max-w-sm\|max-w-md\|max-w-lg\|max-w-xl\|max-w-2xl\|max-w-3xl\|max-w-4xl\|max-w-5xl\|max-w-6xl\|max-w-7xl' app/ 2>/dev/null | head -10`
@@ -182,4 +191,5 @@ Present findings grouped by category:
 | 🟡 Missing transitions | Medium   | Add `transition-colors duration-200`         |
 | 🟢 Motion polish       | Nice     | Add micro-animations, page transitions       |
 
-Ask the user for approval before making changes. Apply fixes and re-run the checklist.
+Ask the user for approval before making changes. Apply fixes and re-run the
+checklist.

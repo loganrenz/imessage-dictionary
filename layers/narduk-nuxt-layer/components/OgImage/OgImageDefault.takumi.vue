@@ -19,7 +19,8 @@ withDefaults(
     description: 'Production-ready Nuxt 4 + Cloudflare Workers',
     icon: '✨',
     siteName: 'Nuxt 4 Demo',
-    primaryColor: '#10b981', // eslint-disable-line atx/no-inline-hex
+    // eslint-disable-next-line narduk/no-inline-hex -- OG image default brand color; Tailwind utilities are not available in component props defaults
+    primaryColor: '#10b981',
   },
 )
 </script>
@@ -76,7 +77,7 @@ withDefaults(
       :style="{
         fontSize: '56px',
         fontWeight: '700',
-        // eslint-disable-next-line atx/no-inline-hex
+        // eslint-disable-next-line narduk/no-inline-hex
         color: '#f1f5f9',
         lineHeight: '1.15',
         marginBottom: '16px',
@@ -91,7 +92,7 @@ withDefaults(
       :style="{
         fontSize: '24px',
         fontWeight: '400',
-        // eslint-disable-next-line atx/no-inline-hex
+        // eslint-disable-next-line narduk/no-inline-hex
         color: '#94a3b8',
         lineHeight: '1.5',
         maxWidth: '800px',
@@ -130,7 +131,7 @@ withDefaults(
         :style="{
           fontSize: '18px',
           fontWeight: '600',
-          // eslint-disable-next-line atx/no-inline-hex
+          // eslint-disable-next-line narduk/no-inline-hex
           color: '#64748b',
         }"
       >

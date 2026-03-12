@@ -1,7 +1,7 @@
 // @ts-check
 // ⚠️ SYNCED FILE — do not edit. App-specific rules go in eslint.overrides.mjs
 import withNuxt from './.nuxt/eslint.config.mjs'
-import { sharedConfigs } from '@narduk/eslint-config'
+import { sharedConfigs } from '@narduk-enterprises/eslint-config/config'
 
 let appOverrides = []
 try {

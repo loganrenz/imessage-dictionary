@@ -7,15 +7,11 @@
     ".": "./eslint.config.mjs"
   },
   "scripts": {
-    "build": "pnpm run build:nuxt-ui && pnpm run build:guardrails && pnpm run build:vue-official",
-    "build:nuxt-ui": "cd eslint-plugin-nuxt-ui && pnpm run build",
-    "build:guardrails": "cd eslint-plugin-nuxt-guardrails && pnpm run build",
-    "build:vue-official": "cd eslint-plugin-vue-official-best-practices && pnpm run build",
-    "test": "vitest run",
-    "test:plugins": "vitest run eslint-plugins/tests",
+    "test": "echo 'No tests in workspace shim — tests live in @narduk-enterprises/eslint-config'",
     "format:check": "prettier --check \"**/*.{ts,mts,vue,js,mjs,json,yaml,yml,css,md}\" --ignore-path ../../.gitignore"
   },
   "dependencies": {
+    "@narduk-enterprises/eslint-config": "^1.0.11",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import-x": "^4.16.1",
     "eslint-plugin-regexp": "^3.0.0",

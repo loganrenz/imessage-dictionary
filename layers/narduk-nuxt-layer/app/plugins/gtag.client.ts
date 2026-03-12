@@ -26,7 +26,8 @@ export default defineNuxtPlugin(() => {
     window.dataLayer.push(args as unknown as IArguments)
   }
 
-  ;(window as any).gtag = gtag // eslint-disable-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- gtag must be attached to window for GA4 to pick it up; no type definition exists
+  ;(window as any).gtag = gtag
 
   gtag('js', new Date())
   gtag('config', measurementId)

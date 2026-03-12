@@ -79,7 +79,7 @@ export function useFormHandler<T extends Record<string, unknown>>(options: FormH
   /** Clear all field errors */
   function clearErrors() {
     for (const key of Object.keys(errors)) {
-      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete -- keys are from Object.keys(errors), safe to delete dynamically
       delete errors[key]
     }
   }

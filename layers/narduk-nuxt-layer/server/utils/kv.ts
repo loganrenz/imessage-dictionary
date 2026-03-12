@@ -66,7 +66,9 @@ export async function kvGet<T = unknown>(
   try {
     return JSON.parse(raw) as T
   } catch (err) {
-    console.warn(`[KV] Failed to parse JSON for key`, err)
+    useLogger(event)
+      .child('KV')
+      .warn('Failed to parse JSON for key', { key, error: String(err) })
     return raw as unknown as T
   }
 }

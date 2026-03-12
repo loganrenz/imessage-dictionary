@@ -18,7 +18,6 @@ declare module 'nuxt/schema' {
     posthogPublicKey: string
     posthogHost: string
     gaMeasurementId: string
-    posthogProjectId: string
     indexNowKey: string
     cspScriptSrc: string
     cspConnectSrc: string

@@ -102,6 +102,8 @@ export async function withD1Cache<T>(
     }
   }
 
+  const log = useLogger(event).child('D1Cache')
+
   // Try D1 cache first
   if (d1 && !isForce) {
     try {
@@ -110,29 +112,34 @@ export async function withD1Cache<T>(
         const isExpired = row.expiresAt <= nowSec
         const withinStale = staleWindowSeconds > 0 && row.expiresAt + staleWindowSeconds > nowSec
         if (!isExpired) {
-          if (import.meta.dev) console.log(`[D1 Cache HIT] ${cacheKey}`)
+          log.debug(`Cache HIT ${cacheKey}`)
           return wrap(JSON.parse(row.value) as T, false)
         }
         if (withinStale) {
-          if (import.meta.dev) console.log(`[D1 Cache STALE] ${cacheKey}`)
+          log.debug(`Cache STALE ${cacheKey}`)
           const parsed = JSON.parse(row.value) as T
           // Background refresh (fire-and-forget)
-          Promise.resolve()
+          void Promise.resolve()
             .then(() => fetcher())
             .then((fresh) => {
               if (d1 && fresh !== undefined) {
                 return setCache(d1, cacheKey, JSON.stringify(fresh), ttlSeconds)
               }
+              return
             })
-            .catch((err) => console.error(`[D1 Cache Background refresh] ${cacheKey}`, err))
+            .catch((err) =>
+              log.error(`Background refresh failed ${cacheKey}`, { error: String(err) }),
+            )
           return wrap(parsed, true)
         }
       }
-      if (import.meta.dev) console.log(`[D1 Cache MISS] ${cacheKey}`)
+      log.debug(`Cache MISS ${cacheKey}`)
     } catch (err) {
-      console.error(`[D1 Cache GET Error] ${cacheKey}`, err)
+      log.error(`GET error ${cacheKey}`, { error: String(err) })
     }
-  } else if (!d1 && import.meta.dev) console.warn(`[D1 Cache] DB binding not found for ${cacheKey}`)
+  } else if (!d1) {
+    log.warn(`DB binding not found for ${cacheKey}`)
+  }
 
   // Execute the actual logic
   const result = await fetcher()
@@ -141,9 +148,9 @@ export async function withD1Cache<T>(
   if (d1 && result !== undefined) {
     try {
       await setCache(d1, cacheKey, JSON.stringify(result), ttlSeconds)
-      if (import.meta.dev) console.log(`[D1 Cache SET] ${cacheKey}`)
+      log.debug(`Cache SET ${cacheKey}`)
     } catch (err) {
-      console.error(`[D1 Cache SET Error] ${cacheKey}`, err)
+      log.error(`SET error ${cacheKey}`, { error: String(err) })
     }
   }
 

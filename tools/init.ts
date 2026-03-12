@@ -185,11 +185,20 @@ async function main() {
 
   // Determine if there is a target (non-template) git remote available
   let hasGitRemote = false
+  let githubRepoSlug = ''
   try {
     const remotesCheck = execSync('git remote -v', { encoding: 'utf-8', stdio: 'pipe' }).trim()
-    hasGitRemote = remotesCheck
+    const pushLine = remotesCheck
       .split('\n')
-      .some((line) => !line.includes('narduk-nuxt-template') && line.includes('(push)'))
+      .find((line) => !line.includes('narduk-nuxt-template') && line.includes('(push)'))
+    hasGitRemote = !!pushLine
+    if (pushLine) {
+      const url = pushLine.split(/\s+/)[1] || ''
+      githubRepoSlug = url
+        .replace(/^(https?:\/\/|git@)/, '')
+        .replace(/^github\.com[:/]/, '')
+        .replace(/\.git$/, '')
+    }
   } catch {
     /* no git or no remotes */
   }
@@ -240,8 +249,7 @@ async function main() {
       .readdir(path.join(ROOT_DIR, 'apps'), { withFileTypes: true })
       .catch(() => [])
     for (const entry of appsForWrangler) {
-      if (!entry.isDirectory() || entry.name.startsWith('example-') || entry.name === 'showcase')
-        continue
+      if (!entry.isDirectory() || entry.name.startsWith('example-')) continue
       const wranglerPath = path.join(ROOT_DIR, 'apps', entry.name, 'wrangler.json')
       try {
         const content = await fs.readFile(wranglerPath, 'utf-8')
@@ -275,7 +283,7 @@ async function main() {
 
     for (const file of files) {
       // Skip this init script so we don't dynamically break the replacements
-      if (file.endsWith('tools/init.ts')) continue
+      if (file.endsWith('tools/init.ts') || file.endsWith('tools/validate.ts')) continue
       // Skip documentation files — they reference the template name intentionally
       if (file.endsWith('.md')) continue
 
@@ -315,6 +323,7 @@ async function main() {
       }
     }
     console.log(`  ✅ Updated ${changedFiles} files.`)
+    completed.push('String replacement')
 
     // Targeted .md replacement: update Doppler project names and clone URLs in
     // CONTRIBUTING.md and example READMEs. We skip:
@@ -351,22 +360,39 @@ async function main() {
   // 2. Database Provisioning (per-app — each app gets its own D1 database)
   console.log('\nStep 2/10: Provisioning D1 Databases...')
 
+  // If D1_DATABASE_ID is pre-provisioned by Control Plane API, skip wrangler creation
+  const preProvisionedD1Id = process.env.D1_DATABASE_ID
+  const preProvisionedD1Name = process.env.D1_DATABASE_NAME
+  if (preProvisionedD1Id) {
+    console.log(`  ⏭ D1 database pre-provisioned by Control Plane API.`)
+    console.log(`  📋 Database ID: ${preProvisionedD1Id}`)
+    console.log(`  📋 Database Name: ${preProvisionedD1Name || `${APP_NAME}-db`}`)
+  }
+
   /**
    * Provision a D1 database by name. Returns the database_id or null on failure.
    * Safe to call multiple times — skips if the database already exists.
    * Uses `wrangler d1 info --json` for reliable ID parsing (avoids brittle regex on table output).
+   * Note: Uses `pnpm exec wrangler` because wrangler is a workspace devDep (apps/web),
+   * not hoisted to root node_modules/.bin in pnpm monorepos.
    */
   function provisionD1(name: string): string | null {
+    // Use pre-provisioned ID if the name matches
+    if (preProvisionedD1Id && (name === preProvisionedD1Name || name === `${APP_NAME}-db`)) {
+      console.log(`  ⏭ Using pre-provisioned D1 ID for ${name}: ${preProvisionedD1Id}`)
+      return preProvisionedD1Id
+    }
+
     // Try to create first
     try {
-      console.log(`  Running: npx wrangler d1 create ${name}`)
-      execSync(`npx wrangler d1 create ${name}`, { encoding: 'utf-8', stdio: 'pipe' })
+      console.log(`  Running: pnpm exec wrangler d1 create ${name}`)
+      execSync(`pnpm exec wrangler d1 create ${name}`, { encoding: 'utf-8', stdio: 'pipe' })
       console.log(`  ✅ Database created: ${name}`)
     } catch (error: any) {
       const stderr = error.stderr || ''
       if (!stderr.includes('already exists')) {
         console.error(`  ❌ D1 creation failed for ${name}: ${stderr || error.message}`)
-        console.error('  Are you logged into Wrangler? (npx wrangler login)')
+        console.error('  Are you logged into Wrangler? (wrangler login)')
         return null
       }
       console.log(`  ⏭ Database ${name} already exists.`)
@@ -374,7 +400,7 @@ async function main() {
 
     // Always fetch the ID via --json for reliable parsing
     try {
-      const infoOutput = execSync(`npx wrangler d1 info ${name} --json`, {
+      const infoOutput = execSync(`pnpm exec wrangler d1 info ${name} --json`, {
         encoding: 'utf-8',
         stdio: 'pipe',
       })
@@ -400,7 +426,7 @@ async function main() {
     appDirs = entries
       .filter((e) => e.isDirectory())
       .map((e) => e.name)
-      .filter((name) => name !== 'showcase' && !name.startsWith('example-'))
+      .filter((name) => !name.startsWith('example-'))
   } catch {
     appDirs = []
   }
@@ -467,6 +493,10 @@ async function main() {
 
   if (updatedCount === 0) {
     console.warn('  ⚠️ No wrangler.json files found in apps/*/')
+    failed.push('D1 database + wrangler.json (no apps found)')
+  } else {
+    completed.push('D1 database provisioning')
+    completed.push('wrangler.json configuration')
   }
 
   // 4. Reset README
@@ -493,13 +523,18 @@ Deployment is done locally via \`pnpm run ship\` (see AGENTS.md).
 `
     await fs.writeFile(path.join(ROOT_DIR, 'README.md'), readmeContent, 'utf-8')
     console.log(`  ✅ Generated fresh README.`)
+    completed.push('README.md')
   }
 
   // 5. Doppler Registration (additive — won't clobber existing secrets)
   console.log('\nStep 5/10: Provisioning Doppler Project...')
-  if (!DOPPLER_AVAILABLE) {
+  if (process.env.DOPPLER_PRE_PROVISIONED) {
+    console.log('  ⏭ Doppler project pre-provisioned by Control Plane API.')
+    completed.push('Doppler project + hub secrets (pre-provisioned)')
+  } else if (!DOPPLER_AVAILABLE) {
     console.log('  ⏭ Doppler CLI not configured; skipping Doppler project provisioning.')
     console.log('     Run `doppler setup` and re-run with --repair to complete this step.')
+    deferred.push('Doppler project + secrets (CLI not installed — re-run with --repair)')
   } else {
     console.log(`  Running: doppler projects create ${APP_NAME}`)
     try {
@@ -525,11 +560,15 @@ Deployment is done locally via \`pnpm run ship\` (see AGENTS.md).
       const hubRefs: Record<string, string> = {
         CLOUDFLARE_API_TOKEN: '${narduk-nuxt-template.prd.CLOUDFLARE_API_TOKEN}',
         CLOUDFLARE_ACCOUNT_ID: '${narduk-nuxt-template.prd.CLOUDFLARE_ACCOUNT_ID}',
+        CONTROL_PLANE_API_KEY: '${narduk-nuxt-template.prd.CONTROL_PLANE_API_KEY}',
+        GITHUB_TOKEN_PACKAGES_READ: '${narduk-nuxt-template.prd.GITHUB_TOKEN_PACKAGES_READ}',
         POSTHOG_PUBLIC_KEY: '${narduk-nuxt-template.prd.POSTHOG_PUBLIC_KEY}',
         POSTHOG_PROJECT_ID: '${narduk-nuxt-template.prd.POSTHOG_PROJECT_ID}',
         POSTHOG_HOST: '${narduk-nuxt-template.prd.POSTHOG_HOST}',
+        POSTHOG_PERSONAL_API_KEY: '${narduk-nuxt-template.prd.POSTHOG_PERSONAL_API_KEY}',
         GA_ACCOUNT_ID: '${narduk-nuxt-template.prd.GA_ACCOUNT_ID}',
         GSC_SERVICE_ACCOUNT_JSON: '${narduk-nuxt-template.prd.GSC_SERVICE_ACCOUNT_JSON}',
+        GSC_USER_EMAIL: '${narduk-nuxt-template.prd.GSC_USER_EMAIL}',
         APPLE_KEY_ID: '${narduk-nuxt-template.prd.APPLE_KEY_ID}',
         APPLE_SECRET_KEY: '${narduk-nuxt-template.prd.APPLE_SECRET_KEY}',
         APPLE_TEAM_ID: '${narduk-nuxt-template.prd.APPLE_TEAM_ID}',
@@ -611,20 +650,29 @@ Deployment is done locally via \`pnpm run ship\` (see AGENTS.md).
       }
     } catch (error: any) {
       console.warn(`  ⚠️ Failed to sync hub credentials: ${error.message}`)
+      failed.push('Doppler hub secret sync')
     }
+    completed.push('Doppler project + hub secrets')
   }
 
   // 6. Doppler Service Token → GitHub Secret (skip if token exists)
   console.log('\nStep 6/10: Adding Doppler token to GitHub repository...')
-  if (!DOPPLER_AVAILABLE) {
+  if (process.env.DOPPLER_PRE_PROVISIONED) {
+    console.log('  ⏭ Doppler token + GitHub secrets pre-provisioned by Control Plane API.')
+    completed.push('GitHub DOPPLER_TOKEN secret (pre-provisioned)')
+  } else if (!DOPPLER_AVAILABLE) {
     console.log('  ⏭ Doppler CLI not configured; skipping GitHub secret setup.')
     console.log('     Run `doppler setup` and re-run with --repair to complete this step.')
+    deferred.push('GitHub DOPPLER_TOKEN secret (needs Doppler)')
   } else {
     if (!hasGitRemote) {
       console.log('  ⏭ No git remote found (expected for fresh scaffolds).')
       console.log('    After adding a remote, re-run with --repair to set the GitHub secret.')
       console.log(
         '    ⚠️  Deploy will fail on push to main until DOPPLER_TOKEN is set; run setup with --repair after adding your remote.',
+      )
+      deferred.push(
+        'GitHub DOPPLER_TOKEN secret (no git remote — re-run with --repair after adding remote)',
       )
     } else {
       try {
@@ -684,14 +732,17 @@ Deployment is done locally via \`pnpm run ship\` (see AGENTS.md).
             stdio: 'pipe',
           })
           console.log(`  ✅ DOPPLER_TOKEN set as GitHub Actions secret.`)
+          completed.push('GitHub DOPPLER_TOKEN secret')
         }
       } catch (error: any) {
         const stderr = error.stderr || error.message || ''
         if (stderr.includes('token') && stderr.includes('already exists')) {
           console.log(`  ⏭ Doppler CI token already exists. Skipping.`)
+          completed.push('GitHub DOPPLER_TOKEN secret')
         } else {
           console.warn(`  ⚠️ Failed to set DOPPLER_TOKEN on GitHub: ${stderr}`)
           console.warn('  Ensure you are logged into gh (gh auth login) and have a git remote set.')
+          failed.push('GitHub DOPPLER_TOKEN secret')
         }
       }
     }
@@ -721,17 +772,28 @@ Deployment is done locally via \`pnpm run ship\` (see AGENTS.md).
         stdio: 'pipe',
       })
       console.log(`  ✅ Local Doppler environment configured for project: ${APP_NAME} (dev config)`)
+      completed.push('Local Doppler environment')
     } catch (error: any) {
       const stderr = error.stderr || error.message || ''
       console.warn(`  ⚠️ Failed to configure local Doppler environment: ${stderr}`)
+      failed.push('Local Doppler environment')
     }
   }
 
   // 7. Analytics Provisioning (each service internally skips if already configured)
   console.log('\nStep 7/10: Bootstrapping Google Analytics & IndexNow...')
-  if (!DOPPLER_AVAILABLE) {
+  if (process.env.GA_PROPERTY_ID && process.env.GA_MEASUREMENT_ID) {
+    console.log('  ⏭ GA4 pre-provisioned by Control Plane API.')
+    console.log(`  📋 Property ID: ${process.env.GA_PROPERTY_ID}`)
+    console.log(`  📋 Measurement ID: ${process.env.GA_MEASUREMENT_ID}`)
+    if (process.env.INDEXNOW_KEY) {
+      console.log(`  📋 IndexNow Key: ${process.env.INDEXNOW_KEY}`)
+    }
+    completed.push('Analytics provisioning (pre-provisioned)')
+  } else if (!DOPPLER_AVAILABLE) {
     console.log('  ⏭ Doppler CLI not configured; skipping analytics provisioning.')
     console.log('     Run `doppler setup` and re-run with --repair to complete this step.')
+    deferred.push('Analytics provisioning (needs Doppler)')
   } else {
     try {
       const toolsDir = path.join(ROOT_DIR, 'tools')
@@ -749,6 +811,7 @@ Deployment is done locally via \`pnpm run ship\` (see AGENTS.md).
           console.log(
             `  Once set, run: doppler run --project ${APP_NAME} --config prd -- npx jiti tools/setup-analytics.ts all`,
           )
+          deferred.push('Analytics provisioning (missing Doppler secrets)')
         } else {
           console.log('  Installing ephemeral dependencies (googleapis, google-auth-library)...')
           execSync('pnpm add -w --save-dev googleapis google-auth-library', {
@@ -759,6 +822,8 @@ Deployment is done locally via \`pnpm run ship\` (see AGENTS.md).
           console.log('  Executing Narduk Analytics provisioning pipeline...')
           // Run against the app's own Doppler project (prd config) so SITE_URL, GSC creds,
           // and hub references all resolve correctly. Command is `all`, not `setup:all`.
+          // DOPPLER_PROJECT and DOPPLER_CONFIG are passed explicitly so writeSetupSecret()
+          // writes to prd (not the dev config from doppler.yaml).
           execSync(
             `doppler run --project ${APP_NAME} --config prd -- npx jiti tools/setup-analytics.ts all`,
             {
@@ -766,17 +831,22 @@ Deployment is done locally via \`pnpm run ship\` (see AGENTS.md).
               env: {
                 ...process.env,
                 APP_NAME,
+                DOPPLER_PROJECT: APP_NAME,
+                DOPPLER_CONFIG: 'prd',
                 GSC_USER_EMAIL: process.env.GSC_USER_EMAIL || '',
               },
             },
           )
           console.log(`  ✅ Analytics & Search Console setup successful.`)
+          completed.push('Analytics provisioning')
         }
       } else {
         console.log('  ⚠️ tools/setup-analytics.ts missing. Skipping analytics.')
+        failed.push('Analytics provisioning (setup-analytics.ts missing)')
       }
     } catch (error: any) {
       console.warn(`  ⚠️ Failed to execute analytics pipeline: ${error.message}`)
+      failed.push('Analytics provisioning')
     }
   }
 
@@ -1059,62 +1129,65 @@ export default defineConfig({
       }
 
       console.log('  ✅ Cleaned up example apps, workflows, and package/playwright config.')
+      completed.push('Template cleanup + lockfile sync')
     } catch (error: any) {
       console.warn(`  ⚠️ Template cleanup failed: ${error.message}`)
+      failed.push('Template cleanup')
     }
   }
 
-  // 9.5. Register with control plane fleet registry
-  console.log('\nStep 9.5/10: Registering with control plane fleet registry...')
+  // 9.5. Fleet Registration
+  // When running via the provision-app.yml GitHub Action, the control plane has
+  // already registered this app in the fleet. When running manually, we guide
+  // the user to provision via the control plane API instead.
+  console.log('\nStep 9.5/10: Fleet registration...')
   const CONTROL_PLANE_URL = process.env.CONTROL_PLANE_URL || 'https://control-plane.nard.uk'
-  const controlPlaneApiKey = process.env.CONTROL_PLANE_API_KEY?.trim()
-  if (!controlPlaneApiKey) {
-    console.log('  ⏭ CONTROL_PLANE_API_KEY not set; skipping automatic registration.')
-    console.log(`     Register manually at ${CONTROL_PLANE_URL}/fleet/manage`)
+  if (process.env.PROVISION_ID) {
+    // Running inside provision-app.yml — fleet registration already done by control plane
+    console.log('  ✅ Fleet registration handled by control plane (provision pipeline).')
+    completed.push('Fleet registry (via control plane)')
   } else {
-    try {
-      const res = await fetch(`${CONTROL_PLANE_URL}/api/fleet/apps`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${controlPlaneApiKey}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: APP_NAME,
-          url: SITE_URL,
-          dopplerProject: APP_NAME,
-          githubRepo: `narduk-enterprises/${APP_NAME}`,
-          gaPropertyId: null,
-          posthogAppName: null,
-        }),
-      })
-      if (res.ok) {
-        console.log(`  ✅ Registered ${APP_NAME} with control plane fleet registry.`)
-      } else if (res.status === 409) {
-        console.log(`  ⏭ ${APP_NAME} already registered in fleet registry.`)
-      } else {
-        const text = await res.text().catch(() => '')
-        console.warn(`  ⚠️ Fleet registration returned ${res.status}: ${text}`)
+    const controlPlaneApiKey = process.env.CONTROL_PLANE_API_KEY?.trim()
+    if (!controlPlaneApiKey) {
+      console.log('  ⏭ Fleet registration skipped — use the control plane provision API:')
+      console.log(`     POST ${CONTROL_PLANE_URL}/api/fleet/provision`)
+      console.log(`     Or register manually at ${CONTROL_PLANE_URL}/fleet/manage`)
+      deferred.push('Fleet registry (use control plane provision API)')
+    } else {
+      try {
+        const res = await fetch(`${CONTROL_PLANE_URL}/api/fleet/apps`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${controlPlaneApiKey}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: APP_NAME,
+            url: SITE_URL,
+            dopplerProject: APP_NAME,
+            githubRepo: hasGitRemote ? githubRepoSlug : `narduk-enterprises/${APP_NAME}`,
+            gaPropertyId: null,
+            posthogAppName: null,
+          }),
+        })
+        if (res.ok) {
+          console.log(`  ✅ Registered ${APP_NAME} with control plane fleet registry.`)
+          completed.push('Fleet registry')
+        } else if (res.status === 409) {
+          console.log(`  ⏭ ${APP_NAME} already registered in fleet registry.`)
+          completed.push('Fleet registry')
+        } else {
+          const text = await res.text().catch(() => '')
+          console.warn(`  ⚠️ Fleet registration returned ${res.status}: ${text}`)
+          console.warn(`     Register manually at ${CONTROL_PLANE_URL}/fleet/manage`)
+          failed.push('Fleet registry')
+        }
+      } catch (err: any) {
+        console.warn(`  ⚠️ Could not register with control plane: ${err.message}`)
         console.warn(`     Register manually at ${CONTROL_PLANE_URL}/fleet/manage`)
+        failed.push('Fleet registry')
       }
-    } catch (err: any) {
-      console.warn(`  ⚠️ Could not register with control plane: ${err.message}`)
-      console.warn(`     Register manually at ${CONTROL_PLANE_URL}/fleet/manage`)
     }
-  }
-  console.log(
-    '     If this repo should receive fleet sync PRs, also add it to control-plane/apps/web/server/data/managed-repos.ts.',
-  )
-
-  // Build ESLint plugins to ensure dist/ exists (required for linting)
-  // .gitignore excludes dist/, so this must run after every fresh clone/init.
-  console.log('\n  Building ESLint plugins...')
-  try {
-    execSync('pnpm run build:plugins', { stdio: 'inherit', cwd: ROOT_DIR })
-    console.log('  ✅ ESLint plugins built successfully.')
-  } catch (error: any) {
-    console.warn(`  ⚠️ ESLint plugin build failed: ${error.message}`)
-    console.warn('    Run manually: pnpm run build:plugins')
   }
 
   // 10. Done (script is kept for re-runs)
@@ -1147,39 +1220,6 @@ export default defineConfig({
   await fs.writeFile(path.join(ROOT_DIR, '.template-version'), templateVersionContent, 'utf-8')
 
   console.log('\nStep 10/10: Complete!')
-
-  // ━━━ Structured Summary ━━━
-  // Populate results based on what actually ran
-  if (!REPAIR_MODE) {
-    completed.push('String replacement')
-    completed.push('README.md')
-  }
-  completed.push('D1 database provisioning')
-  completed.push('wrangler.json configuration')
-
-  if (DOPPLER_AVAILABLE) {
-    completed.push('Doppler project + hub secrets')
-    if (hasGitRemote) {
-      completed.push('GitHub DOPPLER_TOKEN secret')
-    } else {
-      deferred.push(
-        'GitHub DOPPLER_TOKEN secret (no git remote — re-run with --repair after adding remote)',
-      )
-    }
-    completed.push('Local Doppler environment')
-  } else {
-    deferred.push('Doppler project + secrets (CLI not installed — re-run with --repair)')
-    deferred.push('GitHub DOPPLER_TOKEN secret (needs Doppler)')
-  }
-
-  if (!hasGitRemote) {
-    deferred.push('Fleet registry (no git remote — re-run with --repair after adding remote)')
-  } else {
-    completed.push('Fleet registry')
-  }
-
-  completed.push('Template cleanup + lockfile sync')
-  completed.push('ESLint plugin build')
 
   console.log('\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
   console.log('  SETUP SUMMARY')

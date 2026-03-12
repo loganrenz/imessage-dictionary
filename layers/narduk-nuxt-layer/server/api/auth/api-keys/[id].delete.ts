@@ -7,7 +7,8 @@ import { eq, and } from 'drizzle-orm'
  * Revoke (delete) an API key. Users can only delete their own keys.
  */
 export default defineEventHandler(async (event) => {
-  await enforceRateLimit(event, 'auth-api-keys', 10, 60_000)
+  const log = useLogger(event).child('Auth')
+  await enforceRateLimit(event, 'auth-api-keys', 30, 60_000)
 
   const user = await requireAuth(event)
   const id = getRouterParam(event, 'id')
@@ -24,8 +25,10 @@ export default defineEventHandler(async (event) => {
     .returning({ id: apiKeys.id })
 
   if (deleted.length === 0) {
+    log.warn('API key not found for deletion', { keyId: id, userId: user.id })
     throw createError({ statusCode: 404, message: 'API key not found' })
   }
 
+  log.info('API key revoked', { keyId: id, userId: user.id })
   return { success: true }
 })

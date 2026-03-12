@@ -2,7 +2,7 @@
  * Global server error logger — Nitro plugin.
  *
  * Intercepts all unhandled errors and `createError` throws with status >= 500.
- * Emits structured logs via `console.error`, which surface in:
+ * Emits structured JSON logs matching the `useLogger` format, which surface in:
  *   - `wrangler tail` (live)
  *   - Cloudflare Dashboard → Workers → Logs
  *   - Logpush (if configured)
@@ -16,13 +16,24 @@ export default defineNitroPlugin((nitro) => {
 
     const method = event?.method ?? 'UNKNOWN'
     const path = event?.path ?? 'UNKNOWN'
-    const timestamp = new Date().toISOString()
+    const requestId = event?.context?._requestId
 
-    console.error(`[SERVER ERROR] ${timestamp} ${method} ${path} → ${statusCode}`, {
-      message: error.message,
-      name: error.name,
-      ...(error.cause ? { cause: String(error.cause) } : {}),
-      stack: error.stack,
-    })
+    console.error(
+      JSON.stringify({
+        timestamp: new Date().toISOString(),
+        level: 'error',
+        requestId: requestId ?? undefined,
+        method,
+        path,
+        message: `Server error → ${statusCode}`,
+        data: {
+          statusCode,
+          name: error.name,
+          errorMessage: error.message,
+          ...(error.cause ? { cause: String(error.cause) } : {}),
+          stack: error.stack,
+        },
+      }),
+    )
   })
 })

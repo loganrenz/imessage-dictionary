@@ -9,7 +9,7 @@
  * (same as Server API). Create a Maps identifier and key with MapKit JS in Apple Developer.
  */
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- mapkit is a CDN global with no published TypeScript types
 declare const mapkit: any
 
 const MAPKIT_SRC = 'https://cdn.apple-mapkit.com/mk/5.x.x/mapkit.js'
@@ -85,16 +85,17 @@ export function useMapKit() {
     })
   }
 
-  initPromise
-    .then(() => {
+  void (async () => {
+    try {
+      await initPromise
       ready.value = true
       if (import.meta.client) {
         document.documentElement.dataset.mapkitLoaded = 'true'
       }
-    })
-    .catch((err) => {
+    } catch (err) {
       error.value = err instanceof Error ? err.message : 'MapKit JS init failed'
-    })
+    }
+  })()
 
   return { mapkitReady: readonly(ready), mapkitError: readonly(error) }
 }

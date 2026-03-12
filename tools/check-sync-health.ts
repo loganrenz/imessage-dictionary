@@ -48,7 +48,10 @@ function parseVersionParts(input: string | null | undefined): [number, number, n
   ]
 }
 
-function isOlderVersion(actual: string | null | undefined, minimum: string | null | undefined): boolean {
+function isOlderVersion(
+  actual: string | null | undefined,
+  minimum: string | null | undefined,
+): boolean {
   const left = parseVersionParts(actual)
   const right = parseVersionParts(minimum)
   if (!left || !right) return false
@@ -163,7 +166,8 @@ function checkNuxtOgImageInstall(rootPkg: PackageJson): CheckResult {
     return {
       status: 'fail',
       summary: `installed nuxt-og-image ${installed} does not match expected ${expected}`,
-      detail: 'The install state is stale or corrupted. Reinstall dependencies and verify node_modules symlinks.',
+      detail:
+        'The install state is stale or corrupted. Reinstall dependencies and verify node_modules symlinks.',
     }
   }
 
@@ -182,15 +186,15 @@ function checkOgImageConfig(): CheckResult {
   }
 
   const content = readFileSync(APP_NUXT_CONFIG_PATH, 'utf8')
-  const hasObsoleteDefaultsComponent = /ogImage\s*:\s*\{[\s\S]*?defaults\s*:\s*\{[\s\S]*?component\s*:/m.test(
-    content,
-  )
+  const hasObsoleteDefaultsComponent =
+    /ogImage\s*:\s*\{[\s\S]*?defaults\s*:\s*\{[\s\S]*?component\s*:/m.test(content)
 
   if (hasObsoleteDefaultsComponent) {
     return {
       status: 'fail',
       summary: 'obsolete ogImage.defaults.component config detected',
-      detail: 'Move OG image component selection to defineOgImage() / useSeo() instead of nuxt.config.ts.',
+      detail:
+        'Move OG image component selection to defineOgImage() / useSeo() instead of nuxt.config.ts.',
     }
   }
 

@@ -9,7 +9,8 @@ const loginSchema = z.object({
 })
 
 export default defineEventHandler(async (event) => {
-  await enforceRateLimit(event, 'auth-login', 10, 60_000)
+  const log = useLogger(event).child('Auth')
+  await enforceRateLimit(event, 'auth-login', 30, 60_000)
 
   const body = await readValidatedBody(event, loginSchema.parse)
   const db = useDatabase(event)
@@ -18,6 +19,7 @@ export default defineEventHandler(async (event) => {
   const user = await db.select().from(users).where(eq(users.email, normalizedEmail)).get()
 
   if (!user || !user.passwordHash) {
+    log.warn('Login failed — invalid credentials', { email: normalizedEmail })
     throw createError({
       statusCode: 401,
       statusMessage: 'Invalid email or password',
@@ -26,6 +28,7 @@ export default defineEventHandler(async (event) => {
 
   const isValid = await verifyUserPassword(body.password, user.passwordHash)
   if (!isValid) {
+    log.warn('Login failed — invalid credentials', { email: normalizedEmail })
     throw createError({
       statusCode: 401,
       statusMessage: 'Invalid email or password',
@@ -41,6 +44,7 @@ export default defineEventHandler(async (event) => {
   }
 
   await setUserSession(event, { user: cleanUser })
+  log.info('Login successful', { email: normalizedEmail, userId: cleanUser.id })
 
   return { user: cleanUser }
 })

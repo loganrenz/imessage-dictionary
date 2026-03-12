@@ -7,6 +7,7 @@ import { eq } from 'drizzle-orm'
  * List the current user's API keys (never returns the full key).
  */
 export default defineEventHandler(async (event) => {
+  const log = useLogger(event).child('Auth')
   const user = await requireAuth(event)
   const db = useDatabase(event)
 
@@ -23,5 +24,6 @@ export default defineEventHandler(async (event) => {
     .where(eq(apiKeys.userId, user.id))
     .all()
 
+  log.debug('API keys listed', { count: keys.length, userId: user.id })
   return keys.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
 })

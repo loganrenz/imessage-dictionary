@@ -5,8 +5,10 @@ export default defineNuxtPlugin(() => {
   const posthogApiKey = runtimeConfig.public.posthogPublicKey
   const posthogHost = runtimeConfig.public.posthogHost
   const appName = (runtimeConfig.public.appName as string) || 'Unknown App'
+  const isLocalhost =
+    window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
 
-  if (!posthogApiKey || import.meta.server) return
+  if (!posthogApiKey || import.meta.server || isLocalhost) return
 
   const posthogClient = posthog.init(posthogApiKey as string, {
     api_host: (posthogHost as string) || 'https://us.i.posthog.com',
@@ -26,23 +28,17 @@ export default defineNuxtPlugin(() => {
     },
   })
 
-  // Opt out on localhost
-  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
-    posthog.opt_out_capturing()
-    return
-  }
-
   // Expose broadly for any legacy integration
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Legacy integration global injection
   if (!(window as any).$nuxt) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Legacy integration global injection
     ;(window as any).$nuxt = {}
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Legacy integration global injection
   ;(window as any).$nuxt.$posthog = posthog
 
   // Tag internal traffic and uniquely identify the fleet application
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Dynamic property bag
   const superProperties: Record<string, any> = { app: appName }
   if (window.location.hostname.endsWith('.pages.dev')) {
     superProperties.is_internal_user = true

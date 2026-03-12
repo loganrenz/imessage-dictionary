@@ -38,6 +38,8 @@ export default defineEventHandler((event) => {
   const xRequestedWith = getHeader(event, 'x-requested-with')
 
   if (!xRequestedWith) {
+    const log = useLogger(event).child('Security')
+    log.warn('CSRF blocked', { method, path })
     throw createError({
       statusCode: 403,
       message: 'Forbidden: missing required header',
